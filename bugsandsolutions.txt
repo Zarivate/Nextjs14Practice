@@ -1,0 +1,32 @@
+- Error:
+    type string | null is not assignable to type string 
+    in route.ts
+
+    Happened because the first and lastname fields are supposed to return String but they're set to possibly return null. Something which is not
+    allowed for strings, causing errors.
+
+- Solution:
+    - While there are many ways to solve this, either by making the last and firstname fields required, thus making them not possible to return null.
+      I just used the non-null asertion operator to tell Typescript to esentially overlook it, as I'm sure the returining field won't be null.
+
+    Went from this  
+
+    const user = {
+      firstName: first_name,
+      lastName: last_name,
+      username: username!,
+      photo: image_url,
+    };
+
+    To this
+
+    const user = {
+      firstName: first_name!,
+      lastName: last_name!,
+      username: username!,
+      photo: image_url,
+    };
+
+
+
+https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not-assignable-to-parameter-of-type-string

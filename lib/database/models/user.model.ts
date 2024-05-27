@@ -8,6 +8,7 @@ const UserSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
   planId: { type: String, default: 1 },
+  creditBalance: { type: Number, default: 10 },
 });
 
 // Turns Schema into model
