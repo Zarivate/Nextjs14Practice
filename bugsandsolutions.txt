@@ -30,3 +30,13 @@
 
 
 https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not-assignable-to-parameter-of-type-string
+
+
+- Error:
+  - User wasn't being created in MongoDB collection, even after successful signup.
+      Essentially what happened was even when I was able to signup with a brand new email account and or unused Google account, the user profile wasn't being
+      created in the cluster. When checking the Clerk dashboard the webhook was being found and attempted but would always end in failure.
+
+- Solution:
+  - Had to go to Vercel project deployment, go under Settings, then go under Deployment Protection and disable the top setting "Vercel Authentication".
+    Redeployed app afterwards and double checked all environment variables were there.
