@@ -39,4 +39,4 @@ https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not
 
 - Solution:
   - Had to go to Vercel project deployment, go under Settings, then go under Deployment Protection and disable the top setting "Vercel Authentication".
-    Redeployed app afterwards and double checked all environment variables were there.
+    Redeployed app afterwards, double checked all environment variables were there, and made sure current IP was allowed to access MongoDB.
