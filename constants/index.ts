@@ -6,14 +6,14 @@ export const navLinks = [
     icon: "/assets/icons/home.svg",
   },
   {
-    label: "Image Restore",
-    route: "/transformations/add/restore",
+    label: "Make A Post",
+    route: "/post",
     icon: "/assets/icons/image.svg",
   },
   {
-    label: "Generative Fill",
-    route: "/transformations/add/fill",
-    icon: "/assets/icons/stars.svg",
+    label: "Profile",
+    route: "/profile",
+    icon: "/assets/icons/profile.svg",
   },
   {
     label: "Object Remove",
@@ -21,18 +21,8 @@ export const navLinks = [
     icon: "/assets/icons/scan.svg",
   },
   {
-    label: "Object Recolor",
-    route: "/transformations/add/recolor",
-    icon: "/assets/icons/filter.svg",
-  },
-  {
-    label: "Background Remove",
-    route: "/transformations/add/removeBackground",
-    icon: "/assets/icons/camera.svg",
-  },
-  {
-    label: "Profile",
-    route: "/profile",
+    label: "Shop",
+    route: "/shop",
     icon: "/assets/icons/profile.svg",
   },
   {

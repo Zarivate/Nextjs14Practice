@@ -7,7 +7,7 @@ interface MongooseConnection {
   promise: Promise<Mongoose> | null;
 }
 
-// NextJs handles dataabse connections/requests slightly differently than more traditional applications where for each and every request/server action
+// NextJs handles database connections/requests slightly differently than more traditional applications where for each and every request/server action
 // a connection to the database has to be made. NextJs runs in a serverless environment, meaning it's stateless so every time it starts up to handle a
 // request and then shuts down right after so as to not maintain a constant connection to a database. Meaning every request is handled independently
 // so there's no need to handle persistent connections across many instances. Optimization is essentially for this however to ensure proper scaling and
