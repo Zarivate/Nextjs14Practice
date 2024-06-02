@@ -24,6 +24,7 @@ const formSchema = z.object({
 
 const page = () => {
   const { session } = useSession();
+  const [timeToExpire, setTimeToExpire] = useState(60);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -32,16 +33,12 @@ const page = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    console.log(submitting);
-  }
-
   const createPost = async () => {
     setSubmitting(true);
     console.log(session);
     console.log(session?.user.username);
     console.log(session?.user.primaryEmailAddress?.emailAddress);
+    console.log(timeToExpire);
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -49,6 +46,7 @@ const page = () => {
           email: session?.user.primaryEmailAddress?.emailAddress,
           username: session?.user.username,
           postText: userPost,
+          timetoDie: timeToExpire,
         }),
       });
 

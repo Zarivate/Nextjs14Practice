@@ -9,15 +9,14 @@ export async function POST(req: any) {
   const { userId } = getAuth(req);
 
   // Grab the user details
-  const { email, username, postText } = await req.json();
+  const { email, username, postText, timetoDie } = await req.json();
 
   try {
     await connectToDatabase();
 
-    const newPost = new Post({ userId, email, username, postText });
-
+    const newPost = new Post({ userId, email, username, postText, timetoDie });
+    console.log(newPost);
     await newPost.save();
-
     return new Response(JSON.stringify(newPost), {
       status: 201,
     });
@@ -26,3 +25,6 @@ export async function POST(req: any) {
     return new Response("Failed to create the post", { status: 500 });
   }
 }
+
+// use this to get the user posts, if there are any, back
+// const prompt = await Prompt.findById(params.id).populate("creator");
