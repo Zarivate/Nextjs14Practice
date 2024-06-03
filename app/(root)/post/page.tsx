@@ -38,7 +38,6 @@ const page = () => {
     console.log(session);
     console.log(session?.user.username);
     console.log(session?.user.primaryEmailAddress?.emailAddress);
-    console.log(timeToExpire);
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -46,7 +45,6 @@ const page = () => {
           email: session?.user.primaryEmailAddress?.emailAddress,
           username: session?.user.username,
           postText: userPost,
-          timetoDie: timeToExpire,
         }),
       });
 

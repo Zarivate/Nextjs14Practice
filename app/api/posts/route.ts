@@ -9,13 +9,15 @@ export async function POST(req: any) {
   const { userId } = getAuth(req);
 
   // Grab the user details
-  const { email, username, postText, timetoDie } = await req.json();
+  const { email, username, postText } = await req.json();
 
   try {
     await connectToDatabase();
 
-    const newPost = new Post({ userId, email, username, postText, timetoDie });
-    console.log(newPost);
+    const newPost = new Post({ userId, email, username, postText });
+    // Maybe try adding this here to expire it instead of in
+    Post.schema.index({ createdAt: 1 }, { expireAfterSeconds: 120 });
+
     await newPost.save();
     return new Response(JSON.stringify(newPost), {
       status: 201,
