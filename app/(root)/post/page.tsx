@@ -24,7 +24,9 @@ const formSchema = z.object({
 
 const page = () => {
   const { session } = useSession();
-  const [timeToExpire, setTimeToExpire] = useState(60);
+  // Id this is set to 0, the first document appears but is then deleted and any subsequent posts are never stored
+  // Updating the number later on does have the post stored for the time duration, so works!
+  const [timeToExpire, setTimeToExpire] = useState(0);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -38,6 +40,7 @@ const page = () => {
     console.log(session);
     console.log(session?.user.username);
     console.log(session?.user.primaryEmailAddress?.emailAddress);
+    console.log(timeToExpire);
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -45,6 +48,7 @@ const page = () => {
           email: session?.user.primaryEmailAddress?.emailAddress,
           username: session?.user.username,
           postText: userPost,
+          liveTime: timeToExpire,
         }),
       });
 
