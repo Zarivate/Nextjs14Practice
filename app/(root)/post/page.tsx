@@ -14,20 +14,39 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { useSession } from "@clerk/nextjs";
-import { debounce } from "@/lib/utils";
+import { TimeLimitKeys, debounce } from "@/lib/utils";
+import { CustomField } from "@/components/shared/CustomField";
+import { defaultValues2, postTimeLimits } from "@/constants";
 
 const formSchema = z.object({
   postText: z.string().min(1),
 });
 
 const page = () => {
+  // Grab the user session state so can apply user details to post
   const { session } = useSession();
-  // Id this is set to 0, the first document appears but is then deleted and any subsequent posts are never stored
-  // Updating the number later on does have the post stored for the time duration, so works!
+  // Use state to handle how long a user wants their post to stay alive for, 0 by default
   const [timeToExpire, setTimeToExpire] = useState(0);
+  // Use state to handle whether or not someone has already pressed the submit button/so they don't spam it
+  const [submitting, setSubmitting] = useState(false);
+  // Use state to handle user post text
+  const [userPost, setUserPost] = useState("");
 
+  // Toast to display upon successful post creation
+  const { toast } = useToast();
+
+  // Defined user form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,6 +54,7 @@ const page = () => {
     },
   });
 
+  // Function to handle making a post to the database
   const createPost = async () => {
     setSubmitting(true);
     console.log(session);
@@ -60,14 +80,8 @@ const page = () => {
     } finally {
       setSubmitting(false);
     }
-  };
 
-  const testData = () => {
-    console.log(
-      userPost,
-      session?.user.primaryEmailAddress?.emailAddress,
-      session?.user.username
-    );
+    form.reset(defaultValues2);
   };
 
   // Handler to update user input
@@ -84,10 +98,10 @@ const page = () => {
     return onChangeField(value);
   };
 
-  // Use state to handle whether or not someone has already pressed the submit button/so they don't spam it
-  const [submitting, setSubmitting] = useState(false);
-
-  const [userPost, setUserPost] = useState("");
+  const timeChoiceHandler = (value: string) => {
+    const timeChoice = postTimeLimits[value as TimeLimitKeys];
+    setTimeToExpire(timeChoice.timeTL);
+  };
 
   return (
     <>
@@ -123,10 +137,32 @@ const page = () => {
               </FormItem>
             )}
           />
+          <Select
+            onValueChange={(value) => {
+              timeChoiceHandler(value);
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a time limit" />
+            </SelectTrigger>
+            <SelectContent>
+              {Object.keys(postTimeLimits).map((key) => (
+                <SelectItem key={key} value={key} className="select-item">
+                  {postTimeLimits[key as TimeLimitKeys].label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Button
             type="submit"
             className="submit-button capitalize"
             disabled={submitting}
+            onClick={() => {
+              toast({
+                title: "Success!",
+                description: "Your post has been made!",
+              });
+            }}
           >
             Post
           </Button>

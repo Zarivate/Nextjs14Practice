@@ -6,6 +6,16 @@ export const navLinks = [
     icon: "/assets/icons/home.svg",
   },
   {
+    label: "Image Restore",
+    route: "/transformations/add/restore",
+    icon: "/assets/icons/image.svg",
+  },
+  {
+    label: "Generative Fill",
+    route: "/transformations/add/fill",
+    icon: "/assets/icons/stars.svg",
+  },
+  {
     label: "Make A Post",
     route: "/post",
     icon: "/assets/icons/image.svg",
@@ -141,6 +151,7 @@ export const transformationTypes = {
     },
     icon: "scan.svg",
   },
+
   recolor: {
     type: "recolor",
     title: "Object Recolor",
@@ -173,12 +184,43 @@ export const aspectRatioOptions = {
   },
 };
 
+export const postTimeLimits = {
+  "Don't Save": {
+    label: "Don't Save",
+    timeTL: 0,
+  },
+  "1 Minute": {
+    label: "1 Minute",
+    timeTL: 60,
+  },
+  "2 Minutes": {
+    label: "2 Minutes",
+    timeTL: 120,
+  },
+  "1 hour": {
+    label: "1 hour",
+    timeTL: 3600,
+  },
+  "1 day": {
+    label: "1 day",
+    timeTL: 86400,
+  },
+  "1 year": {
+    label: "1 year",
+    timeTL: 31536000,
+  },
+};
+
 export const defaultValues = {
   title: "",
   aspectRatio: "",
   color: "",
   prompt: "",
   publicId: "",
+};
+
+export const defaultValues2 = {
+  postText: "",
 };
 
 export const creditFee = -1;

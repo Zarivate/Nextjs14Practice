@@ -1,5 +1,5 @@
 import { connectToDatabase } from "@/lib/database/mongoose";
-import Post from "@/lib/database/models/posts.model";
+import { Post } from "@/lib/database/models/posts.model";
 import { getAuth } from "@clerk/nextjs/server";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getUserById } from "@/lib/actions/user.actions";
@@ -10,13 +10,16 @@ export async function POST(req: any) {
 
   // Grab the user details
   const { email, username, postText, liveTime } = await req.json();
-
+  // Create the deletion date by adding the passed in "liveTime" in milliseconds to the current date
+  const expireAt = new Date(new Date().getTime() + liveTime * 1000);
   try {
     await connectToDatabase();
 
-    const newPost = new Post({ userId, email, username, postText });
-    // Maybe try adding this here to expire it instead of in
-    Post.schema.index({ createdAt: 1 }, { expireAfterSeconds: liveTime });
+    const newPost = new Post({ userId, email, username, postText, expireAt });
+
+    // Make it so the documents in the database are expired right at the moment they reach their expireAt Date, due to the mongodb deletion reaper running
+    // every 60 seconds however, documents may persist for up to a minute past their actual deletion date.
+    Post.schema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
 
     await newPost.save();
     return new Response(JSON.stringify(newPost), {
