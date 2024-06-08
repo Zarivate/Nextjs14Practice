@@ -36,15 +36,14 @@ const formSchema = z.object({
 const page = () => {
   // Grab the user session state so can apply user details to post
   const { session } = useSession();
-  // Use state to handle how long a user wants their post to stay alive for, 0 by default
-  const [timeToExpire, setTimeToExpire] = useState(0);
-  // Use state to handle whether or not someone has already pressed the submit button/so they don't spam it
-  const [submitting, setSubmitting] = useState(false);
-  // Use state to handle user post text
-  const [userPost, setUserPost] = useState("");
-
   // Toast to display upon successful post creation
   const { toast } = useToast();
+
+  // Use states to handle various properties that will be passed to make a post in the database
+  const [timeToExpire, setTimeToExpire] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
+  const [userPost, setUserPost] = useState("");
+  const [allowHome, setAllowHome] = useState(false);
 
   // Defined user form
   const form = useForm<z.infer<typeof formSchema>>({
@@ -61,6 +60,7 @@ const page = () => {
     console.log(session?.user.username);
     console.log(session?.user.primaryEmailAddress?.emailAddress);
     console.log(timeToExpire);
+    console.log(allowHome);
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -69,6 +69,8 @@ const page = () => {
           username: session?.user.username,
           postText: userPost,
           liveTime: timeToExpire,
+          // TODO: Apply and use this field in database
+          allowHome: allowHome,
         }),
       });
 
@@ -92,15 +94,20 @@ const page = () => {
     // Waits a second after user finishes typing before registering anything as opposed to immediately tracking every keystroke
     debounce(() => {
       setUserPost(value);
-      console.log(userPost);
+      // console.log(userPost);
     }, 100)();
 
     return onChangeField(value);
   };
 
+  // Handler for user expiration time choice
   const timeChoiceHandler = (value: string) => {
     const timeChoice = postTimeLimits[value as TimeLimitKeys];
     setTimeToExpire(timeChoice.timeTL);
+  };
+
+  const choicBoxHandler = () => {
+    setAllowHome(!allowHome);
   };
 
   return (
@@ -118,7 +125,7 @@ const page = () => {
             name="postText"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Your Post</FormLabel>
+                <FormLabel className="font-bold">Your Post</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -137,22 +144,38 @@ const page = () => {
               </FormItem>
             )}
           />
-          <Select
-            onValueChange={(value) => {
-              timeChoiceHandler(value);
-            }}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a time limit" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.keys(postTimeLimits).map((key) => (
-                <SelectItem key={key} value={key} className="select-item">
-                  {postTimeLimits[key as TimeLimitKeys].label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex justify-start">
+            <Checkbox id="terms1" onCheckedChange={choicBoxHandler} />
+            <div className="grid gap-1.5 px-5">
+              <label
+                htmlFor="terms1"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Allow post to appear on homepage.
+              </label>
+              <p className="text-sm text-muted-foreground">
+                If unchecked only you can see your post on your profile.
+              </p>
+            </div>
+            <div className="px-10">
+              <Select
+                onValueChange={(value) => {
+                  timeChoiceHandler(value);
+                }}
+              >
+                <SelectTrigger className="w-[250px] ">
+                  <SelectValue placeholder="Select a time limit" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.keys(postTimeLimits).map((key) => (
+                    <SelectItem key={key} value={key} className="select-item">
+                      {postTimeLimits[key as TimeLimitKeys].label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <Button
             type="submit"
             className="submit-button capitalize"

@@ -6,10 +6,7 @@ const PostSchema = new Schema({
   username: { type: String, required: true },
   postText: { type: String, require: true },
   expireAt: { type: Date, required: true },
-  // All user posts are auto deleted in 2 minutes
-  // createdAt: { type: Date, default: Date.now, required: true },
-  // expire_at: { type: Date, default: Date.now, expires: 120 },
-  // myCustomTTLField: { type: Date },
+  allowHome: { type: Boolean, required: true, default: false },
 });
 
 export const Post = models?.Posts || model("Posts", PostSchema);

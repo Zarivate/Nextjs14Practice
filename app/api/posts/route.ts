@@ -9,13 +9,20 @@ export async function POST(req: any) {
   const { userId } = getAuth(req);
 
   // Grab the user details
-  const { email, username, postText, liveTime } = await req.json();
+  const { email, username, postText, liveTime, allowHome } = await req.json();
   // Create the deletion date by adding the passed in "liveTime" in milliseconds to the current date
   const expireAt = new Date(new Date().getTime() + liveTime * 1000);
   try {
     await connectToDatabase();
 
-    const newPost = new Post({ userId, email, username, postText, expireAt });
+    const newPost = new Post({
+      userId,
+      email,
+      username,
+      postText,
+      expireAt,
+      allowHome,
+    });
 
     // Make it so the documents in the database are expired right at the moment they reach their expireAt Date, due to the mongodb deletion reaper running
     // every 60 seconds however, documents may persist for up to a minute past their actual deletion date.
@@ -31,5 +38,21 @@ export async function POST(req: any) {
   }
 }
 
-// use this to get the user posts, if there are any, back
-// const prompt = await Prompt.findById(params.id).populate("creator");
+export async function GET(req: any) {
+  try {
+    // Connect to the database
+    await connectToDatabase();
+
+    // Filter out just the prompts alongside their creators
+    const posts = await Post.find({}).populate("userId");
+
+    // Return the data
+    return new Response(JSON.stringify(posts), {
+      status: 200,
+    });
+  } catch (error) {
+    return new Response("Failed to fetch prompts", {
+      status: 500,
+    });
+  }
+}

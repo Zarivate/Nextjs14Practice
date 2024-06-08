@@ -1,9 +1,24 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
 
 const Home = () => {
+  const [userPosts, setUserPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await fetch("api/posts", {
+        method: "GET",
+      });
+      const data = await posts.json();
+      setUserPosts(data);
+      console.log(data);
+    };
+    fetchPosts();
+  }, []);
+
   return (
     <>
       <section className="home">
@@ -25,6 +40,10 @@ const Home = () => {
           ))}
         </ul>
       </section>
+      {/* Maybe turn this entire section into it's own component, ala a FEED component */}
+      <div>
+        <button>Get posts</button>
+      </div>
     </>
   );
 };
