@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
+import Feed from "@/components/shared/Feed";
 
 const Home = () => {
   const [userPosts, setUserPosts] = useState([]);
@@ -44,6 +45,7 @@ const Home = () => {
       <div>
         <button>Get posts</button>
       </div>
+      <Feed data={userPosts} />
     </>
   );
 };
