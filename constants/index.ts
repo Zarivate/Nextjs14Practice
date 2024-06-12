@@ -224,3 +224,16 @@ export const defaultValues2 = {
 };
 
 export const creditFee = -1;
+
+export interface UserPost {
+  userId: string;
+  email: string;
+  username: string;
+  postText: string;
+  expireAt: Date;
+  allowHome: Boolean;
+}
+
+export interface UserPostsArray {
+  posts: UserPost[];
+}
