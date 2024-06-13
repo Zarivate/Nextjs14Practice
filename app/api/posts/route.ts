@@ -56,3 +56,19 @@ export async function GET(req: any) {
     });
   }
 }
+
+export async function DELETE(req: any) {
+  const { expireAt } = await req.json();
+
+  try {
+    await connectToDatabase();
+
+    await Post.findByIdAndDelete(expireAt);
+
+    return new Response("Prompt has been deleted", { status: 200 });
+  } catch (error) {
+    return new Response("Failed to delete post", {
+      status: 500,
+    });
+  }
+}

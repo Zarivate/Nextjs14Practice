@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { UserPost, UserPostsArray } from "@/constants";
+import { UserPost } from "@/constants";
 import SinglePost from "./SinglePost";
 
 const Feed = () => {
@@ -12,8 +12,12 @@ const Feed = () => {
         method: "GET",
       });
       const data = await posts.json();
-      setUserPosts(data);
-      console.log(data);
+      // Filter data so only ones that agreed to be visible are retrieved
+      const allowedData = data.filter(
+        (datasnip: UserPost) => datasnip.allowHome == true
+      );
+
+      setUserPosts(allowedData);
     };
     fetchPosts();
   }, []);

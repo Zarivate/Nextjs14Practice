@@ -69,7 +69,6 @@ const page = () => {
           username: session?.user.username,
           postText: userPost,
           liveTime: timeToExpire,
-          // TODO: Apply and use this field in database
           allowHome: allowHome,
         }),
       });
