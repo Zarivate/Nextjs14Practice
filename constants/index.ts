@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 // This file holds a colletion of links to different parts of the site, to be adjusted later
 export const navLinks = [
   {
@@ -232,7 +234,8 @@ export interface UserPost {
   postText: string;
   expireAt: Date;
   allowHome: Boolean;
-  postId: string;
+  _id: string;
+  handleDelete: (_id: string) => Promise<void>;
 }
 
 export interface UserPostsArray {

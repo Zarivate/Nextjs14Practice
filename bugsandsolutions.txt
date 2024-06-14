@@ -40,3 +40,26 @@ https://stackoverflow.com/questions/46915002/argument-of-type-string-null-is-not
 - Solution:
   - Had to go to Vercel project deployment, go under Settings, then go under Deployment Protection and disable the top setting "Vercel Authentication".
     Redeployed app afterwards, double checked all environment variables were there, and made sure current IP was allowed to access MongoDB.
+
+
+- Error:
+  - Type 'Promise<void>' is not assignable to type 'MouseEventHandler<HTMLParagraphElement>
+    Essentially was trying to pass a post deletion function to the SinglePost component so when the user clicks the delete option, it not only
+    deletes the post but also rerenders the posts displayed on the page. Error appeared when trying to pass function to the onClick field of the 
+    delete button in SinglePost.tsx. 
+    
+- Solution:
+  - This was because inside index.ts, the corresponding field on the UserPost Interface returned a Promise.
+    
+    handleDelete: (_id: string) => Promise<void>;
+
+    The onClick is a mouse event which doesn't match, thus the error. This can be simply fixed by turning the onClick to a callback, IE: going from
+
+    onClick={handleDelete(_id)}
+    to
+    onClick={() => handleDelete(_id)}
+
+    A simple fix when looking back on it but worth taking note of
+
+https://stackoverflow.com/questions/67367665/type-promisevoid-is-not-assignable-to-type-mouseeventhandlerhtmlbuttonelem
+

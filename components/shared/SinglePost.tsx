@@ -9,53 +9,15 @@ const SinglePost = ({
   username,
   postText,
   expireAt,
-  postId,
+  _id,
+  handleDelete,
 }: UserPost) => {
   // Grab the user session state to check whether the same user is looking at their post on the home screen
   const { session } = useSession();
-  console.log(typeof postId);
-  console.log(postId);
 
   function handleEdit() {
     throw new Error("Function not implemented.");
   }
-
-  const handleDelete = async () => {
-    // Make sure user wants to delete post
-    const confirmed = confirm("Are you sure you want to delete this?");
-
-    // If user is sure, make a call to delete the post
-    if (confirmed) {
-      try {
-        await fetch("/api/posts", {
-          method: "DELETE",
-          body: JSON.stringify({
-            _id: postId,
-          }),
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
-  const [userPosts, setUserPosts] = useState([]);
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const posts = await fetch("api/posts", {
-        method: "GET",
-      });
-      const data = await posts.json();
-      // Filter data so only ones that agreed to be visible are retrieved
-      const allowedData = data.filter(
-        (datasnip: UserPost) => datasnip.allowHome == true
-      );
-
-      setUserPosts(allowedData);
-    };
-    fetchPosts();
-  }, []);
 
   return (
     <div className="flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit">
@@ -81,7 +43,7 @@ const SinglePost = ({
           </p>
           <p
             className="font-inter text-sm orange_gradient cursor-pointer"
-            onClick={handleDelete}
+            onClick={() => handleDelete(_id)}
           >
             Delete
           </p>

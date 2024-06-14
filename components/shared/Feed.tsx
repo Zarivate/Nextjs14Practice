@@ -2,9 +2,13 @@
 import React, { useState, useEffect } from "react";
 import { UserPost } from "@/constants";
 import SinglePost from "./SinglePost";
+import { useSession } from "@clerk/nextjs";
 
 const Feed = () => {
-  const [userPosts, setUserPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState<Array<UserPost>>([]);
+  const { session } = useSession();
+
+  console.log(userPosts);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -20,7 +24,30 @@ const Feed = () => {
       setUserPosts(allowedData);
     };
     fetchPosts();
-  }, []);
+  }, [session?.user.id]);
+
+  const handleDelete = async (_id: string) => {
+    // Make sure user wants to delete post
+    const confirmed = confirm("Are you sure you want to delete this?");
+
+    // If user is sure, make a call to delete the post
+    if (confirmed) {
+      try {
+        await fetch("/api/posts", {
+          method: "DELETE",
+          body: JSON.stringify({
+            _id: _id,
+          }),
+        });
+        console.log(userPosts);
+        // Filter out the delete post from the rest of the posts
+        const filteredData = userPosts.filter((bleh) => bleh._id !== _id);
+        setUserPosts(filteredData);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   if (!userPosts?.length) {
     return (
@@ -42,7 +69,8 @@ const Feed = () => {
               expireAt={expireAt}
               allowHome={allowHome}
               key={_id}
-              postId={_id}
+              _id={_id}
+              handleDelete={handleDelete}
             />
           )
         )}
