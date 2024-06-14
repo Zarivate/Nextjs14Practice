@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { UserPost } from "@/constants";
 import { useSession } from "@clerk/nextjs";
 
@@ -9,9 +9,12 @@ const SinglePost = ({
   username,
   postText,
   expireAt,
+  postId,
 }: UserPost) => {
   // Grab the user session state to check whether the same user is looking at their post on the home screen
   const { session } = useSession();
+  console.log(typeof postId);
+  console.log(postId);
 
   function handleEdit() {
     throw new Error("Function not implemented.");
@@ -27,16 +30,32 @@ const SinglePost = ({
         await fetch("/api/posts", {
           method: "DELETE",
           body: JSON.stringify({
-            expireAt: expireAt,
+            _id: postId,
           }),
         });
-        console.log(expireAt);
-        console.log("Made it here");
       } catch (error) {
         console.log(error);
       }
     }
   };
+
+  const [userPosts, setUserPosts] = useState([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await fetch("api/posts", {
+        method: "GET",
+      });
+      const data = await posts.json();
+      // Filter data so only ones that agreed to be visible are retrieved
+      const allowedData = data.filter(
+        (datasnip: UserPost) => datasnip.allowHome == true
+      );
+
+      setUserPosts(allowedData);
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <div className="flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit">

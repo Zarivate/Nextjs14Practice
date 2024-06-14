@@ -232,6 +232,7 @@ export interface UserPost {
   postText: string;
   expireAt: Date;
   allowHome: Boolean;
+  postId: string;
 }
 
 export interface UserPostsArray {

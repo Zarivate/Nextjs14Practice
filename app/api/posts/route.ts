@@ -58,12 +58,13 @@ export async function GET(req: any) {
 }
 
 export async function DELETE(req: any) {
-  const { expireAt } = await req.json();
+  const { _id } = await req.json();
+  console.log(_id);
 
   try {
     await connectToDatabase();
 
-    await Post.findByIdAndDelete(expireAt);
+    await Post.findByIdAndDelete(_id);
 
     return new Response("Prompt has been deleted", { status: 200 });
   } catch (error) {

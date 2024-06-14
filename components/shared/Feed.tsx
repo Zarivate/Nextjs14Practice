@@ -33,7 +33,7 @@ const Feed = () => {
     <div className="mt-16 py-8 sm:columns-2 sm:gap-6 xl:columns-3 bg-black">
       <ul className="space-x-20">
         {userPosts.map(
-          ({ userId, email, username, postText, expireAt, allowHome }) => (
+          ({ userId, email, username, postText, expireAt, allowHome, _id }) => (
             <SinglePost
               userId={userId}
               email={email}
@@ -41,7 +41,8 @@ const Feed = () => {
               postText={postText}
               expireAt={expireAt}
               allowHome={allowHome}
-              key={expireAt}
+              key={_id}
+              postId={_id}
             />
           )
         )}
