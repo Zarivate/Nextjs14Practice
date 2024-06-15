@@ -1,8 +1,6 @@
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { Post } from "@/lib/database/models/posts.model";
 import { getAuth } from "@clerk/nextjs/server";
-import type { NextApiRequest, NextApiResponse } from "next";
-import { getUserById } from "@/lib/actions/user.actions";
 
 export async function POST(req: any) {
   // Grab the clerk userId using the built in auth method
@@ -38,7 +36,7 @@ export async function POST(req: any) {
   }
 }
 
-export async function GET(req: any) {
+export async function GET() {
   try {
     // Connect to the database
     await connectToDatabase();
@@ -71,5 +69,34 @@ export async function DELETE(req: any) {
     return new Response("Failed to delete post", {
       status: 500,
     });
+  }
+}
+
+// PATCH request for editing the prompt
+export async function PATCH(req: any) {
+  // Retrieve data passed in to update the prompt
+  const { _id, postText } = await req.json();
+
+  try {
+    await connectToDatabase();
+
+    // Filter out the current prompt by it's id
+    const existingPost = await Post.findById(_id);
+
+    // If there is no existing prompt, then return an error message
+    if (!existingPost) {
+      return new Response("Prompt does not exist", { status: 404 });
+    }
+
+    // If the prompt does exists, then update it to be equal to the one passed in through params
+    existingPost.postText = postText;
+
+    // Once updated, just await for it to save in the DB
+    await existingPost.save();
+
+    // Return a successful response
+    return new Response(JSON.stringify(existingPost), { status: 200 });
+  } catch (error) {
+    return new Response("Failed to update prompt", { status: 500 });
   }
 }

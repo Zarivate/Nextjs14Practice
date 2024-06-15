@@ -27,7 +27,7 @@ const Home = () => {
           ))}
         </ul>
       </section>
-      <div className="w-screen h-screen">
+      <div className="h-screen">
         <Feed />
       </div>
     </>

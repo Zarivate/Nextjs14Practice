@@ -26,11 +26,12 @@ const Feed = () => {
     fetchPosts();
   }, [session?.user.id]);
 
+  // Functio to handle deleting posts, accepts the unique post id
   const handleDelete = async (_id: string) => {
-    // Make sure user wants to delete post
+    // Make sure user wants to delete the post
     const confirmed = confirm("Are you sure you want to delete this?");
 
-    // If user is sure, make a call to delete the post
+    // If user is sure, make a call to delete
     if (confirmed) {
       try {
         await fetch("/api/posts", {
@@ -39,13 +40,34 @@ const Feed = () => {
             _id: _id,
           }),
         });
-        console.log(userPosts);
-        // Filter out the delete post from the rest of the posts
+
+        // Filter out the now deleted post from the rest of the posts
         const filteredData = userPosts.filter((bleh) => bleh._id !== _id);
+
+        // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.s
         setUserPosts(filteredData);
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  const handleEdit = async (_id: string, postText: string) => {
+    try {
+      await fetch("/api/posts", {
+        method: "DELETE",
+        body: JSON.stringify({
+          _id: _id,
+        }),
+      });
+
+      // Filter out the now deleted post from the rest of the posts
+      const filteredData = userPosts.filter((bleh) => bleh._id !== _id);
+
+      // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.s
+      setUserPosts(filteredData);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -57,7 +79,7 @@ const Feed = () => {
     );
   }
   return (
-    <div className="mt-16 py-8 sm:columns-2 sm:gap-6 xl:columns-3 bg-black">
+    <div className="mt-16 py-8 sm:columns-2 sm:gap-6 xl:columns-3">
       <ul className="space-x-20">
         {userPosts.map(
           ({ userId, email, username, postText, expireAt, allowHome, _id }) => (

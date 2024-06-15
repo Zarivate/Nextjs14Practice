@@ -14,9 +14,13 @@ const SinglePost = ({
 }: UserPost) => {
   // Grab the user session state to check whether the same user is looking at their post on the home screen
   const { session } = useSession();
+  const [newPostText, setNewPostText] = useState(postText);
+  const [editMode, setEditMode] = useState(false);
+  console.log(editMode);
 
   function handleEdit() {
-    throw new Error("Function not implemented.");
+    setEditMode(!editMode);
+    console.log(editMode);
   }
 
   return (
@@ -29,7 +33,20 @@ const SinglePost = ({
           <p className="font-inter text-sm text-gray-500">{email}</p>
         </div>
       </div>
-      <p className="my-4 font-satoshi text-sm text-gray-700">{postText}</p>
+      {editMode ? (
+        // Maybe do the debounce thing here, also add a confirm button to the side that will call the API PATCH method
+        <textarea
+          value={postText}
+          onChange={(e: any) => {
+            const newText = e.target.value;
+            setNewPostText(newText);
+            console.log(newPostText);
+          }}
+        />
+      ) : (
+        <p className="my-4 font-satoshi text-sm text-gray-700">{postText}</p>
+      )}
+
       {/* TODO: Add funcitonality to see whether user is same as poster */}
       {/* Check to make sure the logged in user is the same as the creator of the post, and
       is on the profile page. If so then allow the delete and edit functionality to appear. */}
@@ -41,6 +58,7 @@ const SinglePost = ({
           >
             Edit
           </p>
+
           <p
             className="font-inter text-sm orange_gradient cursor-pointer"
             onClick={() => handleDelete(_id)}
