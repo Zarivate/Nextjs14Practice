@@ -10,19 +10,20 @@ const Feed = () => {
 
   console.log(userPosts);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const posts = await fetch("api/posts", {
-        method: "GET",
-      });
-      const data = await posts.json();
-      // Filter data so only ones that agreed to be visible are retrieved
-      const allowedData = data.filter(
-        (datasnip: UserPost) => datasnip.allowHome == true
-      );
+  const fetchPosts = async () => {
+    const posts = await fetch("api/posts", {
+      method: "GET",
+    });
+    const data = await posts.json();
+    // Filter data so only ones that agreed to be visible are retrieved
+    const allowedData = data.filter(
+      (datasnip: UserPost) => datasnip.allowHome == true
+    );
 
-      setUserPosts(allowedData);
-    };
+    setUserPosts(allowedData);
+  };
+
+  useEffect(() => {
     fetchPosts();
   }, [session?.user.id]);
 
@@ -52,20 +53,19 @@ const Feed = () => {
     }
   };
 
-  const handleEdit = async (_id: string, postText: string) => {
+  // Function to handle updating the prompt
+  const updatePrompt = async (_id: string, newPostText: string) => {
+    // Attempt to update the post
     try {
-      await fetch("/api/posts", {
-        method: "DELETE",
+      await fetch(`/api/posts`, {
+        method: "PATCH",
         body: JSON.stringify({
           _id: _id,
+          postText: newPostText,
         }),
       });
 
-      // Filter out the now deleted post from the rest of the posts
-      const filteredData = userPosts.filter((bleh) => bleh._id !== _id);
-
-      // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.s
-      setUserPosts(filteredData);
+      fetchPosts();
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +93,7 @@ const Feed = () => {
               key={_id}
               _id={_id}
               handleDelete={handleDelete}
+              updatePrompt={updatePrompt}
             />
           )
         )}

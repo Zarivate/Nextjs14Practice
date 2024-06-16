@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { UserPost } from "@/constants";
 import { useSession } from "@clerk/nextjs";
+import { debounce } from "@/lib/utils";
 
 const SinglePost = ({
   userId,
@@ -11,6 +12,7 @@ const SinglePost = ({
   expireAt,
   _id,
   handleDelete,
+  updatePrompt,
 }: UserPost) => {
   // Grab the user session state to check whether the same user is looking at their post on the home screen
   const { session } = useSession();
@@ -23,6 +25,21 @@ const SinglePost = ({
     console.log(editMode);
   }
 
+  const onInputChangeHandler = (value: string) => {
+    debounce(() => {
+      setNewPostText(value);
+      console.log(newPostText);
+    }, 100)();
+
+    setNewPostText(value);
+  };
+
+  const sendPatch = () => {
+    updatePrompt(_id, newPostText);
+    setEditMode(!editMode);
+    console.log("HOwdy");
+  };
+
   return (
     <div className="flex-1 break-inside-avoid rounded-lg border border-gray-300 bg-white/20 bg-clip-padding p-6 pb-4 backdrop-blur-lg backdrop-filter md:w-[360px] w-full h-fit">
       <div className="flex justify-between items-start gap-5">
@@ -34,15 +51,13 @@ const SinglePost = ({
         </div>
       </div>
       {editMode ? (
-        // Maybe do the debounce thing here, also add a confirm button to the side that will call the API PATCH method
-        <textarea
-          value={postText}
-          onChange={(e: any) => {
-            const newText = e.target.value;
-            setNewPostText(newText);
-            console.log(newPostText);
-          }}
-        />
+        <>
+          <textarea
+            className="my-4 text-sm text-gray-700 w-full"
+            value={newPostText}
+            onChange={(e: any) => onInputChangeHandler(e.target.value)}
+          />
+        </>
       ) : (
         <p className="my-4 font-satoshi text-sm text-gray-700">{postText}</p>
       )}
@@ -52,12 +67,21 @@ const SinglePost = ({
       is on the profile page. If so then allow the delete and edit functionality to appear. */}
       {session?.user.id === userId && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
-          <p
-            className="font-inter text-sm green_gradient cursor-pointer"
-            onClick={handleEdit}
-          >
-            Edit
-          </p>
+          {editMode ? (
+            <p
+              className="font-inter text-sm green_gradient cursor-pointer"
+              onClick={() => sendPatch()}
+            >
+              Done
+            </p>
+          ) : (
+            <p
+              className="font-inter text-sm green_gradient cursor-pointer"
+              onClick={handleEdit}
+            >
+              Edit
+            </p>
+          )}
 
           <p
             className="font-inter text-sm orange_gradient cursor-pointer"

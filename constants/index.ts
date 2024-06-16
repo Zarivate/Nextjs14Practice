@@ -236,6 +236,7 @@ export interface UserPost {
   allowHome: Boolean;
   _id: string;
   handleDelete: (_id: string) => Promise<void>;
+  updatePrompt: (_id: string, postText: string) => Promise<void>;
 }
 
 export interface UserPostsArray {
