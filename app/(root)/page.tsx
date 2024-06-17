@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
 import Feed from "@/components/shared/Feed";
+import { Suspense } from "react";
+import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
 
 const Home = () => {
   return (
@@ -27,9 +29,9 @@ const Home = () => {
           ))}
         </ul>
       </section>
-      <div className="h-screen">
+      <Suspense fallback={<LoadingPostsSkeleton />}>
         <Feed />
-      </div>
+      </Suspense>
     </>
   );
 };

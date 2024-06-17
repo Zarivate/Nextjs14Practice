@@ -4,11 +4,15 @@ import { UserPost } from "@/constants";
 import SinglePost from "./SinglePost";
 import { useSession } from "@clerk/nextjs";
 
-const Feed = () => {
+export default async function Feed() {
   const [userPosts, setUserPosts] = useState<Array<UserPost>>([]);
   const { session } = useSession();
 
   console.log(userPosts);
+
+  const delay = async (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
   const fetchPosts = async () => {
     const posts = await fetch("api/posts", {
@@ -71,13 +75,13 @@ const Feed = () => {
     }
   };
 
-  if (!userPosts?.length) {
-    return (
-      <div>
-        <h1>No posts found</h1>
-      </div>
-    );
-  }
+  // if (!userPosts?.length) {
+  //   return (
+  //     <div>
+  //       <h1>No posts found</h1>
+  //     </div>
+  //   );
+  // }
   return (
     <div className="mt-16 py-8 sm:columns-2 sm:gap-6 xl:columns-3">
       <ul className="space-x-20">
@@ -100,6 +104,4 @@ const Feed = () => {
       </ul>
     </div>
   );
-};
-
-export default Feed;
+}

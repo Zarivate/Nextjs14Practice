@@ -1,7 +1,10 @@
-import React from "react";
+"use client";
+import { UserPost } from "@/constants";
+import { useSession } from "@clerk/nextjs";
+import React, { useState } from "react";
 
-const ProfilePage = () => {
+export default async function ProfilePage() {
+  const { session } = useSession();
+
   return <div>ProfilePage goes here</div>;
-};
-
-export default ProfilePage;
+}
