@@ -83,8 +83,9 @@ export default async function Feed() {
   //   );
   // }
   return (
-    <div className="mt-16 py-8 sm:columns-2 sm:gap-6 xl:columns-3">
-      <ul className="space-x-20">
+    <div className="mt-5 bg-black">
+      {/* Remove the h-56 grid grid-cols-3 gap-4 content-start to see if can stack content in other ways */}
+      <ul className="flex items-start justify-between h-56 grid grid-cols-2 gap-4 content-start">
         {userPosts.map(
           ({ userId, email, username, postText, expireAt, allowHome, _id }) => (
             <SinglePost

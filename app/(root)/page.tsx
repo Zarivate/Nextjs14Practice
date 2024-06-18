@@ -29,9 +29,11 @@ const Home = () => {
           ))}
         </ul>
       </section>
-      <Suspense fallback={<LoadingPostsSkeleton />}>
-        <Feed />
-      </Suspense>
+      <div className="">
+        <Suspense fallback={<LoadingPostsSkeleton />}>
+          <Feed />
+        </Suspense>
+      </div>
     </>
   );
 };

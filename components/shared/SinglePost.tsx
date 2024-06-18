@@ -43,25 +43,24 @@ const SinglePost = ({
 
   return (
     <>
-      <div className="">
-        <div className="flex justify-between items-start gap-7">
-          <div className="flex flex-col">
-            <h3 className="font-satoshi font-semibold text-gray-900">
-              {username}
-            </h3>
-            <p className="font-inter text-sm text-gray-500">{email}</p>
-          </div>
+      <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div className="flex flex-col">
+          <h3 className="font-satoshi font-semibold text-gray-900">
+            {username}
+          </h3>
+          <p className="font-inter text-sm text-gray-500">{email}</p>
         </div>
+
         {editMode ? (
           <>
             <textarea
-              className="mb-3 font-normal text-gray-700 dark:text-gray-400"
+              className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 w-full overflow-y"
               value={newPostText}
               onChange={(e: any) => onInputChangeHandler(e.target.value)}
             />
           </>
         ) : (
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-y">
             {postText}
           </p>
         )}
@@ -89,13 +88,6 @@ const SinglePost = ({
             </p>
           </div>
         )}
-      </div>
-      <div className="flex flex-col space-y-3">
-        <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-        <div className="space-y-2">
-          <Skeleton className="h-4 w-[250px]" />
-          <Skeleton className="h-4 w-[200px]" />
-        </div>
       </div>
     </>
   );
