@@ -6,5 +6,7 @@ import React, { useState } from "react";
 export default async function ProfilePage() {
   const { session } = useSession();
 
-  return <div>ProfilePage goes here</div>;
+  return (
+    <div className="w-screen h-screen bg-black">ProfilePage goes here</div>
+  );
 }

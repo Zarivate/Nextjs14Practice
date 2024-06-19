@@ -3,12 +3,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const LoadingPostsSkeleton = () => {
   return (
-    <div className="flex flex-col space-y-3">
-      <Skeleton className="h-[125px] w-[250px] rounded-xl" />
-      <div className="space-y-2">
-        <Skeleton className="h-4 w-[250px]" />
-        <Skeleton className="h-4 w-[200px]" />
-      </div>
+    <div className="flex items-start justify-between h-56 grid grid-cols-2 gap-4 content-start mt-5">
+      <Skeleton className="skeleton-post" />
+      <Skeleton className="skeleton-post" />
+      <Skeleton className="skeleton-post" />
+      <Skeleton className="skeleton-post" />
     </div>
   );
 };

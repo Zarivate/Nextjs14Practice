@@ -75,15 +75,15 @@ export default async function Feed() {
     }
   };
 
-  // if (!userPosts?.length) {
-  //   return (
-  //     <div>
-  //       <h1>No posts found</h1>
-  //     </div>
-  //   );
-  // }
+  if (!userPosts?.length) {
+    return (
+      <div>
+        <h1>No posts found. Why not make one?</h1>
+      </div>
+    );
+  }
   return (
-    <div className="mt-5 bg-black">
+    <div className="mt-5">
       {/* Remove the h-56 grid grid-cols-3 gap-4 content-start to see if can stack content in other ways */}
       <ul className="flex items-start justify-between h-56 grid grid-cols-2 gap-4 content-start">
         {userPosts.map(
