@@ -1,5 +1,5 @@
 "use client";
-import { navLinks } from "@/constants";
+import { SideBarPass, navLinks } from "@/constants";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,12 +8,17 @@ import React from "react";
 import { Button } from "../ui/button";
 
 // The component that handles the sidebar and all it's navigations
-const Sidebar = () => {
+const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
   // Grab the current path/url of the page
   const pathname = usePathname();
 
   return (
-    <aside className="sidebar">
+    <aside
+      className={`hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 lg:flex ${
+        isOpen ? "bg-blue-700 inset-y-0 right-1" : "opacity-0 inset-y-0 left-0"
+      }`}
+    >
+      <button onClick={toggle}> Test me</button>
       <div className="flex size-full flex-col gap-4">
         <Link href="/" className="sidebar-logo">
           <Image

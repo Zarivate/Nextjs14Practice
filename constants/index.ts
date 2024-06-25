@@ -242,3 +242,8 @@ export interface UserPost {
 export interface UserPostsArray {
   posts: UserPost[];
 }
+
+export interface SideBarPass {
+  isOpen: boolean;
+  toggle: () => void;
+}
