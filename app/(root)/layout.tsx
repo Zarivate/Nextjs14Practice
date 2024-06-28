@@ -10,6 +10,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   const toggle = () => {
     setIsOpen(!isOpen);
+    console.log(isOpen);
   };
 
   return (
