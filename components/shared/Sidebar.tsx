@@ -15,7 +15,7 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
   return (
     <aside
       className={`hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 lg:flex ${
-        isOpen ? "bg-blue-700 inset-y-0 right-1" : "opacity-0 inset-y-0 left-0"
+        isOpen ? "bg-blue-700 inset-y-0 right-1" : ""
       }`}
     >
       {/* <button

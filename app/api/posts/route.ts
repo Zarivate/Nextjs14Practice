@@ -36,7 +36,7 @@ export async function POST(req: any) {
   }
 }
 
-export async function GET() {
+export const GET = async () => {
   try {
     // Connect to the database
     await connectToDatabase();
@@ -53,7 +53,7 @@ export async function GET() {
       status: 500,
     });
   }
-}
+};
 
 export async function DELETE(req: any) {
   const { _id } = await req.json();
@@ -99,4 +99,17 @@ export async function PATCH(req: any) {
   } catch (error) {
     return new Response("Failed to update prompt", { status: 500 });
   }
+}
+
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export async function fetchPosts() {
+  await delay(3000);
+
+  const posts = await fetch(process.env.URL + "/api/posts", {
+    method: "GET",
+  });
+  const data = await posts.json();
+
+  return data;
 }
