@@ -239,6 +239,18 @@ export interface UserPost {
   updatePrompt: (_id: string, postText: string) => Promise<void>;
 }
 
+export interface BasicPost {
+  userId: "test";
+  email: "test@mail.com";
+  username: "zari";
+  postText: "Bleh";
+  expireAt: "Today";
+  allowHome: true;
+  _id: "1234";
+  handleDelete: (_id: string) => Promise<void>;
+  updatePrompt: (_id: string, postText: string) => Promise<void>;
+}
+
 export interface UserPostsArray {
   posts: UserPost[];
 }
