@@ -106,7 +106,7 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export async function fetchPosts() {
   await delay(3000);
 
-  const posts = await fetch(process.env.URL + "/api/posts", {
+  const posts = await fetch("/api/posts", {
     method: "GET",
   });
   const data = await posts.json();

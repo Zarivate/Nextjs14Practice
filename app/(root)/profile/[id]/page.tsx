@@ -1,16 +1,24 @@
+"use client";
 import Profile from "@/components/shared/Profile";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BasicPost, UserPost } from "@/constants";
 import { fetchPosts } from "@/app/api/posts/route";
 import SinglePost from "@/components/shared/SinglePost";
+import { useSession } from "@clerk/nextjs";
 
-export default async function ProfilePage() {
-  let profilePosts: UserPost[] | BasicPost;
+const ProfilePage = () => {
+  const [allowedProfile, setAllowedProfile] = useState(false);
+  const [testPosts, setTestPosts] = useState([]);
 
-  const testPosts = await fetchPosts();
+  const defaultRun = async () => {
+    const data = await fetchPosts();
+    setTestPosts(data);
+  };
+
+  useEffect(() => {
+    defaultRun();
+  }, []);
   console.log(testPosts);
-  profilePosts = testPosts;
-
   if (!testPosts?.length) {
     return (
       <div>
@@ -20,8 +28,9 @@ export default async function ProfilePage() {
   }
   return (
     <div className="mt-5">
-      "Howdy"
-      <Profile profilePosts={profilePosts} />
+      <Profile profilePosts={testPosts} />
     </div>
   );
-}
+};
+
+export default ProfilePage;
