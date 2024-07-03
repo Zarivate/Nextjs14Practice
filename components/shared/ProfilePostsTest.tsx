@@ -10,6 +10,7 @@ export default function ProfilePostsTest({
   email,
   userId,
   _id,
+  handleDelete,
 }) {
   const { session } = useSession();
   const [newPostText, setNewPostText] = useState(postText);
@@ -52,31 +53,6 @@ export default function ProfilePostsTest({
     console.log("HOwdy");
   };
 
-  const handleDelete = async (_id: string) => {
-    // Make sure user wants to delete the post
-    const confirmed = confirm("Are you sure you want to delete this?");
-
-    // If user is sure, make a call to delete
-    if (confirmed) {
-      try {
-        await fetch("/api/posts", {
-          method: "DELETE",
-          body: JSON.stringify({
-            _id: _id,
-          }),
-        });
-
-        // Filter out the now deleted post from the rest of the posts
-        const filteredData = userPosts.filter((bleh) => bleh._id !== _id);
-
-        // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.s
-        setUserPosts(filteredData);
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
   return (
     <>
       <ul className="flex items-start justify-between h-56 grid grid-cols-2 gap-6 content-start mt-6">
@@ -104,10 +80,7 @@ export default function ProfilePostsTest({
                 Edit
               </button>
 
-              <p
-                className="post-btn"
-                onClick={() => console.log("Delete test")}
-              >
+              <p className="post-btn" onClick={() => handleDelete(_id)}>
                 Delete
               </p>
             </div>
