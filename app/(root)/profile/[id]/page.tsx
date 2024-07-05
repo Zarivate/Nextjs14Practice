@@ -11,15 +11,17 @@ const ProfilePage = () => {
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
   const { session } = useSession();
 
-  const defaultRun = async () => {
-    const data = await fetchPosts();
-    setTestPosts(data);
-  };
-
   useEffect(() => {
-    defaultRun();
+    const defaultRun = async () => {
+      const data = await fetchPosts();
+      setTestPosts(data);
+      console.log(testPosts);
+    };
+
+    if (session?.user.id) {
+      defaultRun();
+    }
   }, [session?.user.id]);
-  console.log(testPosts);
 
   const handleDelete = async (_id: string) => {
     // Make sure user wants to delete the post
@@ -46,13 +48,6 @@ const ProfilePage = () => {
     }
   };
 
-  if (!testPosts?.length) {
-    return (
-      <div>
-        <h1>No posts found. Why not make one?</h1>
-      </div>
-    );
-  }
   return (
     <div className="mt-5">
       <Profile profilePosts={testPosts} handleDelete={handleDelete} />

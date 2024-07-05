@@ -1,43 +1,40 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { UserPost } from "@/constants";
+import { TestPostInterface, UserPost } from "@/constants";
 import { useSession } from "@clerk/nextjs";
 import { debounce } from "@/lib/utils";
 
-const SinglePost = ({
+const SinglePost2 = ({
   userId,
   email,
   username,
   postText,
   expireAt,
   _id,
-  handleDelete,
-  updatePrompt,
-}: UserPost) => {
+  handleDeleteFeed,
+  updatePromptFeed,
+}: TestPostInterface) => {
   // Grab the user session state to check whether the same user is looking at their post on the home screen
   const { session } = useSession();
   const [newPostText, setNewPostText] = useState(postText);
   const [editMode, setEditMode] = useState(false);
-  console.log(editMode);
 
   function handleEdit() {
     setEditMode(!editMode);
-    console.log(editMode);
   }
 
   const onInputChangeHandler = (value: string) => {
     debounce(() => {
       setNewPostText(value);
       console.log(newPostText);
-    }, 100)();
+    }, 10)();
 
     setNewPostText(value);
   };
 
   const sendPatch = () => {
-    updatePrompt(_id, newPostText);
+    updatePromptFeed(_id, newPostText);
     setEditMode(!editMode);
-    console.log("HOwdy");
   };
 
   return (
@@ -82,7 +79,7 @@ const SinglePost = ({
               </button>
             )}
 
-            <p className="post-btn" onClick={() => handleDelete(_id)}>
+            <p className="post-btn" onClick={() => handleDeleteFeed(_id)}>
               Delete
             </p>
           </div>
@@ -92,4 +89,4 @@ const SinglePost = ({
   );
 };
 
-export default SinglePost;
+export default SinglePost2;

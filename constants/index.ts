@@ -250,6 +250,17 @@ export interface BasicPost {
   handleDelete: (_id: string) => Promise<void>;
   updatePrompt: (_id: string, postText: string) => Promise<void>;
 }
+export interface TestPostInterface {
+  userId: string;
+  email: string;
+  username: string;
+  postText: string;
+  expireAt: Date;
+  allowHome: Boolean;
+  _id: string;
+  handleDeleteFeed: (_id: string) => Promise<void>;
+  updatePromptFeed: (_id: string, postText: string) => Promise<void>;
+}
 
 export interface UserPostsArray {
   posts: UserPost[];

@@ -113,3 +113,40 @@ export async function fetchPosts() {
 
   return data;
 }
+
+export async function handleDeleteGeneral(_id: string) {
+  // Make sure user wants to delete the post
+  const confirmed = confirm("Are you sure you want to delete this?");
+
+  // If user is sure, make a call to delete
+  if (confirmed) {
+    try {
+      await fetch("/api/posts", {
+        method: "DELETE",
+        body: JSON.stringify({
+          _id: _id,
+        }),
+      });
+
+      return _id;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+}
+
+// Function to handle updating the prompt
+export async function updatePromptGeneral(_id: string, newPostText: string) {
+  // Attempt to update the post
+  try {
+    await fetch(`/api/posts`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        _id: _id,
+        postText: newPostText,
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}

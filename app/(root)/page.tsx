@@ -1,11 +1,8 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
-import Feed from "@/components/shared/Feed";
-import { Suspense } from "react";
-import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
+import Feed2 from "@/components/shared/Feed2";
 
 const Home = () => {
   return (
@@ -29,11 +26,8 @@ const Home = () => {
           ))}
         </ul>
       </section>
-      <div className="">
-        <Suspense fallback={<LoadingPostsSkeleton />}>
-          <Feed />
-        </Suspense>
-      </div>
+
+      <Feed2 />
     </>
   );
 };
