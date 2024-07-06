@@ -106,7 +106,7 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 export async function fetchPosts() {
   await delay(3000);
 
-  const posts = await fetch("/api/posts", {
+  const posts = await fetch(process.env.URL + "/api/posts", {
     method: "GET",
   });
   const data = await posts.json();
@@ -132,21 +132,5 @@ export async function handleDeleteGeneral(_id: string) {
     } catch (error) {
       console.log(error);
     }
-  }
-}
-
-// Function to handle updating the prompt
-export async function updatePromptGeneral(_id: string, newPostText: string) {
-  // Attempt to update the post
-  try {
-    await fetch(`/api/posts`, {
-      method: "PATCH",
-      body: JSON.stringify({
-        _id: _id,
-        postText: newPostText,
-      }),
-    });
-  } catch (error) {
-    console.log(error);
   }
 }

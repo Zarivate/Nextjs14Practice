@@ -2,18 +2,18 @@
 import React, { useState, useEffect, Suspense } from "react";
 import { TestPostInterface, UserPost } from "@/constants";
 import SinglePost2 from "./SinglePost2";
-import {
-  handleDeleteGeneral,
-  updatePromptGeneral,
-} from "@/app/api/posts/route";
+import { handleDeleteGeneral } from "@/app/api/posts/route";
 import LoadingPostsSkeleton from "./LoadingPostsSkeleton";
 
 export default function Feed2() {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface>>([]);
+  // Add a fixed delay so you can see the loading state
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
 
   console.log(userPosts);
   const fetchPosts = async () => {
-    const posts = await fetch("api/posts", {
+    const posts = await fetch("/api/posts", {
       method: "GET",
     });
     const data = await posts.json();
@@ -21,6 +21,7 @@ export default function Feed2() {
     const allowedData = data.filter(
       (datasnip: UserPost) => datasnip.allowHome == true
     );
+
     setUserPosts(allowedData);
   };
 
@@ -28,7 +29,7 @@ export default function Feed2() {
     fetchPosts();
   }, []);
 
-  // Functio to handle deleting posts, accepts the unique post id
+  // Function to handle deleting posts, accepts the unique post id
   const handleDeleteFeed = async (_id: string) => {
     const returnId = await handleDeleteGeneral(_id);
 
@@ -56,36 +57,26 @@ export default function Feed2() {
   };
 
   return (
-    <Suspense fallback={<LoadingPostsSkeleton />}>
-      <div className="mt-5">
-        {/* Remove the h-56 grid grid-cols-3 gap-4 content-start to see if can stack content in other ways */}
-        <ul className="flex items-start justify-between h-56 grid grid-cols-2 gap-4 content-start">
-          {userPosts.map(
-            ({
-              userId,
-              email,
-              username,
-              postText,
-              expireAt,
-              allowHome,
-              _id,
-            }) => (
-              <SinglePost2
-                userId={userId}
-                email={email}
-                username={username}
-                postText={postText}
-                expireAt={expireAt}
-                allowHome={allowHome}
-                key={_id}
-                _id={_id}
-                handleDeleteFeed={handleDeleteFeed}
-                updatePromptFeed={updatePromptFeed}
-              />
-            )
-          )}
-        </ul>
-      </div>
-    </Suspense>
+    <div className="mt-5">
+      {/* Remove the h-56 grid grid-cols-3 gap-4 content-start to see if can stack content in other ways */}
+      <ul className="flex items-start justify-between h-56 grid grid-cols-2 gap-4 content-start">
+        {userPosts.map(
+          ({ userId, email, username, postText, expireAt, allowHome, _id }) => (
+            <SinglePost2
+              userId={userId}
+              email={email}
+              username={username}
+              postText={postText}
+              expireAt={expireAt}
+              allowHome={allowHome}
+              key={_id}
+              _id={_id}
+              handleDeleteFeed={handleDeleteFeed}
+              updatePromptFeed={updatePromptFeed}
+            />
+          )
+        )}
+      </ul>
+    </div>
   );
 }

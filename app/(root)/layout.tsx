@@ -20,9 +20,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <Sidebar isOpen={isOpen} toggle={toggle} />
       <MobileNav />
       <div className="root-container">
-        <Suspense fallback={<LoadingPostsSkeleton />}>
-          <div className="wrapper">{children}</div>
-        </Suspense>
+        <div className="wrapper">{children}</div>
+
         <Toaster />
       </div>
     </main>
