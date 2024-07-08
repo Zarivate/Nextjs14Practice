@@ -4,9 +4,11 @@ import { TestPostInterface, UserPost } from "@/constants";
 import SinglePost2 from "./SinglePost2";
 import { handleDeleteGeneral } from "@/app/api/posts/route";
 import LoadingPostsSkeleton from "./LoadingPostsSkeleton";
+import { handleDeleteFeed } from "./TestFeed";
 
-export default function Feed2() {
+export default function Feed2({ posts }: any) {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface>>([]);
+  // setUserPosts(posts);
   // Add a fixed delay so you can see the loading state
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
@@ -30,8 +32,8 @@ export default function Feed2() {
   }, []);
 
   // Function to handle deleting posts, accepts the unique post id
-  const handleDeleteFeed = async (_id: string) => {
-    const returnId = await handleDeleteGeneral(_id);
+  const handleDelete = async (_id: string) => {
+    const returnId = await handleDeleteFeed(_id);
 
     // Filter out the now deleted post from the rest of the posts
     const filteredData = userPosts.filter((bleh) => bleh._id !== returnId);
@@ -71,7 +73,7 @@ export default function Feed2() {
               allowHome={allowHome}
               key={_id}
               _id={_id}
-              handleDeleteFeed={handleDeleteFeed}
+              handleDeleteFeed={handleDelete}
               updatePromptFeed={updatePromptFeed}
             />
           )
