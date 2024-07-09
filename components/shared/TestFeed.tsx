@@ -35,7 +35,7 @@ async function TestFeed() {
   return (
     <div>
       <Suspense fallback={<LoadingPostsSkeleton />}>
-        <Feed2 posts={homePosts} />
+        <Feed2 />
       </Suspense>
     </div>
   );

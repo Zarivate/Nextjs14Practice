@@ -6,7 +6,7 @@ import { handleDeleteGeneral } from "@/app/api/posts/route";
 import LoadingPostsSkeleton from "./LoadingPostsSkeleton";
 import { handleDeleteFeed } from "./TestFeed";
 
-export default function Feed2({ posts }: any) {
+export default function Feed2() {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface>>([]);
   // setUserPosts(posts);
   // Add a fixed delay so you can see the loading state
