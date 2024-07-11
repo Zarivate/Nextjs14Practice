@@ -1,6 +1,7 @@
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { Post } from "@/lib/database/models/posts.model";
 import { getAuth } from "@clerk/nextjs/server";
+import { UserPost } from "@/constants";
 
 export async function POST(req: any) {
   // Grab the clerk userId using the built in auth method
@@ -74,7 +75,7 @@ export async function DELETE(req: any) {
 
 // PATCH request for editing the prompt
 export async function PATCH(req: any) {
-  // Retrieve data passed in to update the prompt
+  // Retrieve data passed in to update the prompt, should be the post ID and the new post text.
   const { _id, postText } = await req.json();
 
   try {
@@ -103,15 +104,20 @@ export async function PATCH(req: any) {
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function fetchPosts() {
-  await delay(3000);
-
+export async function fetchPosts(type: string) {
   const posts = await fetch(process.env.URL + "/api/posts", {
     method: "GET",
   });
   const data = await posts.json();
-
-  return data;
+  if (type == "home") {
+    const homePosts = data.filter(
+      (datasnip: UserPost) => datasnip.allowHome == true
+    );
+    await delay(2000);
+    return homePosts;
+  } else {
+    return data;
+  }
 }
 
 export async function handleDeleteGeneral(_id: string) {

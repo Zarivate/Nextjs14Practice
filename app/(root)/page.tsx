@@ -29,7 +29,7 @@ const Home = () => {
         </ul>
       </section>
       <Suspense fallback={<LoadingPostsSkeleton />}>
-        <Feed2 />
+        <TestFeed />
       </Suspense>
     </>
   );

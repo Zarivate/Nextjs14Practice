@@ -261,9 +261,22 @@ export interface TestPostInterface {
   handleDeleteFeed: (_id: string) => Promise<void>;
   updatePromptFeed: (_id: string, postText: string) => Promise<void>;
 }
+export interface TestPostInterface2 {
+  userId: string;
+  email: string;
+  username: string;
+  postText: string;
+  expireAt: Date;
+  allowHome: Boolean;
+  _id: string;
+}
 
 export interface UserPostsArray {
   posts: UserPost[];
+}
+
+export interface UserPostsArray2 {
+  posts: TestPostInterface2[];
 }
 
 export interface SideBarPass {
