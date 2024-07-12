@@ -61,9 +61,6 @@ const SinglePost2 = ({
           </p>
         )}
 
-        {/* TODO: Add funcitonality to see whether user is same as poster */}
-        {/* Check to make sure the logged in user is the same as the creator of the post, and
-      is on the profile page. If so then allow the delete and edit functionality to appear. */}
         {session?.user.id === userId && (
           <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
             {editMode ? (

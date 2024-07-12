@@ -1,25 +1,11 @@
 "use client";
 import React, { useState, useEffect, Suspense } from "react";
-import {
-  TestPostInterface,
-  TestPostInterface2,
-  UserPost,
-  UserPostsArray,
-  UserPostsArray2,
-} from "@/constants";
+import { TestPostInterface2 } from "@/constants";
 import SinglePost2 from "./SinglePost2";
 import { fetchPosts, handleDeleteGeneral } from "@/app/api/posts/route";
-import LoadingPostsSkeleton from "./LoadingPostsSkeleton";
-import { handleDeleteTest } from "./TestFeed";
 
-export default function Feed2({ posts }: UserPostsArray2) {
+export default function Feed2() {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface2>>([]);
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  useEffect(() => {
-    setUserPosts(posts);
-  }, []);
 
   const fetchPostsFeed = async () => {
     const posts = await fetchPosts("home");
@@ -27,14 +13,18 @@ export default function Feed2({ posts }: UserPostsArray2) {
     setUserPosts(posts);
   };
 
+  useEffect(() => {
+    fetchPostsFeed();
+  }, []);
+
   // Function to handle deleting posts, accepts the unique post id
   const handleDelete = async (_id: string) => {
-    const returnId = await handleDeleteTest(_id);
+    const returnId = await handleDeleteGeneral(_id);
 
     // Filter out the now deleted post from the rest of the posts
     const filteredData = userPosts.filter((bleh) => bleh._id !== returnId);
 
-    // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.s
+    // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.
     setUserPosts(filteredData);
   };
 

@@ -102,24 +102,20 @@ export async function PATCH(req: any) {
   }
 }
 
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export async function fetchPosts(type: string) {
-  const posts = await fetch(process.env.URL + "/api/posts", {
+  const posts = await fetch("/api/posts", {
     method: "GET",
-    // cache: "no-store",
   });
   const data = await posts.json();
-  // if (type == "home") {
-  //   const homePosts = data.filter(
-  //     (datasnip: UserPost) => datasnip.allowHome == true
-  //   );
+  if (type == "home") {
+    const homePosts = data.filter(
+      (datasnip: UserPost) => datasnip.allowHome == true
+    );
 
-  //   return homePosts;
-  // } else {
-  //   return data;
-  // }
-  return data;
+    return homePosts;
+  } else {
+    return data;
+  }
 }
 
 export async function handleDeleteGeneral(_id: string) {

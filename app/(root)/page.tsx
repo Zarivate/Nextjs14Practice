@@ -2,7 +2,6 @@ import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
-import Feed2 from "@/components/shared/Feed2";
 import TestFeed from "@/components/shared/TestFeed";
 import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
 
