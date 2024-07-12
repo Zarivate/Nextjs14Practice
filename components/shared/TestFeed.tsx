@@ -1,8 +1,10 @@
 import { fetchPosts, handleDeleteGeneral } from "@/app/api/posts/route";
 import React, { Suspense, useState } from "react";
 import Feed2 from "./Feed2";
-import { TestPostInterface, UserPost } from "@/constants";
+import { TestPostInterface, TestPostInterface2, UserPost } from "@/constants";
 import LoadingPostsSkeleton from "./LoadingPostsSkeleton";
+import Feed from "./Feed";
+import TestPostServerDelete from "./TestPostServerDelete";
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -11,10 +13,9 @@ export const handleDeleteTest = async (_id: string) => {
   // Make sure user wants to delete the post
   const confirmed = confirm("Are you sure you want to delete this?");
 
-  // If user is sure, make a call to delete
   if (confirmed) {
     try {
-      await fetch("/api/posts", {
+      await fetch(process.env.URL + "/api/posts", {
         method: "DELETE",
         body: JSON.stringify({
           _id: _id,
@@ -28,12 +29,19 @@ export const handleDeleteTest = async (_id: string) => {
 };
 
 async function TestFeed() {
-  const allPosts = await fetchPosts("home");
-  console.log(allPosts);
+  const examplePosts = await fetchPosts("");
+  console.log(examplePosts);
+  console.log("Example Posts");
 
   return (
     <div>
-      <Feed2 posts={allPosts} />
+      Hello
+      {examplePosts.map((post) => (
+        <>
+          <div>{post._id}</div>
+          <TestPostServerDelete idDelete={post._id} />
+        </>
+      ))}
     </div>
   );
 }
