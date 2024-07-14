@@ -2,8 +2,8 @@ import React, { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
-import TestFeed from "@/components/shared/TestFeed";
 import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
+import FeedHold from "@/components/shared/FeedHold";
 
 const Home = () => {
   return (
@@ -28,7 +28,7 @@ const Home = () => {
         </ul>
       </section>
       <Suspense fallback={<LoadingPostsSkeleton />}>
-        <TestFeed />
+        <FeedHold />
       </Suspense>
     </>
   );

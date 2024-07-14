@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { TestPostInterface2 } from "@/constants";
 import SinglePost2 from "./SinglePost2";
 import { fetchPosts, handleDeleteGeneral } from "@/app/api/posts/route";
 
-export default function Feed2() {
+export default function Feed() {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface2>>([]);
 
   const fetchPostsFeed = async () => {

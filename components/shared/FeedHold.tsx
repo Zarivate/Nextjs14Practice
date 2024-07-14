@@ -1,7 +1,7 @@
 import React from "react";
-import Feed2 from "./Feed2";
+import Feed from "./Feed";
 
-async function TestFeed() {
+async function FeedHold() {
   // Artifical delay to showcase the loading skeleton
   const delay = (ms: number) =>
     new Promise((resolve) => setTimeout(resolve, ms));
@@ -9,9 +9,9 @@ async function TestFeed() {
   await delay(2000);
   return (
     <div>
-      <Feed2 />
+      <Feed />
     </div>
   );
 }
 
-export default TestFeed;
+export default FeedHold;
