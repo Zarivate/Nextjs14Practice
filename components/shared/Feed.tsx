@@ -8,7 +8,7 @@ export default function Feed() {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface2>>([]);
 
   const fetchPostsFeed = async () => {
-    const posts = await fetchPosts("home");
+    const posts = await fetchPosts("home", null);
 
     setUserPosts(posts);
   };

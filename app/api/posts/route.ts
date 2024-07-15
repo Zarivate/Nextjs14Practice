@@ -1,7 +1,8 @@
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { Post } from "@/lib/database/models/posts.model";
-import { getAuth } from "@clerk/nextjs/server";
+import { getAuth, User } from "@clerk/nextjs/server";
 import { UserPost } from "@/constants";
+import { useSession } from "@clerk/nextjs";
 
 export async function POST(req: any) {
   // Grab the clerk userId using the built in auth method
@@ -102,20 +103,27 @@ export async function PATCH(req: any) {
   }
 }
 
-export async function fetchPosts(type: string) {
+export async function fetchPosts(
+  type: string | null | undefined,
+  value: string | null | undefined
+) {
   const posts = await fetch("/api/posts", {
     method: "GET",
   });
   const data = await posts.json();
+
   if (type == "home") {
     const homePosts = data.filter(
       (datasnip: UserPost) => datasnip.allowHome == true
     );
 
     return homePosts;
-  } else {
-    return data;
-  }
+  } else if (type == "user") {
+    const profilePosts = data.filter(
+      (datasnip: UserPost) => datasnip.username == value
+    );
+    return profilePosts;
+  } else return data;
 }
 
 export async function handleDeleteGeneral(_id: string) {
