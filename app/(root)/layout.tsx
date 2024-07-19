@@ -8,7 +8,7 @@ import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
 
 // The actual main page of the application, holds the pages for the entire application
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggle = () => {
     setIsOpen(!isOpen);
