@@ -7,8 +7,9 @@ const UserSchema = new Schema({
   photo: { type: String, require: true },
   firstName: { type: String },
   lastName: { type: String },
-  planId: { type: String, default: 1 },
+  planId: { type: Number, default: 1 },
   creditBalance: { type: Number, default: 10 },
+  privacySet: { type: Boolean, required: true, default: true },
 });
 
 // Turns Schema into model

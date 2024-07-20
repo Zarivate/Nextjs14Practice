@@ -4,15 +4,16 @@ import { fetchPosts, handleDeleteGeneral } from "@/app/api/posts/route";
 import { useSession } from "@clerk/nextjs";
 import { UserPost } from "@/constants";
 import SinglePost2 from "@/components/shared/SinglePost2";
+import { Checkbox } from "@/components/ui/checkbox";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Page = () => {
-  const [allowedProfile, setAllowedProfile] = useState(true);
+  const [allowedProfile, setAllowedProfile] = useState(false);
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
   const { session } = useSession();
   const stringUsername = session?.user.username;
   console.log(testPosts);
-
+  console.log(session);
   const grabPosts = async () => {
     const data = await fetchPosts("user", stringUsername);
     setTestPosts(data);
@@ -53,12 +54,15 @@ const Page = () => {
 
   return (
     <>
-      <div className="bg-gray-100 h-screen">
-        <h2 className="text-2xl">Welcome to your Profile page</h2>
-        <p>Take a look at your posts</p>
-        flex items-start justify-between h-56 grid grid-cols-2 gap-4
-        content-start
-        <div className="flex items-start bg-blue-700 h-50 justify-between grid grid-cols-2 gap-4 content-start">
+      <div className="bg-white-200 h-screen w-auto">
+        <h2 className="h1-semibold text-center text-black">
+          Welcome to your Profile page
+        </h2>
+        <p className="text-center text-lg text-black h-11 mt-4 ">
+          Here is where you can change more specific aspects of what you allow
+          other users to see.
+        </p>
+        <div className="flex items-start h-auto grid grid-cols-2 gap-4 pl-14">
           {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
           {testPosts.map(
             ({
@@ -90,6 +94,21 @@ const Page = () => {
           others see them by changing the setting below
         </p>
         {/* Add button/slider here to showcase private/public*/}
+        <div className="items-top flex space-x-2">
+          <Checkbox id="terms1" />
+          <div className="grid gap-1.5 leading-none">
+            <label
+              htmlFor="terms1"
+              className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Set Privacy off
+            </label>
+            <p className="text-sm text-muted-foreground">
+              This allows others to view your profile and your username will
+              appear on any Home posts.
+            </p>
+          </div>
+        </div>
         {/* Add feature here where displays any products user may have in their cart/want to purchase */}
       </div>
     </>

@@ -37,7 +37,7 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
       </nav>
       <aside
         className={`mt-25px hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 lg:flex pl-2 ${
-          isOpen ? "bg-blue-700 left-auto" : "absolute -left-full -top-full"
+          isOpen ? "left-auto" : "absolute -left-full -top-full"
         }`}
       >
         <div className="flex size-full flex-col pt-12">
