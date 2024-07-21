@@ -277,6 +277,15 @@ export interface TestPostInterface3 {
   handleDelete: (_id: string) => Promise<void>;
 }
 
+export interface TestPostInterface4 {
+  userId: string;
+  email: string;
+  username: string;
+  postText: string;
+  _id: string;
+  handleDelete: (_id: string) => Promise<void>;
+}
+
 export interface UserPostsArray {
   posts: UserPost[];
 }

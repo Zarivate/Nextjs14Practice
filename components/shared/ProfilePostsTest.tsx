@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "@clerk/nextjs";
 import { debounce } from "@/lib/utils";
 import { fetchPosts } from "@/lib/actions/post.actions";
+import { TestPostInterface4 } from "@/constants";
 
 export default function ProfilePostsTest({
   username,
@@ -11,7 +12,7 @@ export default function ProfilePostsTest({
   userId,
   _id,
   handleDelete,
-}) {
+}: TestPostInterface4) {
   const { session } = useSession();
   const [newPostText, setNewPostText] = useState(postText);
   const [editMode, setEditMode] = useState(false);
@@ -41,7 +42,7 @@ export default function ProfilePostsTest({
         }),
       });
 
-      fetchPosts();
+      fetchPosts("", "");
     } catch (error) {
       console.log(error);
     }
