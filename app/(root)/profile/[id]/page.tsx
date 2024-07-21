@@ -2,8 +2,8 @@
 import Profile from "@/components/shared/Profile";
 import React, { useEffect, useState } from "react";
 import { BasicPost, UserPost } from "@/constants";
-import { fetchPosts } from "@/app/api/posts/route";
-import SinglePost from "@/components/shared/SinglePost";
+import { fetchPosts } from "@/lib/actions/post.actions";
+
 import { useSession } from "@clerk/nextjs";
 
 const ProfilePage = () => {
@@ -13,7 +13,7 @@ const ProfilePage = () => {
 
   useEffect(() => {
     const defaultRun = async () => {
-      const data = await fetchPosts();
+      const data = await fetchPosts("", "");
       setTestPosts(data);
       console.log(testPosts);
     };

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useSession } from "@clerk/nextjs";
 import { debounce } from "@/lib/utils";
-import { fetchPosts } from "@/app/api/posts/route";
+import { fetchPosts } from "@/lib/actions/post.actions";
 
 export default function ProfilePostsTest({
   username,
