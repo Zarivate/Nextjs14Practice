@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { TestPostInterface2 } from "@/constants";
 import SinglePost2 from "./SinglePost2";
-import { fetchPosts, handleDeleteGeneral } from "@/app/api/posts/route";
+import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
 
 export default function Feed() {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface2>>([]);

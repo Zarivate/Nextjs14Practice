@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchPosts, handleDeleteGeneral } from "@/app/api/posts/route";
+import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
 import { useSession } from "@clerk/nextjs";
 import { UserPost } from "@/constants";
 import SinglePost2 from "@/components/shared/SinglePost2";
