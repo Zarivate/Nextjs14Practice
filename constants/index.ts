@@ -271,6 +271,12 @@ export interface TestPostInterface2 {
   _id: string;
 }
 
+// This is to handle the types for an unknown user's profile
+export interface TestPostInterface3 {
+  profilePosts: TestPostInterface2[];
+  handleDelete: (_id: string) => Promise<void>;
+}
+
 export interface UserPostsArray {
   posts: UserPost[];
 }

@@ -1,7 +1,11 @@
 import React, { Suspense } from "react";
 import ProfilePostsTest from "./ProfilePostsTest";
+import { TestPostInterface3 } from "@/constants";
 
-export default function Profile({ profilePosts, handleDelete }) {
+export default function Profile({
+  profilePosts,
+  handleDelete,
+}: TestPostInterface3) {
   return (
     <>
       {profilePosts.map((post) => (
