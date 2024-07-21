@@ -34,6 +34,11 @@ const UserSchema = new Schema({
     type: Number,
     default: 10,
   },
+  privacySet: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
 });
 
 const User = models?.User || model("User", UserSchema);
