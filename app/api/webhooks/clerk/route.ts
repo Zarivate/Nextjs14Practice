@@ -69,6 +69,7 @@ export async function POST(req: Request) {
       firstName: first_name!,
       lastName: last_name!,
       photo: image_url,
+      privacySet: true,
     };
 
     const newUser = await createUser(user);
@@ -94,6 +95,7 @@ export async function POST(req: Request) {
       lastName: last_name!,
       username: username!,
       photo: image_url,
+      privacySet: false,
     };
 
     const updatedUser = await updateUser(id, user);

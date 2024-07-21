@@ -3,8 +3,6 @@ import MobileNav from "@/components/shared/MobileNav";
 import Sidebar from "@/components/shared/Sidebar";
 import React, { useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { Suspense } from "react";
-import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
 
 // The actual main page of the application, holds the pages for the entire application
 const Layout = ({ children }: { children: React.ReactNode }) => {

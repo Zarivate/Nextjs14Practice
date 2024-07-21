@@ -26,14 +26,13 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { useSession } from "@clerk/nextjs";
 import { TimeLimitKeys, debounce } from "@/lib/utils";
-import { CustomField } from "@/components/shared/CustomField";
 import { defaultValues2, postTimeLimits } from "@/constants";
 
 const formSchema = z.object({
   postText: z.string().min(1),
 });
 
-const page = () => {
+const Page = () => {
   // Grab the user session state so can apply user details to post
   const { session } = useSession();
   // Toast to display upon successful post creation
@@ -194,4 +193,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
