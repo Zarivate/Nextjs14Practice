@@ -32,7 +32,7 @@ const ImageSchema = new Schema({
   height: { type: Number },
   config: { type: Object },
   transformationUrl: { type: URL },
-  aspectRation: { type: String },
+  aspectRatio: { type: String },
   color: { type: String },
   prompt: { type: String },
   author: { type: Schema.Types.ObjectId, ref: "User" },

@@ -33,7 +33,7 @@ import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 // Handles the types of  input fields and their validation
 export const formSchema = z.object({
   title: z.string(),
-  aspectRation: z.string().optional(),
+  aspectRatio: z.string().optional(),
   color: z.string().optional(),
   prompt: z.string().optional(),
   publicId: z.string(),
@@ -97,7 +97,7 @@ const TransformationForm = ({
 
     setImage((prevState: any) => ({
       ...prevState,
-      aspectRation: imageSize.aspectRatio,
+      aspectRatio: imageSize.aspectRatio,
       width: imageSize.width,
       height: imageSize.height,
     }));
@@ -161,7 +161,7 @@ const TransformationForm = ({
           <CustomField
             control={form.control}
             name="aspectRatio"
-            FormLabel="Aspect Ratio"
+            formLabel="Aspect Ratio"
             className="w-full"
             render={({ field }) => (
               //
