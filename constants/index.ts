@@ -235,6 +235,8 @@ export interface UserPost {
   expireAt: Date;
   allowHome: Boolean;
   _id: string;
+  createdAt: Date;
+  updatedAt: Date;
   handleDelete: (_id: string) => Promise<void>;
   updatePrompt: (_id: string, postText: string) => Promise<void>;
 }
@@ -258,6 +260,8 @@ export interface TestPostInterface {
   expireAt: Date;
   allowHome: Boolean;
   _id: string;
+  createdAt: Date;
+  updatedAt: Date;
   handleDeleteFeed: (_id: string) => Promise<void>;
   updatePromptFeed: (_id: string, postText: string) => Promise<void>;
 }

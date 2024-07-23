@@ -11,6 +11,8 @@ const SinglePost2 = ({
   postText,
   expireAt,
   _id,
+  createdAt,
+  updatedAt,
   handleDeleteFeed,
   updatePromptFeed,
 }: TestPostInterface) => {
@@ -56,9 +58,14 @@ const SinglePost2 = ({
             />
           </>
         ) : (
-          <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-auto max-h-28">
-            {postText}
-          </p>
+          <>
+            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-auto max-h-28">
+              {postText}
+            </p>
+            <p className="text-sm">
+              {createdAt == updatedAt ? "" : "(Edited)"}
+            </p>
+          </>
         )}
 
         {session?.user.id === userId && (

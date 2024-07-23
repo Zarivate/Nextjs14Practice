@@ -15,6 +15,7 @@ declare type UpdateUserParams = {
   lastName: string;
   username: string;
   photo: string;
+  privacySet: boolean;
 };
 
 // ====== IMAGE PARAMS
@@ -125,6 +126,12 @@ declare type TransformationFormProps = {
   creditBalance: number;
   data?: IImage | null;
   config?: Transformations | null;
+};
+
+declare type ProfileProps = {
+  clerkId: string;
+  privacySet: boolean;
+  user: UpdateUserParams;
 };
 
 declare type TransformedImageProps = {
