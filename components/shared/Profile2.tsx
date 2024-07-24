@@ -11,7 +11,7 @@ import { updateUser } from "@/lib/actions/user.actions";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
-  const [allowedProfile, setAllowedProfile] = useState(privacySet);
+  const [allowedProfile, setAllowedProfile] = useState(user.privacySet);
 
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
 
@@ -78,8 +78,8 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
     try {
       const response = await updateUser(clerkId, user);
 
-      console.log(response);
-      console.log("Response above");
+      // console.log(response);
+      // console.log("Response above");
     } catch (error) {
       console.log(error);
     } finally {
@@ -132,8 +132,9 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
         </div>
         <p className="text-lg mt-5 text-center mb-3">
           By default all the posts are only visible to you but you can let
-          others see them by changing the setting below
+          others see them by changing the setting below.
         </p>
+        <p>Currently privacy is {allowedProfile ? "On" : "Off"}</p>
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-8">
           <div className="items-top flex space-x-2">
             <Checkbox id="terms1" onCheckedChange={handlePrivacyCheck} />
@@ -146,8 +147,8 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
               </label>
               <p className="text-sm text-muted-foreground">
                 {allowedProfile
-                  ? "Privacy is on, meaning only you can see your profile and name and email above your posts."
-                  : "Privacy is off. Anybody can view your profile and your posts."}
+                  ? "Privacy will be off. Anybody will be able to view your profile, and name and email above your posts."
+                  : "Privacy will be on, meaning only you can see your profile and your name and email won't appear above your posts."}
               </p>
             </div>
           </div>
