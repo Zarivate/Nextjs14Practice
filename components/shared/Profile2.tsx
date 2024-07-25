@@ -4,14 +4,14 @@ import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
 import { useSession } from "@clerk/nextjs";
 import { UserPost } from "@/constants";
 import SinglePost2 from "@/components/shared/SinglePost2";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { updateUser } from "@/lib/actions/user.actions";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
-  const [allowedProfile, setAllowedProfile] = useState(user.privacySet);
+  const [allowedProfile, setAllowedProfile] = useState(privacySet);
 
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
 
@@ -63,23 +63,18 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
 
   // Function to handle changing the privacy setting box
   const handlePrivacyCheck = () => {
-    user.privacySet = !allowedProfile;
     setAllowedProfile(!allowedProfile);
-    console.log(user.privacySet);
-    console.log("Privacy setting above");
+    user.privacySet = !user.privacySet;
   };
 
-  //   Function to handle user form submission
+  // Function to handle user form submission
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     setSubmitting(true);
 
     try {
-      const response = await updateUser(clerkId, user);
-
-      // console.log(response);
-      // console.log("Response above");
+      await updateUser(clerkId, user);
     } catch (error) {
       console.log(error);
     } finally {
@@ -134,23 +129,21 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
           By default all the posts are only visible to you but you can let
           others see them by changing the setting below.
         </p>
-        <p>Currently privacy is {allowedProfile ? "On" : "Off"}</p>
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-8">
-          <div className="items-top flex space-x-2">
-            <Checkbox id="terms1" onCheckedChange={handlePrivacyCheck} />
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor="terms1"
-                className="text-md font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Set Privacy {allowedProfile ? "Off" : "On"}
-              </label>
-              <p className="text-sm text-muted-foreground">
-                {allowedProfile
-                  ? "Privacy will be off. Anybody will be able to view your profile, and name and email above your posts."
-                  : "Privacy will be on, meaning only you can see your profile and your name and email won't appear above your posts."}
-              </p>
+          <div className="flex items-center justify-between rounded-lg border p-3 shadow-md">
+            <div className="space-y-0.5">
+              <div className="mb-2 text-lg font-medium">Privacy</div>
+              <div>
+                When on only you can see your profile and name and email above
+                your posts. When off all this will become visible to anyone.
+              </div>
             </div>
+
+            <Switch
+              checked={allowedProfile}
+              onCheckedChange={handlePrivacyCheck}
+              aria-readonly
+            />
           </div>
           <Button
             type="submit"
