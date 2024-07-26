@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { updateUser } from "@/lib/actions/user.actions";
+import { CldUploadWidget } from "next-cloudinary";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
@@ -126,7 +127,7 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
           )}
         </div>
         <p className="text-lg mt-5 text-center mb-3">
-          By default all the posts are only visible to you but you can let
+          By default all your posts are only visible to you but you can let
           others see them by changing the setting below.
         </p>
         <form onSubmit={(e) => handleSubmit(e)} className="space-y-8">
@@ -159,6 +160,7 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
             Save Changes
           </Button>
         </form>
+
         {/* Add feature here where displays any products user may have in their cart/want to purchase */}
       </div>
     </>
