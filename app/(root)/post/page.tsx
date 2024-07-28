@@ -27,6 +27,7 @@ import { Input } from "@/components/ui/input";
 import { useSession } from "@clerk/nextjs";
 import { TimeLimitKeys, debounce } from "@/lib/utils";
 import { defaultValues2, postTimeLimits } from "@/constants";
+import { CustomField } from "@/components/shared/CustomField";
 
 const formSchema = z.object({
   postText: z.string().min(1),
@@ -174,6 +175,7 @@ const Page = () => {
               </Select>
             </div>
           </div>
+          <div className="media-uploader-field">Test Query</div>
           <Button
             type="submit"
             className="submit-button capitalize"
