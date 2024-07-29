@@ -29,6 +29,7 @@ import {
 } from "@/constants";
 import { CustomField } from "./CustomField";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
+import ImageUpload from "./ImageUpload";
 
 // Handles the types of  input fields and their validation
 export const formSchema = z.object({
@@ -235,6 +236,24 @@ const TransformationForm = ({
             )}
           </div>
         )}
+
+        <div className="media-uploader-field">
+          <CustomField
+            control={form.control}
+            name="publicId"
+            className="flex size-full flex-col"
+            render={({ field }) => (
+              <ImageUpload
+                onValueChange={field.onChange}
+                setImage={setImage}
+                publicId={field.value}
+                image={image}
+                type={type}
+              />
+            )}
+          />
+        </div>
+
         {/* Button to apply the transformation */}
         <div className="flex flex-col gap-4">
           <Button
