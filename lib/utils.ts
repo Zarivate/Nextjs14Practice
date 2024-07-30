@@ -101,6 +101,10 @@ export const getImageSize = (
   image: any,
   dimension: "width" | "height"
 ): number => {
+  {
+    console.log(image);
+    console.log("howdy");
+  }
   if (type === "fill") {
     return (
       aspectRatioOptions[image.aspectRatio as AspectRatioKey]?.[dimension] ||
@@ -108,6 +112,25 @@ export const getImageSize = (
     );
   }
   return image?.[dimension] || 1000;
+};
+
+export const getImageSize2 = (
+  image: any,
+  dimension: "width" | "height"
+): number => {
+  var ratio = Math.min(250 / image.width, 250 / image.height);
+  // console.log(image);
+  // console.log("Image data above");
+  // console.log(image.height);
+  // console.log(image.width);
+  // console.log("Image height and width above");
+  // console.log(ratio);
+  // console.log("Ratio above");
+  if (dimension == "height") {
+    return ratio * image.height;
+  }
+
+  return ratio * image.width;
 };
 
 // DOWNLOAD IMAGE

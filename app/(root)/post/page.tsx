@@ -25,9 +25,19 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { useSession } from "@clerk/nextjs";
-import { TimeLimitKeys, debounce } from "@/lib/utils";
+import { TimeLimitKeys, dataUrl, debounce, getImageSize2 } from "@/lib/utils";
 import { defaultValues2, postTimeLimits } from "@/constants";
-import { CustomField } from "@/components/shared/CustomField";
+import { CldImage, CldUploadWidget } from "next-cloudinary";
+import Image from "next/image";
+import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
+
+type ImageProps = {
+  prevState: any;
+  publicId: string;
+  width: number;
+  height: number;
+  secureUrl: string;
+};
 
 const formSchema = z.object({
   postText: z.string().min(1),
@@ -45,6 +55,9 @@ const Page = () => {
   const [userPost, setUserPost] = useState("");
   const [allowHome, setAllowHome] = useState(false);
 
+  const [publicId, setPublicId] = useState("");
+  const [image, setImage] = useState<ImageProps>();
+
   // Defined user form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -61,6 +74,7 @@ const Page = () => {
     console.log(session?.user.primaryEmailAddress?.emailAddress);
     console.log(timeToExpire);
     console.log(allowHome);
+    console.log(image?.secureUrl);
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -70,6 +84,7 @@ const Page = () => {
           postText: userPost,
           liveTime: timeToExpire,
           allowHome: allowHome,
+          imageUrl: image?.secureUrl,
         }),
       });
 
@@ -107,6 +122,34 @@ const Page = () => {
 
   const choicBoxHandler = () => {
     setAllowHome(!allowHome);
+  };
+
+  const onUploadSuccess = (result: any) => {
+    console.log(result);
+    setImage((prevState: any) => ({
+      ...prevState,
+      publicId: result?.info?.public_id,
+      width: result?.info?.width,
+      height: result?.info?.height,
+      secureUrl: result?.info?.secure_url,
+    }));
+    setPublicId(result?.info?.public_id);
+
+    toast({
+      title: "Post successfully made!",
+      description: "Hopefully someone responds soon",
+      duration: 5000,
+      className: "success-toast",
+    });
+  };
+
+  const onUploadError = () => {
+    toast({
+      title: "Something went wrong",
+      description: "Please try again in a short while",
+      duration: 5000,
+      className: "error-toast",
+    });
   };
 
   return (
@@ -175,7 +218,50 @@ const Page = () => {
               </Select>
             </div>
           </div>
-          <div className="media-uploader-field">Test Query</div>
+          <CldUploadWidget
+            uploadPreset="iz_voidboard"
+            options={{
+              multiple: false,
+              resourceType: "image",
+            }}
+            onSuccess={onUploadSuccess}
+            onError={onUploadError}
+          >
+            {({ open }) => (
+              <div className="flex flex-col gap-4">
+                <h3 className="h3-bold text-dark-600">Image</h3>
+                {/* This is what gets displayed after a successful Image upload */}
+                {publicId ? (
+                  <>
+                    <div className="cursor-pointer overflow-hidden rounded-[10px]">
+                      <CldImage
+                        width={getImageSize2(image, "width")}
+                        height={getImageSize2(image, "height")}
+                        src={publicId}
+                        alt="userImage"
+                        sizes={"(max-width: 300px) 25vw, 25vw"}
+                        placeholder={dataUrl as PlaceholderValue}
+                        className="media-uploader_cldImage"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  // If no publicId is detected then that means no Image has been registered so give them the option to upload something
+                  <div className="media-uploader_cta" onClick={() => open()}>
+                    <div className="media-uploader_cta_image">
+                      <Image
+                        src="/assets/icons/add.svg"
+                        alt="Add Image"
+                        width={24}
+                        height={24}
+                      />
+                    </div>
+                    <p className="p-14-medium">Upload Image</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </CldUploadWidget>
           <Button
             type="submit"
             className="submit-button capitalize"

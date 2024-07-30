@@ -24,6 +24,8 @@ const ImageUpload = ({
   const { toast } = useToast();
 
   const onUploadSuccess = (result: any) => {
+    console.log(result);
+
     setImage((prevState: any) => ({
       ...prevState,
       publicId: result?.info?.public_id,
@@ -34,6 +36,7 @@ const ImageUpload = ({
 
     onValueChange(result?.info?.public_id);
 
+    console.log("Image data above, if any");
     toast({
       title: "Post successfully made!",
       description: "Hopefully someone responds soon",
