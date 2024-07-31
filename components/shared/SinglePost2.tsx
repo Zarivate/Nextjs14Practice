@@ -4,15 +4,17 @@ import { TestPostInterface, UserPost } from "@/constants";
 import { useSession } from "@clerk/nextjs";
 import { debounce } from "@/lib/utils";
 
+import { CldImage } from "next-cloudinary";
+
 const SinglePost2 = ({
   userId,
   email,
   username,
   postText,
-  expireAt,
   _id,
   createdAt,
   updatedAt,
+  imageUrl,
   handleDeleteFeed,
   updatePromptFeed,
 }: TestPostInterface) => {
@@ -59,13 +61,25 @@ const SinglePost2 = ({
           </>
         ) : (
           <>
-            <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-auto max-h-28">
+            <p className="mb-2 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-auto max-h-28">
               {postText}
             </p>
-            <p className="text-sm">
+            <p className="text-sm mb-2">
               {createdAt == updatedAt ? "" : "(Edited)"}
             </p>
           </>
+        )}
+        {imageUrl ? (
+          <CldImage
+            crop="fit"
+            height="200"
+            width="200"
+            src={imageUrl}
+            alt="testImg"
+          />
+        ) : (
+          // <Image height={240} width={240} src={imageUrl} alt="testImg" />
+          ""
         )}
 
         {session?.user.id === userId && (

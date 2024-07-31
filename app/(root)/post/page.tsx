@@ -74,7 +74,7 @@ const Page = () => {
     console.log(session?.user.primaryEmailAddress?.emailAddress);
     console.log(timeToExpire);
     console.log(allowHome);
-    console.log(image?.secureUrl);
+    console.log(image?.publicId);
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -84,7 +84,7 @@ const Page = () => {
           postText: userPost,
           liveTime: timeToExpire,
           allowHome: allowHome,
-          imageUrl: image?.secureUrl,
+          imageUrl: image?.publicId,
         }),
       });
 
@@ -239,7 +239,7 @@ const Page = () => {
                         height={getImageSize2(image, "height")}
                         src={publicId}
                         alt="userImage"
-                        sizes={"(max-width: 300px) 25vw, 25vw"}
+                        sizes={"(max-width: 750px) 100vw, 50vw"}
                         placeholder={dataUrl as PlaceholderValue}
                         className="media-uploader_cldImage"
                       />

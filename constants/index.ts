@@ -262,6 +262,7 @@ export interface TestPostInterface {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
+  imageUrl: string;
   handleDeleteFeed: (_id: string) => Promise<void>;
   updatePromptFeed: (_id: string, postText: string) => Promise<void>;
 }
@@ -271,8 +272,11 @@ export interface TestPostInterface2 {
   username: string;
   postText: string;
   expireAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
   allowHome: Boolean;
   _id: string;
+  imageUrl: string;
 }
 
 // This is to handle the types for an unknown user's profile

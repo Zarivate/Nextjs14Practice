@@ -49,14 +49,28 @@ export default function Feed() {
       {/* Remove the h-56 grid grid-cols-3 gap-4 content-start to see if can stack content in other ways */}
       <ul className="flex items-start justify-between h-56 grid grid-cols-2 gap-4 content-start">
         {userPosts.map(
-          ({ userId, email, username, postText, expireAt, allowHome, _id }) => (
+          ({
+            userId,
+            email,
+            username,
+            postText,
+            expireAt,
+            allowHome,
+            _id,
+            createdAt,
+            updatedAt,
+            imageUrl,
+          }) => (
             <SinglePost2
               userId={userId}
               email={email}
               username={username}
               postText={postText}
               expireAt={expireAt}
+              createdAt={createdAt}
+              updatedAt={updatedAt}
               allowHome={allowHome}
+              imageUrl={imageUrl}
               key={_id}
               _id={_id}
               handleDeleteFeed={handleDelete}

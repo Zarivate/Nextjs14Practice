@@ -8,6 +8,7 @@ const PostSchema = new Schema(
     postText: { type: String, require: true },
     expireAt: { type: Date, required: true },
     allowHome: { type: Boolean, required: true, default: false },
+    imageUrl: { type: String },
   },
   { timestamps: true }
 );
