@@ -30,6 +30,7 @@ import { defaultValues2, postTimeLimits } from "@/constants";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
+import { deleteImage } from "@/lib/actions/image.actions";
 
 type ImageProps = {
   prevState: any;
@@ -134,13 +135,6 @@ const Page = () => {
       secureUrl: result?.info?.secure_url,
     }));
     setPublicId(result?.info?.public_id);
-
-    toast({
-      title: "Post successfully made!",
-      description: "Hopefully someone responds soon",
-      duration: 5000,
-      className: "success-toast",
-    });
   };
 
   const onUploadError = () => {
@@ -233,6 +227,9 @@ const Page = () => {
                 {/* This is what gets displayed after a successful Image upload */}
                 {publicId ? (
                   <>
+                    <button type="button" onClick={() => deleteImage(publicId)}>
+                      Button goes here
+                    </button>
                     <div className="cursor-pointer overflow-hidden rounded-[10px]">
                       <CldImage
                         width={getImageSize2(image, "width")}

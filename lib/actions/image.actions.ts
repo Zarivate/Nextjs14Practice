@@ -1,50 +1,18 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
 
-export async function addImage({ image, userId, path }: AddImageParams) {
+export async function deleteImage(publicId: string) {
   try {
-    await connectToDatabase();
+    const res = await fetch(process.env.URL + "/api/images/", {
+      method: "DELETE",
+      body: JSON.stringify({
+        publicId: publicId,
+      }),
+    });
 
-    revalidatePath(path);
-
-    return JSON.parse(JSON.stringify(image));
-  } catch (error) {
-    handleError(error);
-  }
-}
-
-export async function updateImage({ image, userId, path }: AddImageParams) {
-  try {
-    await connectToDatabase();
-
-    revalidatePath(path);
-
-    return JSON.parse(JSON.stringify(image));
-  } catch (error) {
-    handleError(error);
-  }
-}
-
-export async function deleteImage(imageId: string) {
-  try {
-    await connectToDatabase();
-
-    return JSON.parse(JSON.stringify(image));
-  } catch (error) {
-    handleError(error);
-  }
-}
-
-export async function getImageById(imageId: string) {
-  try {
-    await connectToDatabase();
-
-    revalidatePath(path);
-
-    return JSON.parse(JSON.stringify(image));
+    const deletedImageData = await res.json();
+    return JSON.parse(JSON.stringify(deletedImageData));
   } catch (error) {
     handleError(error);
   }

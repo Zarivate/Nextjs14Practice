@@ -76,6 +76,8 @@ const SinglePost2 = ({
             width="200"
             src={imageUrl}
             alt="testImg"
+            className="cursor-pointer"
+            onClick={() => console.log("Howdy")}
           />
         ) : (
           // <Image height={240} width={240} src={imageUrl} alt="testImg" />
