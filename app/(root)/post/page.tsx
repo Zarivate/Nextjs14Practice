@@ -42,6 +42,9 @@ type ImageProps = {
 
 const formSchema = z.object({
   postText: z.string().min(1),
+  // This field needs to be applied to the form else everything will break/submit button won't work
+  // anymore after initial submission.
+  imageId: z.string(),
 });
 
 const Page = () => {
@@ -53,6 +56,7 @@ const Page = () => {
   // Use states to handle various properties that will be passed to make a post in the database
   const [timeToExpire, setTimeToExpire] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [submittingDelete, setSubmittingDelete] = useState(false);
   const [userPost, setUserPost] = useState("");
   const [allowHome, setAllowHome] = useState(false);
 
@@ -64,6 +68,8 @@ const Page = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       postText: "",
+      // Same idea here, properly apply this else form will break
+      imageId: "",
     },
   });
 
@@ -99,6 +105,12 @@ const Page = () => {
     }
 
     form.reset(defaultValues2);
+    toast({
+      title: "Post made!",
+      description: "Your post has succesfully been created.",
+      duration: 3000,
+      className: "success-toast",
+    });
   };
 
   // Handler to update user input
@@ -146,6 +158,21 @@ const Page = () => {
     });
   };
 
+  const deleteImageHandler = async () => {
+    setSubmittingDelete(true);
+    try {
+      const deleteResponse = await deleteImage(publicId);
+      if (deleteResponse.result === "ok") {
+        console.log("Just reset the image field now doofus");
+        setPublicId("");
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmittingDelete(false);
+    }
+  };
+
   return (
     <>
       <Header
@@ -176,7 +203,6 @@ const Page = () => {
                   also send it to the main home page by clicking the checkbox
                   below.
                 </FormDescription>
-                <FormMessage />
               </FormItem>
             )}
           />
@@ -227,8 +253,13 @@ const Page = () => {
                 {/* This is what gets displayed after a successful Image upload */}
                 {publicId ? (
                   <>
-                    <button type="button" onClick={() => deleteImage(publicId)}>
-                      Button goes here
+                    <button
+                      type="button"
+                      className="button bg-red-500 text-white"
+                      disabled={submittingDelete}
+                      onClick={() => deleteImageHandler()}
+                    >
+                      Delete
                     </button>
                     <div className="cursor-pointer overflow-hidden rounded-[10px]">
                       <CldImage
@@ -263,12 +294,6 @@ const Page = () => {
             type="submit"
             className="submit-button capitalize"
             disabled={submitting}
-            onClick={() => {
-              toast({
-                title: "Success!",
-                description: "Your post has been made!",
-              });
-            }}
           >
             Post
           </Button>

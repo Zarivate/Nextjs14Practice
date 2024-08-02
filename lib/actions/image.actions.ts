@@ -12,7 +12,8 @@ export async function deleteImage(publicId: string) {
     });
 
     const deletedImageData = await res.json();
-    return JSON.parse(JSON.stringify(deletedImageData));
+    return deletedImageData;
+    // return JSON.parse(JSON.stringify(deletedImageData));
   } catch (error) {
     handleError(error);
   }
