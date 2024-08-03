@@ -42,9 +42,6 @@ type ImageProps = {
 
 const formSchema = z.object({
   postText: z.string().min(1),
-  // This field needs to be applied to the form else everything will break/submit button won't work
-  // anymore after initial submission.
-  imageId: z.string(),
 });
 
 const Page = () => {
@@ -68,8 +65,6 @@ const Page = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       postText: "",
-      // Same idea here, properly apply this else form will break
-      imageId: "",
     },
   });
 
@@ -105,6 +100,7 @@ const Page = () => {
     }
 
     form.reset(defaultValues2);
+    setPublicId("");
     toast({
       title: "Post made!",
       description: "Your post has succesfully been created.",
@@ -238,6 +234,7 @@ const Page = () => {
               </Select>
             </div>
           </div>
+
           <CldUploadWidget
             uploadPreset="iz_voidboard"
             options={{
@@ -290,6 +287,7 @@ const Page = () => {
               </div>
             )}
           </CldUploadWidget>
+
           <Button
             type="submit"
             className="submit-button capitalize"

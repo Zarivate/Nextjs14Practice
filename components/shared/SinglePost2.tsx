@@ -22,6 +22,7 @@ const SinglePost2 = ({
   const { session } = useSession();
   const [newPostText, setNewPostText] = useState(postText);
   const [editMode, setEditMode] = useState(false);
+  console.log(userId);
 
   function handleEdit() {
     setEditMode(!editMode);
