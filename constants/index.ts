@@ -237,6 +237,7 @@ export interface UserPost {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
+  privacySet: Boolean;
   handleDelete: (_id: string) => Promise<void>;
   updatePrompt: (_id: string, postText: string) => Promise<void>;
 }

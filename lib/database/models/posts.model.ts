@@ -9,6 +9,7 @@ const PostSchema = new Schema(
     expireAt: { type: Date, required: true },
     allowHome: { type: Boolean, required: true, default: false },
     imageUrl: { type: String },
+    privacySet: { type: Boolean, required: true, default: true },
   },
   { timestamps: true }
 );

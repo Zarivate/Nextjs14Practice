@@ -12,7 +12,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 import {
   Select,
@@ -109,6 +108,9 @@ const Page = () => {
     });
   };
 
+  // Function to handle grabbing the user's profile data, mainly just for their privacy setting
+  const grabPrivacy = async () => {};
+
   // Handler to update user input
   const onInputChangeHandler = (
     value: string,
@@ -129,6 +131,7 @@ const Page = () => {
     setTimeToExpire(timeChoice.timeTL);
   };
 
+  // Handler for whether user allows post to appear on home page or not
   const choicBoxHandler = () => {
     setAllowHome(!allowHome);
   };

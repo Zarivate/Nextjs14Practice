@@ -81,8 +81,21 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
     } finally {
       setSubmitting(false);
     }
-
+    toast({
+      title: "Success!",
+      description: "Settings have been changed",
+    });
     console.log("I'm going to make you proud everyone...");
+  };
+
+  // Create function that changes all the users posts' privacy settings once they change the setting
+  const updatePostsPrivacy = async () => {
+    // This doesn't work because it doesn't update anything in the database sadly. Will instead need to make
+    // a separte call for each post I think, geh.
+
+    testPosts.map((post) => {
+      post.privacySet = user.privacySet;
+    });
   };
 
   return (
@@ -150,12 +163,7 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
             type="submit"
             className="submit-button capitalize"
             disabled={submitting}
-            onClick={() => {
-              toast({
-                title: "Success!",
-                description: "Settings have been changed",
-              });
-            }}
+            onClick={() => {}}
           >
             Save Changes
           </Button>
