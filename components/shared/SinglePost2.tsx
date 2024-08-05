@@ -15,6 +15,7 @@ const SinglePost2 = ({
   createdAt,
   updatedAt,
   imageUrl,
+  privacySet,
   handleDeleteFeed,
   updatePromptFeed,
 }: TestPostInterface) => {
@@ -43,13 +44,33 @@ const SinglePost2 = ({
 
   return (
     <>
-      <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <div className="flex flex-col">
-          <h3 className="font-satoshi font-semibold text-gray-900">
-            {username}
-          </h3>
-          <p className="font-inter text-sm text-gray-500">{email}</p>
-        </div>
+      <div className="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        {imageUrl ? (
+          <div className="float-left">
+            <CldImage
+              crop="fit"
+              height="200"
+              width="200"
+              src={imageUrl}
+              alt="testImg"
+              className="cursor-pointer"
+              onClick={() => console.log("Howdy")}
+            />
+          </div>
+        ) : (
+          // <Image height={240} width={240} src={imageUrl} alt="testImg" />
+          ""
+        )}
+        {privacySet ? (
+          <></>
+        ) : (
+          <div className="flex flex-col pl-2">
+            <h3 className="font-satoshi font-semibold text-gray-900">
+              {username}
+            </h3>
+            <p className="font-inter text-sm text-gray-500">{email}</p>
+          </div>
+        )}
 
         {editMode ? (
           <>
@@ -61,7 +82,7 @@ const SinglePost2 = ({
           </>
         ) : (
           <>
-            <p className="mb-2 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-auto max-h-28">
+            <p className="pl-2 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-auto max-h-28">
               {postText}
             </p>
             <p className="text-sm mb-2">
@@ -69,23 +90,9 @@ const SinglePost2 = ({
             </p>
           </>
         )}
-        {imageUrl ? (
-          <CldImage
-            crop="fit"
-            height="200"
-            width="200"
-            src={imageUrl}
-            alt="testImg"
-            className="cursor-pointer"
-            onClick={() => console.log("Howdy")}
-          />
-        ) : (
-          // <Image height={240} width={240} src={imageUrl} alt="testImg" />
-          ""
-        )}
 
         {session?.user.id === userId && (
-          <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
+          <div className="mt-5 flex-center gap-4 border-t border-gray-500 pt-3 relative">
             {editMode ? (
               <p
                 className="font-inter text-sm green_gradient cursor-pointer"

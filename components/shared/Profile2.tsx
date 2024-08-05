@@ -21,8 +21,9 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
   const [submitting, setSubmitting] = useState(false);
 
   const stringUsername = session?.user.username;
-  console.log(testPosts);
-  console.log(session);
+  // console.log(testPosts);
+  // console.log("test posts above");
+  // console.log(session);
 
   const grabPosts = async () => {
     const data = await fetchPosts("user", stringUsername);
@@ -76,6 +77,16 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
 
     try {
       await updateUser(clerkId, user);
+      testPosts.map(async (post) => {
+        await fetch(`/api/posts`, {
+          method: "PATCH",
+          body: JSON.stringify({
+            _id: post._id,
+            postText: post.postText,
+            privacySet: user.privacySet,
+          }),
+        });
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -86,16 +97,6 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
       description: "Settings have been changed",
     });
     console.log("I'm going to make you proud everyone...");
-  };
-
-  // Create function that changes all the users posts' privacy settings once they change the setting
-  const updatePostsPrivacy = async () => {
-    // This doesn't work because it doesn't update anything in the database sadly. Will instead need to make
-    // a separte call for each post I think, geh.
-
-    testPosts.map((post) => {
-      post.privacySet = user.privacySet;
-    });
   };
 
   return (

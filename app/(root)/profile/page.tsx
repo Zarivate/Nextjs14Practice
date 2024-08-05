@@ -14,10 +14,10 @@ const Page = async () => {
   // Grab the corresponding mongoDB user id using the clerk Id
   const user = await getUserById(userId);
 
-  console.log(userId);
-  console.log("userId above");
-  console.log(user);
-  console.log("user above");
+  // console.log(userId);
+  // console.log("userId above");
+  // console.log(user);
+  // console.log("user above");
 
   return (
     <>

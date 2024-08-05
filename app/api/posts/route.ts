@@ -83,7 +83,7 @@ export async function DELETE(req: any) {
 // PATCH request for editing the prompt
 export async function PATCH(req: any) {
   // Retrieve data passed in to update the prompt, should be the post ID and the new post text.
-  const { _id, postText } = await req.json();
+  const { _id, postText, privacySet } = await req.json();
 
   try {
     await connectToDatabase();
@@ -98,6 +98,7 @@ export async function PATCH(req: any) {
 
     // If the prompt does exists, then update it to be equal to the one passed in through params
     existingPost.postText = postText;
+    existingPost.privacySet = privacySet;
 
     // Once updated, just await for it to save in the DB
     await existingPost.save();
