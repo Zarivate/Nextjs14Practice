@@ -44,73 +44,94 @@ const SinglePost2 = ({
 
   return (
     <>
-      <div className="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-full w-full">
         {imageUrl ? (
-          <div className="float-left">
+          <div className="float-left w-full h-96 md:h-auto md:w-48">
             <CldImage
               crop="fit"
               height="200"
               width="200"
               src={imageUrl}
               alt="testImg"
-              className="cursor-pointer"
+              className="w-full h-96 md:h-auto md:w-48"
               onClick={() => console.log("Howdy")}
             />
           </div>
         ) : (
-          // <Image height={240} width={240} src={imageUrl} alt="testImg" />
           ""
         )}
-        {privacySet ? (
-          <></>
-        ) : (
-          <div className="flex flex-col pl-2">
-            <h3 className="font-satoshi font-semibold text-gray-900">
-              {username}
-            </h3>
-            <p className="font-inter text-sm text-gray-500">{email}</p>
-          </div>
-        )}
+        <div className="grid grid-cols-1 ">
+          {privacySet ? (
+            <></>
+          ) : (
+            <div className="flex flex-col pl-2">
+              <h3 className="font-satoshi font-semibold text-gray-900">
+                {username}
+              </h3>
+              <p className="font-inter text-sm text-gray-500">{email}</p>
+            </div>
+          )}
 
-        {editMode ? (
-          <>
-            <textarea
-              className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 w-full overflow-y"
-              value={newPostText}
-              onChange={(e: any) => onInputChangeHandler(e.target.value)}
-            />
-          </>
-        ) : (
-          <>
-            <p className="pl-2 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-auto max-h-28">
-              {postText}
-            </p>
-            <p className="text-sm mb-2">
-              {createdAt == updatedAt ? "" : "(Edited)"}
-            </p>
-          </>
-        )}
-
-        {session?.user.id === userId && (
-          <div className="mt-5 flex-center gap-4 border-t border-gray-500 pt-3 relative">
-            {editMode ? (
-              <p
-                className="font-inter text-sm green_gradient cursor-pointer"
-                onClick={() => sendPatch()}
-              >
-                Done
+          {editMode ? (
+            <>
+              <textarea
+                className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 w-full overflow-y"
+                value={newPostText}
+                onChange={(e: any) => onInputChangeHandler(e.target.value)}
+              />
+            </>
+          ) : (
+            <>
+              <p className="pl-2 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-y max-h-52">
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
+                {postText}
               </p>
-            ) : (
-              <button className="post-btn" onClick={handleEdit}>
-                Edit
-              </button>
-            )}
+              <p className="text-sm mb-2">
+                {createdAt == updatedAt ? "" : "(Edited)"}
+              </p>
+            </>
+          )}
+          <div className="bottom-0">
+            {session?.user.id === userId && (
+              <div className="mt-5 flex-center gap-4 border-t border-gray-500 p-3">
+                {editMode ? (
+                  <p
+                    className="font-inter text-sm green-gradient cursor-pointer"
+                    onClick={() => sendPatch()}
+                  >
+                    Done
+                  </p>
+                ) : (
+                  <button className="post-btn" onClick={handleEdit}>
+                    Edit
+                  </button>
+                )}
 
-            <p className="post-btn" onClick={() => handleDeleteFeed(_id)}>
-              Delete
-            </p>
+                <p className="post-btn" onClick={() => handleDeleteFeed(_id)}>
+                  Delete
+                </p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </>
   );
