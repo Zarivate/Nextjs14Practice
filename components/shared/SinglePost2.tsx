@@ -44,32 +44,31 @@ const SinglePost2 = ({
 
   return (
     <>
-      <div className="p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 h-full w-full">
+      <div className="p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         {imageUrl ? (
-          <div className="float-left w-full h-96 md:h-auto md:w-48">
+          <div className="float-left  md:h-auto md:w-48 cursor-pointer">
             <CldImage
               crop="fit"
-              height="200"
-              width="200"
+              height="150"
+              width="175"
               src={imageUrl}
               alt="testImg"
-              className="w-full h-96 md:h-auto md:w-48"
               onClick={() => console.log("Howdy")}
             />
           </div>
         ) : (
           ""
         )}
-        <div className="grid grid-cols-1 ">
+        <div className="flex flex-col p-2 leading-normal h-inherit">
           {privacySet ? (
             <></>
           ) : (
-            <div className="flex flex-col pl-2">
-              <h3 className="font-satoshi font-semibold text-gray-900">
+            <>
+              <h3 className=" font-satoshi font-semibold text-gray-900">
                 {username}
               </h3>
-              <p className="font-inter text-sm text-gray-500">{email}</p>
-            </div>
+              <p className=" font-inter text-sm text-gray-500">{email}</p>
+            </>
           )}
 
           {editMode ? (
@@ -82,26 +81,7 @@ const SinglePost2 = ({
             </>
           ) : (
             <>
-              <p className="pl-2 font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-y max-h-52">
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
-                {postText}
+              <p className="font-normal text-gray-700 dark:text-gray-400 mt-5 overflow-y max-h-52 w-full">
                 {postText}
               </p>
               <p className="text-sm mb-2">
@@ -109,28 +89,27 @@ const SinglePost2 = ({
               </p>
             </>
           )}
-          <div className="bottom-0">
-            {session?.user.id === userId && (
-              <div className="mt-5 flex-center gap-4 border-t border-gray-500 p-3">
-                {editMode ? (
-                  <p
-                    className="font-inter text-sm green-gradient cursor-pointer"
-                    onClick={() => sendPatch()}
-                  >
-                    Done
-                  </p>
-                ) : (
-                  <button className="post-btn" onClick={handleEdit}>
-                    Edit
-                  </button>
-                )}
 
-                <p className="post-btn" onClick={() => handleDeleteFeed(_id)}>
-                  Delete
+          {session?.user.id === userId && (
+            <div className="md:mt-[50px] flex-center gap-4 p-3">
+              {editMode ? (
+                <p
+                  className="font-inter text-sm green-gradient cursor-pointer"
+                  onClick={() => sendPatch()}
+                >
+                  Done
                 </p>
-              </div>
-            )}
-          </div>
+              ) : (
+                <button className="post-btn" onClick={handleEdit}>
+                  Edit
+                </button>
+              )}
+
+              <p className="post-btn" onClick={() => handleDeleteFeed(_id)}>
+                Delete
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </>
