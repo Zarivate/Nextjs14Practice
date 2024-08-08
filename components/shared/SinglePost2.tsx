@@ -23,6 +23,9 @@ const SinglePost2 = ({
   const { session } = useSession();
   const [newPostText, setNewPostText] = useState(postText);
   const [editMode, setEditMode] = useState(false);
+  const [imageClick, setImageClick] = useState(false);
+  console.log(imageClick);
+  console.log("Initial click state above");
 
   function handleEdit() {
     setEditMode(!editMode);
@@ -42,18 +45,24 @@ const SinglePost2 = ({
     setEditMode(!editMode);
   };
 
+  const testClick = () => {
+    setImageClick(!imageClick);
+    console.log("Click setting below");
+    console.log(imageClick);
+  };
+
   return (
     <>
       <div className="p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         {imageUrl ? (
-          <div className="float-left  md:h-auto md:w-48 cursor-pointer">
+          <div className="float-left md:h-auto md:w-48 cursor-pointer">
             <CldImage
               crop="fit"
-              height="150"
-              width="175"
+              height={imageClick ? 800 : 200}
+              width={imageClick ? 900 : 175}
               src={imageUrl}
               alt="testImg"
-              onClick={() => console.log("Howdy")}
+              onClick={testClick}
             />
           </div>
         ) : (
