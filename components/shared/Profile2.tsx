@@ -8,7 +8,6 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { updateUser } from "@/lib/actions/user.actions";
-import { CldUploadWidget } from "next-cloudinary";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
@@ -122,6 +121,8 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
               _id,
               createdAt,
               updatedAt,
+              imageUrl,
+              privacySet,
             }) => (
               <SinglePost2
                 userId={userId}
@@ -132,6 +133,8 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
                 allowHome={allowHome}
                 key={_id}
                 _id={_id}
+                imageUrl={imageUrl}
+                privacySet={privacySet}
                 createdAt={createdAt}
                 updatedAt={updatedAt}
                 handleDeleteFeed={handleDelete}
