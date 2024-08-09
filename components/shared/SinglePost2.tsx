@@ -55,11 +55,17 @@ const SinglePost2 = ({
     <>
       <div className="p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         {imageUrl ? (
-          <div className="float-left md:h-auto md:w-48 cursor-pointer">
+          <div
+            className={
+              imageClick
+                ? "float-left cursor-pointer bg-black md:h-full md:w-72"
+                : "float-left cursor-pointer bg-black md:h-full md:w-48"
+            }
+          >
             <CldImage
               crop="fit"
-              height={imageClick ? 800 : 200}
-              width={imageClick ? 900 : 175}
+              height={imageClick ? 1300 : 200}
+              width={imageClick ? 1000 : 175}
               src={imageUrl}
               alt="testImg"
               onClick={testClick}

@@ -267,7 +267,7 @@ const Page = () => {
                         height={getImageSize2(image, "height")}
                         src={publicId}
                         alt="userImage"
-                        sizes={"(max-width: 750px) 100vw, 50vw"}
+                        sizes={"(max-width: 900px) 100vw, 100vw"}
                         placeholder={dataUrl as PlaceholderValue}
                         className="media-uploader_cldImage"
                       />
