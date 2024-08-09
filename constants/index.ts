@@ -237,11 +237,24 @@ export interface UserPost {
   _id: string;
   createdAt: Date;
   updatedAt: Date;
+  imageUrl: string;
   privacySet: Boolean;
   handleDelete: (_id: string) => Promise<void>;
   updatePrompt: (_id: string, postText: string) => Promise<void>;
 }
-
+export interface TestPostInterface2 {
+  userId: string;
+  email: string;
+  username: string;
+  postText: string;
+  expireAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  allowHome: Boolean;
+  _id: string;
+  imageUrl: string;
+  privacySet: Boolean;
+}
 export interface BasicPost {
   userId: "test";
   email: "test@mail.com";
@@ -267,19 +280,6 @@ export interface TestPostInterface {
   privacySet: Boolean;
   handleDeleteFeed: (_id: string) => Promise<void>;
   updatePromptFeed: (_id: string, postText: string) => Promise<void>;
-}
-export interface TestPostInterface2 {
-  userId: string;
-  email: string;
-  username: string;
-  postText: string;
-  expireAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  allowHome: Boolean;
-  _id: string;
-  imageUrl: string;
-  privacySet: Boolean;
 }
 
 // This is to handle the types for an unknown user's profile

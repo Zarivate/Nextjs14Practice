@@ -40,7 +40,7 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams) {
   });
 }
 
-// Creates a transaction record in the database
+// Creates a transaction record in the database. Will be triggered using a Stripe webhook that triggers once payment is completed.
 export async function createTransaction(transaction: CreateTransactionParams) {
   try {
     await connectToDatabase();

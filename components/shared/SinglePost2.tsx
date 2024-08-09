@@ -58,8 +58,8 @@ const SinglePost2 = ({
           <div
             className={
               imageClick
-                ? "float-left cursor-pointer bg-black md:h-full md:w-72"
-                : "float-left cursor-pointer bg-black md:h-full md:w-48"
+                ? "float-left cursor-pointer md:h-full md:w-72"
+                : "float-left cursor-pointer md:h-full md:w-48"
             }
           >
             <CldImage
