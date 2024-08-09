@@ -38,6 +38,7 @@ export async function checkoutCredits(transaction: CheckoutTransactionParams) {
     success_url: `${process.env.NEXT_PUBLIC_SECURE_URL}/profile`,
     cancel_url: `${process.env.NEXT_PUBLIC_SECURE_URL}/`,
   });
+  redirect(session.url!);
 }
 
 // Creates a transaction record in the database. Will be triggered using a Stripe webhook that triggers once payment is completed.

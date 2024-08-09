@@ -24,6 +24,11 @@ const Checkout = ({
   useEffect(() => {
     loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
   }, []);
+  //   console.log(plan);
+  //   console.log(amount);
+  //   console.log(credits);
+  //   console.log(buyerId);
+  //   console.log("Checkout details above");
 
   useEffect(() => {
     // Check to see if this is a redirect back from Checkout
@@ -47,7 +52,8 @@ const Checkout = ({
     }
   }, []);
 
-  const onCheckout = async () => {
+  const onCheckout = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const transaction = {
       plan,
       amount,
@@ -59,7 +65,7 @@ const Checkout = ({
   };
 
   return (
-    <form action={onCheckout} method="POST">
+    <form onSubmit={(e) => onCheckout(e)}>
       <section>
         <Button
           type="submit"

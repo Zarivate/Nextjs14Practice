@@ -6,6 +6,7 @@ import stripe from "stripe";
 export async function POST(request: Request) {
   // Access body of request
   const body = await request.text();
+  console.log("Got to this point in the code");
 
   // Get signature to make sure request is valid
   const sig = request.headers.get("stripe-signature") as string;

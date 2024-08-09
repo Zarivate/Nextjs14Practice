@@ -24,8 +24,6 @@ const SinglePost2 = ({
   const [newPostText, setNewPostText] = useState(postText);
   const [editMode, setEditMode] = useState(false);
   const [imageClick, setImageClick] = useState(false);
-  console.log(imageClick);
-  console.log("Initial click state above");
 
   function handleEdit() {
     setEditMode(!editMode);
@@ -47,8 +45,6 @@ const SinglePost2 = ({
 
   const testClick = () => {
     setImageClick(!imageClick);
-    console.log("Click setting below");
-    console.log(imageClick);
   };
 
   return (
