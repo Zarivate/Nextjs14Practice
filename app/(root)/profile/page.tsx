@@ -21,7 +21,12 @@ const Page = async () => {
 
   return (
     <>
-      <Profile2 clerkId={userId} privacySet={user.privacySet} user={user} />
+      <Profile2
+        clerkId={userId}
+        privacySet={user.privacySet}
+        user={user}
+        accountCredits={user.creditBalance}
+      />
     </>
   );
 };

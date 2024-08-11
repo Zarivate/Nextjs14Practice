@@ -139,6 +139,7 @@ declare type ProfileProps = {
   clerkId: string;
   privacySet: boolean;
   user: UpdateUserParams;
+  accountCredits: Number;
 };
 
 declare type TransformedImageProps = {

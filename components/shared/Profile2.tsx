@@ -8,9 +8,15 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { updateUser } from "@/lib/actions/user.actions";
+import Image from "next/image";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
-const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
+const Profile2 = ({
+  clerkId,
+  privacySet,
+  user,
+  accountCredits,
+}: ProfileProps) => {
   const [allowedProfile, setAllowedProfile] = useState(privacySet);
 
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
@@ -104,6 +110,23 @@ const Profile2 = ({ clerkId, privacySet, user }: ProfileProps) => {
         <h2 className="h1-semibold text-center text-black">
           Welcome to your Profile page
         </h2>
+        <section className="profile">
+          <div className="profile-balance">
+            <p className="p-14-medium md:p-16-medium">CREDITS AVAILABLE</p>
+            <div className="mt-4 flex items-center gap-4">
+              <Image
+                src="/assets/icons/coins.svg"
+                alt="coins"
+                width={50}
+                height={50}
+                className="size-9 md:size-12"
+              />
+              <h2 className="h2-bold text-dark-600">
+                {accountCredits.toString()}
+              </h2>
+            </div>
+          </div>
+        </section>
         <p className="text-center text-lg text-black h-11 mt-4 ">
           Here is where you can change more specific aspects of what you allow
           other users to see.
