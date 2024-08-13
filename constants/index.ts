@@ -7,16 +7,7 @@ export const navLinks = [
     route: "/",
     icon: "/assets/icons/home.svg",
   },
-  {
-    label: "Image Restore",
-    route: "/transformations/add/restore",
-    icon: "/assets/icons/image.svg",
-  },
-  {
-    label: "Generative Fill",
-    route: "/transformations/add/fill",
-    icon: "/assets/icons/stars.svg",
-  },
+
   {
     label: "Make A Post",
     route: "/post",
@@ -27,11 +18,7 @@ export const navLinks = [
     route: "/profile",
     icon: "/assets/icons/profile.svg",
   },
-  {
-    label: "Object Remove",
-    route: "/transformations/add/remove",
-    icon: "/assets/icons/scan.svg",
-  },
+
   {
     label: "Shop",
     route: "/shop",
