@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "../ui/button";
-import { SheetTrigger } from "../ui/sheet";
 
 // The component that handles the sidebar and all it's navigations
 const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
@@ -44,7 +43,7 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
           <nav className="sidebar-nav">
             {/* Using SignedIn allows the data to only be accessible to those signed in */}
             <SignedIn>
-              <ul className="sidebar-nav_elements">
+              <ul className="sidebar-nav_elements pt-3">
                 {navLinks.map((link) => {
                   const isActive = link.route === pathname;
 
@@ -72,6 +71,8 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
                     </li>
                   );
                 })}
+              </ul>
+              <ul className="sidebar-nav_elements">
                 <li className="flex-center cursor-pointer gap-2 p-4">
                   <UserButton afterSignOutUrl="/" showName />
                 </li>

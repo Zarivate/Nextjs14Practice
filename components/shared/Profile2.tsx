@@ -131,7 +131,7 @@ const Profile2 = ({
           Here is where you can change more specific aspects of what you allow
           other users to see.
         </p>
-        <div className="flex items-start h-auto grid grid-cols-2 gap-4 pl-14">
+        <div className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
           {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
           {testPosts.map(
             ({

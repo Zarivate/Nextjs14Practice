@@ -46,7 +46,6 @@ export default function Feed() {
 
   return (
     <>
-      {/* Remove the h-56 grid grid-cols-3 gap-4 content-start to see if can stack content in other ways */}
       <ul className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
         {userPosts.map(
           ({
