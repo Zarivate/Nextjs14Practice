@@ -22,7 +22,12 @@ export const navLinks = [
   {
     label: "Shop",
     route: "/shop",
-    icon: "/assets/icons/profile.svg",
+    icon: "/assets/icons/stars.svg",
+  },
+  {
+    label: "About",
+    route: "/about",
+    icon: "/assets/icons/scan.svg",
   },
   {
     label: "Buy Credits",

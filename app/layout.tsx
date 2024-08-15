@@ -9,6 +9,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
+import { ThemeProvider } from "@/components/ui/theme-provider";
 
 const IBMPlex = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -34,7 +35,16 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={cn("font-IBMPlex antialiased", IBMPlex.variable)}>
-          <main>{children}</main>
+          <main>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+            </ThemeProvider>
+          </main>
         </body>
       </html>
     </ClerkProvider>

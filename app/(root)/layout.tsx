@@ -16,6 +16,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main className="root">
       <Sidebar isOpen={isOpen} toggle={toggle} />
+
       <MobileNav />
       <div className="root-container">
         <div className="wrapper">{children}</div>

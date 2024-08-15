@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-// Chadcn is used to expedite the styling process
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "../ui/button";
 import Link from "next/link";

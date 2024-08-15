@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "../ui/button";
+import { ModeToggle } from "./Theme";
 
 // The component that handles the sidebar and all it's navigations
 const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
@@ -25,6 +26,7 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
         />
 
         <Link href="/" className="sidebar-logo">
+          {/* TODO: Change this logo for one more fitting of VoidBoard */}
           <Image
             src="/assets/images/logo-text.svg"
             alt="logo"
@@ -33,9 +35,10 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
             className="px-2"
           />
         </Link>
+        <ModeToggle />
       </nav>
       <aside
-        className={`mt-25px hidden h-screen w-72 bg-white p-5 shadow-md shadow-purple-200/50 lg:flex pl-2 ${
+        className={`mt-25px hidden h-screen w-72 p-5 shadow-md shadow-purple-200/50 lg:flex pl-2 ${
           isOpen ? "left-auto" : "absolute -left-full -top-full"
         }`}
       >
