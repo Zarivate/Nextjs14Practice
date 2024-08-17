@@ -36,6 +36,7 @@ export default function Feed() {
         body: JSON.stringify({
           _id: _id,
           postText: newPostText,
+          type: "FEED",
         }),
       });
       fetchPostsFeed();

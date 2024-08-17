@@ -82,14 +82,13 @@ export async function DELETE(req: any) {
 
 // PATCH request for editing the prompt
 export async function PATCH(req: any) {
-  // Retrieve data passed in to update the prompt, should be the post ID and the new post text.
-  const { _id, postText, privacySet } = await req.json();
+  const data = await req.json();
 
   try {
     await connectToDatabase();
 
     // Filter out the current prompt by it's id
-    const existingPost = await Post.findById(_id);
+    const existingPost = await Post.findById(data._id);
 
     // If there is no existing prompt, then return an error message
     if (!existingPost) {
@@ -97,8 +96,12 @@ export async function PATCH(req: any) {
     }
 
     // If the prompt does exists, then update it to be equal to the one passed in through params
-    existingPost.postText = postText;
-    existingPost.privacySet = privacySet;
+    if (data.type == "FEED") {
+      existingPost.postText = data.postText;
+    } else {
+      existingPost.postText = data.postText;
+      existingPost.privacySet = data.privacySet;
+    }
 
     // Once updated, just await for it to save in the DB
     await existingPost.save();
