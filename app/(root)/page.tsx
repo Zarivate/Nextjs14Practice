@@ -29,6 +29,7 @@ const Home = () => {
       <Suspense fallback={<LoadingPostsSkeleton />}>
         <FeedHold />
       </Suspense>
+      <LoadingPostsSkeleton />
     </>
   );
 };

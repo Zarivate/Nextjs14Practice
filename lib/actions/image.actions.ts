@@ -4,7 +4,7 @@ import { handleError } from "../utils";
 
 export async function deleteImage(publicId: string) {
   try {
-    const res = await fetch(process.env.URL + "/api/images/", {
+    const res = await fetch(process.env.URL_TEST + "/api/images/", {
       method: "DELETE",
       body: JSON.stringify({
         publicId: publicId,
@@ -12,8 +12,8 @@ export async function deleteImage(publicId: string) {
     });
 
     const deletedImageData = await res.json();
-    return deletedImageData;
-    // return JSON.parse(JSON.stringify(deletedImageData));
+
+    return JSON.parse(JSON.stringify(deletedImageData));
   } catch (error) {
     handleError(error);
   }

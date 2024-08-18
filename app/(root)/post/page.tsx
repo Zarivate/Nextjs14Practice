@@ -159,8 +159,10 @@ const Page = () => {
 
   const deleteImageHandler = async () => {
     setSubmittingDelete(true);
+
     try {
       const deleteResponse = await deleteImage(publicId);
+
       if (deleteResponse.result === "ok") {
         console.log("Just reset the image field now doofus");
         setPublicId("");
@@ -259,7 +261,7 @@ const Page = () => {
                       disabled={submittingDelete}
                       onClick={() => deleteImageHandler()}
                     >
-                      Delete
+                      Clear Image
                     </button>
                     <div className="cursor-pointer overflow-hidden rounded-[10px]">
                       <CldImage

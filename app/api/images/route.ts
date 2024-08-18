@@ -22,6 +22,7 @@ export async function DELETE(req: any) {
       }
     );
     const responseCloud = await res.json();
+
     return new Response(JSON.stringify(responseCloud), {
       status: 200,
     });
