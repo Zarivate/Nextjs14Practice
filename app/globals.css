@@ -367,7 +367,11 @@
 }
 
 .skeleton-post {
-  @apply h-56 lg:w-[385px] rounded-xl;
+  @apply h-56 w-full rounded-sm border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700;
+}
+
+.post-holder {
+  @apply mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4;
 }
 
 /* =====  CLERK OVERRIDES */

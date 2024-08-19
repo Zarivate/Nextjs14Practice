@@ -47,7 +47,7 @@ export default function Feed() {
 
   return (
     <>
-      <ul className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
+      <ul className="post-holder">
         {userPosts.map(
           ({
             userId,

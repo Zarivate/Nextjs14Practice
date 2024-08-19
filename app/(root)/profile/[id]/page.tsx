@@ -3,6 +3,8 @@ import Profile from "@/components/shared/Profile";
 import React, { useEffect, useState } from "react";
 import { BasicPost, UserPost } from "@/constants";
 import { fetchPosts } from "@/lib/actions/post.actions";
+import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 
 import { useSession } from "@clerk/nextjs";
 
@@ -10,6 +12,12 @@ const ProfilePage = () => {
   const [allowedProfile, setAllowedProfile] = useState(true);
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
   const { session } = useSession();
+
+  // Grab the clerk userId using the built in auth method
+  const { userId } = auth();
+
+  // Because the correspodning user can be null, case is handled
+  if (!userId) redirect("/sign-in");
 
   useEffect(() => {
     const defaultRun = async () => {
