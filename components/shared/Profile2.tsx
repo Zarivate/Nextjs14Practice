@@ -9,6 +9,7 @@ import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
 import { updateUser } from "@/lib/actions/user.actions";
 import Image from "next/image";
+import { ProfileProps } from "@/types";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Profile2 = ({
