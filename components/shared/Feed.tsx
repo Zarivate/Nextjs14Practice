@@ -4,13 +4,20 @@ import { TestPostInterface2 } from "@/constants";
 import SinglePost2 from "./SinglePost2";
 import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
 
-export default function Feed() {
+export default function Feed({ products }: { products: TestPostInterface2[] }) {
   const [userPosts, setUserPosts] = useState<Array<TestPostInterface2>>([]);
+  const [userPosts2, setUserPosts2] = useState<Array<TestPostInterface2>>([]);
+
+  console.log(userPosts);
+  console.log("Client side retrieved posts above");
+  console.log(userPosts2);
+  console.log("Server side retrieved posts above");
 
   const fetchPostsFeed = async () => {
     const posts = await fetchPosts("home", null);
 
     setUserPosts(posts);
+    setUserPosts2(products);
   };
 
   useEffect(() => {
@@ -23,9 +30,11 @@ export default function Feed() {
 
     // Filter out the now deleted post from the rest of the posts
     const filteredData = userPosts.filter((bleh) => bleh._id !== returnId);
+    const filteredData2 = userPosts2.filter((bleh) => bleh._id !== returnId);
 
     // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.
     setUserPosts(filteredData);
+    setUserPosts2(filteredData2);
   };
 
   // Function to handle updating the prompt

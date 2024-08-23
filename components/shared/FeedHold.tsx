@@ -10,13 +10,10 @@ async function FeedHold() {
     new Promise((resolve) => setTimeout(resolve, ms));
 
   await delay(2000);
-  console.log(products);
-  console.log("Posts above above");
-  console.log("Posts above above");
-  console.log("Posts above above");
+
   return (
     <div>
-      <Feed />
+      <Feed products={products} />
     </div>
   );
 }

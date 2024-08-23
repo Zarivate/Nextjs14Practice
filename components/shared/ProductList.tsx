@@ -6,26 +6,28 @@ import { Product } from "@/types";
 
 function ProductCard({ product }: { product?: Product }) {
   return (
-    <div className="max-h-full shadow-lg max-w-sm">
+    <div className="shadow-lg w-full place-items-center">
       {product ? (
-        <Image
-          src={product.image}
-          width={158}
-          height={200}
-          alt={product.title}
-          style={{ objectFit: "contain", height: "200px", width: "158px" }}
-        />
+        <div className="flex justify-center items-center">
+          <Image
+            src={product.image}
+            width={158}
+            height={200}
+            alt={product.title}
+            style={{ objectFit: "fill", height: "200px", width: "158px" }}
+          />
+        </div>
       ) : (
         <Skeleton className="skeleton-post" />
       )}
-      <div className="w-56">
+      <div className="text-center">
         {product ? (
-          <h1 className="bg-black">{product.title}</h1>
+          <h1 className="">{product.title}</h1>
         ) : (
           <Skeleton className="skeleton-post" />
         )}
         {product ? (
-          <text>{product.price}</text>
+          <text className="">{product.price}</text>
         ) : (
           <Skeleton className="skeleton-post" />
         )}
@@ -36,7 +38,7 @@ function ProductCard({ product }: { product?: Product }) {
 
 export function ProductList({ products }: { products: Product[] }) {
   return (
-    <div className="post-holder">
+    <div className="mt-5 grid grid-cols-3 gap-4 place-content-evenly h-full">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} />
       ))}
