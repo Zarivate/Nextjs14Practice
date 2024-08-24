@@ -155,8 +155,7 @@ declare type TransformedImageProps = {
 export type Product = {
   id: number;
   title: string;
-  price: number;
+  price: int;
   description: string;
-  category: string;
   image: string;
 };

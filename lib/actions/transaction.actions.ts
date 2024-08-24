@@ -6,6 +6,7 @@ import { handleError } from "../utils";
 import { connectToDatabase } from "../database/mongoose";
 import Transaction from "../database/models/transaction.model";
 import { updateCredits } from "./user.actions";
+import { CheckoutTransactionParams, CreateTransactionParams } from "@/types";
 
 // Function to handle payment processes
 export async function checkoutCredits(transaction: CheckoutTransactionParams) {

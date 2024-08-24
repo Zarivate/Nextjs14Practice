@@ -20,14 +20,20 @@ function ProductCard({ product }: { product?: Product }) {
       ) : (
         <Skeleton className="skeleton-post" />
       )}
-      <div className="text-center">
+      <div className="">
         {product ? (
-          <h1 className="">{product.title}</h1>
+          <div className="text-center">
+            <h1 className="mb-2">{product.title}</h1>
+            <h1 className="">{product.description}</h1>
+            <text className="">{product.price} Credits</text>
+          </div>
         ) : (
           <Skeleton className="skeleton-post" />
         )}
         {product ? (
-          <text className="">{product.price}</text>
+          <div className="text-center mt-2">
+            <a href={product.srcLink}>{product.srcText}</a>
+          </div>
         ) : (
           <Skeleton className="skeleton-post" />
         )}

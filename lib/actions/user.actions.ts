@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
+import { CreateUserParams, UpdateUserParams, UpdateUserParams2 } from "@/types";
 
 // Server directives that handle the user functionality aspects, the alternative to the more traditional API routes
 
