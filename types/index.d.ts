@@ -157,5 +157,7 @@ export type Product = {
   title: string;
   price: int;
   description: string;
+  srcLink: string;
+  srcText: string;
   image: string;
 };

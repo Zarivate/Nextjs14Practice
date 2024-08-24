@@ -5,6 +5,7 @@ import TransformationForm from "@/components/shared/TransformationForm";
 import { auth } from "@clerk/nextjs/server";
 import { getUserById } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
+import { SearchParamProps, TransformationTypeKey } from "@/types";
 
 // In order to adjust what gets displayed according to what page the user heads to, the [type] field in the folder structure is destructured and displayed
 const AddTransformationTypePage = async ({
