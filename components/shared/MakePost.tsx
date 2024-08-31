@@ -1,6 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Header from "@/components/shared/Header";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -23,14 +22,12 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
-import { useSession } from "@clerk/nextjs";
 import { TimeLimitKeys, dataUrl, debounce, getImageSize2 } from "@/lib/utils";
 import { defaultValues2, postTimeLimits } from "@/constants";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import { deleteImage } from "@/lib/actions/image.actions";
-import { getUserById } from "@/lib/actions/user.actions";
 import { InsufficientCreditsModal } from "@/components/shared/InsufficientCredits";
 
 type ImageProps = {
@@ -43,16 +40,15 @@ type ImageProps = {
 
 type UserProps = {
   creditBalance: number;
+  userEmail: string;
+  username: string;
 };
 
 const formSchema = z.object({
   postText: z.string().min(1),
 });
 
-const MakePost = ({ creditBalance }: UserProps) => {
-  // Grab the user session state so can apply user details to post
-  const { session } = useSession();
-
+const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
   // Toast to display upon successful post creation
   const { toast } = useToast();
 
@@ -62,7 +58,6 @@ const MakePost = ({ creditBalance }: UserProps) => {
   const [submittingDelete, setSubmittingDelete] = useState(false);
   const [userPost, setUserPost] = useState("");
   const [allowHome, setAllowHome] = useState(false);
-
   const [publicId, setPublicId] = useState("");
   const [image, setImage] = useState<ImageProps>();
 
@@ -87,8 +82,8 @@ const MakePost = ({ creditBalance }: UserProps) => {
       const response = await fetch("/api/posts", {
         method: "POST",
         body: JSON.stringify({
-          email: session?.user.primaryEmailAddress?.emailAddress,
-          username: session?.user.username,
+          email: userEmail,
+          username: username,
           postText: userPost,
           liveTime: timeToExpire,
           allowHome: allowHome,
@@ -114,9 +109,6 @@ const MakePost = ({ creditBalance }: UserProps) => {
       className: "success-toast",
     });
   };
-
-  // Function to handle grabbing the user's profile data, mainly just for their privacy setting
-  const grabPrivacy = async () => {};
 
   // Handler to update user input
   const onInputChangeHandler = (
@@ -171,7 +163,6 @@ const MakePost = ({ creditBalance }: UserProps) => {
       const deleteResponse = await deleteImage(publicId);
 
       if (deleteResponse.result === "ok") {
-        console.log("Just reset the image field now doofus");
         setPublicId("");
       }
     } catch (error) {

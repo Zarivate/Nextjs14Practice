@@ -107,7 +107,7 @@ const Profile2 = ({
 
   return (
     <>
-      <div className="bg-white-200 h-screen w-auto">
+      <div className="bg-white-200">
         <h2 className="h1-semibold text-center text-black">
           Welcome to your Profile page
         </h2>
@@ -132,6 +132,34 @@ const Profile2 = ({
           Here is where you can change more specific aspects of what you allow
           other users to see.
         </p>
+        <p className="text-lg mt-5 text-center mb-3">
+          By default all your posts are only visible to you but you can let
+          others see them by changing the setting below.
+        </p>
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
+          <div className="flex items-center justify-between rounded-lg border p-3 shadow-md">
+            <div className="space-y-0.5">
+              <div className="mb-2 text-lg font-medium">Privacy</div>
+              <div>
+                When on only you can see your profile and name and email above
+                your posts. When off all this will become visible to anyone.
+              </div>
+            </div>
+
+            <Switch
+              checked={allowedProfile}
+              onCheckedChange={handlePrivacyCheck}
+              aria-readonly
+            />
+          </div>
+          <Button
+            type="submit"
+            className="submit-button capitalize"
+            disabled={submitting}
+          >
+            Save Changes
+          </Button>
+        </form>
         <div className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
           {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
           {testPosts.map(
@@ -167,35 +195,6 @@ const Profile2 = ({
             )
           )}
         </div>
-        <p className="text-lg mt-5 text-center mb-3">
-          By default all your posts are only visible to you but you can let
-          others see them by changing the setting below.
-        </p>
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-8">
-          <div className="flex items-center justify-between rounded-lg border p-3 shadow-md">
-            <div className="space-y-0.5">
-              <div className="mb-2 text-lg font-medium">Privacy</div>
-              <div>
-                When on only you can see your profile and name and email above
-                your posts. When off all this will become visible to anyone.
-              </div>
-            </div>
-
-            <Switch
-              checked={allowedProfile}
-              onCheckedChange={handlePrivacyCheck}
-              aria-readonly
-            />
-          </div>
-          <Button
-            type="submit"
-            className="submit-button capitalize"
-            disabled={submitting}
-            onClick={() => {}}
-          >
-            Save Changes
-          </Button>
-        </form>
 
         {/* Add feature here where displays any products user may have in their cart/want to purchase */}
       </div>

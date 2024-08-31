@@ -1,6 +1,6 @@
 import Header from "@/components/shared/Header";
 import MakePost from "@/components/shared/MakePost";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getUserById } from "@/lib/actions/user.actions";
@@ -12,9 +12,6 @@ const Page = async () => {
 
   const user = await getUserById(userId);
 
-  console.log(user);
-  console.log("Server side page user data above");
-
   return (
     <>
       <Header
@@ -23,7 +20,11 @@ const Page = async () => {
           "Ever wanted to let your thoughts out to the world but face none of the consequences? Well that's where this site comes in! Anything you post here gets auto sent to the void in a minute. This timeframe can be altered and or entirely removed if you want to save a post to your profile."
         }
       />
-      <MakePost creditBalance={user.creditBalance} />
+      <MakePost
+        creditBalance={user.creditBalance}
+        userEmail={user.email}
+        username={user.username}
+      />
     </>
   );
 };
