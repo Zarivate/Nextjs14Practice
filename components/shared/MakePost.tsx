@@ -24,7 +24,6 @@ import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { TimeLimitKeys, debounce } from "@/lib/utils";
 import { defaultValues2, postTimeLimits } from "@/constants";
-
 import { InsufficientCreditsModal } from "@/components/shared/InsufficientCredits";
 import { updateCredits } from "@/lib/actions/user.actions";
 import { PostField } from "./PostField";
@@ -132,7 +131,6 @@ const MakePost = ({
     // Waits a second after user finishes typing before registering anything as opposed to immediately tracking every keystroke
     debounce(() => {
       setUserPost(value);
-      // console.log(userPost);
     }, 100)();
 
     return onChangeField(value);

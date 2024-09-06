@@ -30,6 +30,7 @@ import {
 import { CustomField } from "./CustomField";
 import { AspectRatioKey, debounce, deepMergeObjects } from "@/lib/utils";
 import ImageUpload from "./ImageUpload";
+import { TransformationFormProps, Transformations } from "@/types";
 
 // Handles the types of  input fields and their validation
 export const formSchema = z.object({
@@ -249,7 +250,9 @@ const TransformationForm = ({
                 setImage={setImage}
                 publicId={field.value}
                 image={image}
-                type={type}
+                handleImageDelete={function (): void {
+                  throw new Error("Function not implemented.");
+                }}
               />
             )}
           />
