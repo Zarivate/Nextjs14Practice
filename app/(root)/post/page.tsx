@@ -17,10 +17,11 @@ const Page = async () => {
       <Header
         title={"Welcome to the main function of this site"}
         subtitle={
-          "Ever wanted to let your thoughts out to the world but face none of the consequences? Well that's where this site comes in! Anything you post here gets auto sent to the void in a minute. This timeframe can be altered and or entirely removed if you want to save a post to your profile."
+          "This is an Anti-Social Media site. This site is designed to facilitate private posting and little else. Nothing is shared publicly unless you allow it to be and anything you post gets auto sent to the void in a minute. This timeframe can be altered or entirely removed below. "
         }
       />
       <MakePost
+        userId={user._id}
         creditBalance={user.creditBalance}
         userEmail={user.email}
         username={user.username}

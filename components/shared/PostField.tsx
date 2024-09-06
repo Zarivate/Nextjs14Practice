@@ -8,33 +8,29 @@ import {
   FormMessage,
   FormLabel,
 } from "../ui/form";
-import { formSchema } from "./TransformationForm";
 
-const formSchema2 = z.object({
-  title: z.string(),
-  aspectRatio: z.string().optional(),
-  color: z.string().optional(),
-  prompt: z.string().optional(),
-  publicId: z.string(),
+const formSchema3 = z.object({
+  timeChoice: z.string().optional(),
+  publicId: z.string().optional(),
   postText: z.string(),
 });
 
-type CustomFieldProps = {
-  control: Control<z.infer<typeof formSchema2>> | undefined;
+type PostFieldProps = {
+  control: Control<z.infer<typeof formSchema3>> | undefined;
   render: (props: { field: any }) => React.ReactNode;
-  name: keyof z.infer<typeof formSchema>;
+  name: keyof z.infer<typeof formSchema3>;
   formLabel?: string;
   className?: string;
 };
 
 // This file is in charge of altering the user form with the corresponding page's content, to make it more reusable
-export const CustomField = ({
+export const PostField = ({
   control,
   render,
   name,
   formLabel,
   className,
-}: CustomFieldProps) => {
+}: PostFieldProps) => {
   return (
     <FormField
       control={control}

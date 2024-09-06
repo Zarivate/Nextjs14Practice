@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,13 +22,13 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
-import { TimeLimitKeys, dataUrl, debounce, getImageSize2 } from "@/lib/utils";
+import { TimeLimitKeys, debounce } from "@/lib/utils";
 import { defaultValues2, postTimeLimits } from "@/constants";
-import { CldImage, CldUploadWidget } from "next-cloudinary";
-import Image from "next/image";
-import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
-import { deleteImage } from "@/lib/actions/image.actions";
+
 import { InsufficientCreditsModal } from "@/components/shared/InsufficientCredits";
+import { updateCredits } from "@/lib/actions/user.actions";
+import { PostField } from "./PostField";
+import ImageUpload from "./ImageUpload";
 
 type ImageProps = {
   prevState: any;
@@ -39,6 +39,7 @@ type ImageProps = {
 };
 
 type UserProps = {
+  userId: string;
   creditBalance: number;
   userEmail: string;
   username: string;
@@ -46,26 +47,34 @@ type UserProps = {
 
 const formSchema = z.object({
   postText: z.string().min(1),
+  timeChoice: z.string().optional(),
+  publicId: z.string().optional(),
 });
 
-const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
+const MakePost = ({
+  userId,
+  creditBalance,
+  userEmail,
+  username,
+}: UserProps) => {
   // Toast to display upon successful post creation
   const { toast } = useToast();
 
   // Use states to handle various properties that will be passed to make a post in the database
   const [timeToExpire, setTimeToExpire] = useState(0);
   const [submitting, setSubmitting] = useState(false);
-  const [submittingDelete, setSubmittingDelete] = useState(false);
   const [userPost, setUserPost] = useState("");
   const [allowHome, setAllowHome] = useState(false);
-  const [publicId, setPublicId] = useState("");
   const [image, setImage] = useState<ImageProps>();
+  const [isPending, startTransition] = useTransition();
 
   // Defined user form
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       postText: "",
+      timeChoice: "",
+      publicId: "",
     },
   });
 
@@ -93,6 +102,10 @@ const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
 
       if (response.ok) {
         console.log("Success!");
+        // Each post costs 1 credit, so subtract it from their current credits.
+        startTransition(async () => {
+          await updateCredits(userId, -1);
+        });
       }
     } catch (error) {
       console.log(error);
@@ -100,8 +113,9 @@ const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
       setSubmitting(false);
     }
 
+    // Reset the fields
     form.reset(defaultValues2);
-    setPublicId("");
+
     toast({
       title: "Post made!",
       description: "Your post has succesfully been created.",
@@ -125,9 +139,14 @@ const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
   };
 
   // Handler for user expiration time choice
-  const timeChoiceHandler = (value: string) => {
+  const timeChoiceHandler = (
+    value: string,
+    onChangeField: (value: string) => void
+  ) => {
     const timeChoice = postTimeLimits[value as TimeLimitKeys];
     setTimeToExpire(timeChoice.timeTL);
+    // This is just so the change is actually reflected in the ui
+    return onChangeField(value);
   };
 
   // Handler for whether user allows post to appear on home page or not
@@ -135,48 +154,15 @@ const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
     setAllowHome(!allowHome);
   };
 
-  const onUploadSuccess = (result: any) => {
-    console.log(result);
-    setImage((prevState: any) => ({
-      ...prevState,
-      publicId: result?.info?.public_id,
-      width: result?.info?.width,
-      height: result?.info?.height,
-      secureUrl: result?.info?.secure_url,
-    }));
-    setPublicId(result?.info?.public_id);
-  };
-
-  const onUploadError = () => {
-    toast({
-      title: "Something went wrong",
-      description: "Please try again in a short while",
-      duration: 5000,
-      className: "error-toast",
-    });
-  };
-
-  const deleteImageHandler = async () => {
-    setSubmittingDelete(true);
-
-    try {
-      const deleteResponse = await deleteImage(publicId);
-
-      if (deleteResponse.result === "ok") {
-        setPublicId("");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setSubmittingDelete(false);
-    }
+  const handleImageDelete = () => {
+    form.resetField("publicId");
   };
 
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(createPost)} className="space-y-8">
-          {creditBalance < 1000 && <InsufficientCreditsModal />}
+          {creditBalance < 0 && <InsufficientCreditsModal />}
           <FormField
             control={form.control}
             name="postText"
@@ -190,6 +176,7 @@ const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
                     onChange={(e) =>
                       onInputChangeHandler(e.target.value, field.onChange)
                     }
+                    className="input-field "
                   />
                 </FormControl>
                 <FormDescription>
@@ -200,6 +187,7 @@ const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
               </FormItem>
             )}
           />
+
           <div className="flex justify-start">
             <Checkbox id="terms1" onCheckedChange={choicBoxHandler} />
             <div className="grid gap-1.5 px-5">
@@ -214,78 +202,48 @@ const MakePost = ({ creditBalance, userEmail, username }: UserProps) => {
               </p>
             </div>
             <div className="px-10">
-              <Select
-                onValueChange={(value) => {
-                  timeChoiceHandler(value);
-                }}
-              >
-                <SelectTrigger className="w-[250px] ">
-                  <SelectValue placeholder="Select a time limit" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.keys(postTimeLimits).map((key) => (
-                    <SelectItem key={key} value={key} className="select-item">
-                      {postTimeLimits[key as TimeLimitKeys].label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <PostField
+                control={form.control}
+                name="timeChoice"
+                render={({ field }) => (
+                  <Select
+                    onValueChange={(value) => {
+                      timeChoiceHandler(value, field.onChange);
+                    }}
+                    value={field.value}
+                  >
+                    <SelectTrigger className="w-[250px] ">
+                      <SelectValue placeholder="Select a time limit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.keys(postTimeLimits).map((key) => (
+                        <SelectItem
+                          key={key}
+                          value={key}
+                          className="select-item"
+                        >
+                          {postTimeLimits[key as TimeLimitKeys].label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
+              ></PostField>
             </div>
           </div>
-
-          <CldUploadWidget
-            uploadPreset="iz_voidboard"
-            options={{
-              multiple: false,
-              resourceType: "image",
-            }}
-            onSuccess={onUploadSuccess}
-            onError={onUploadError}
-          >
-            {({ open }) => (
-              <div className="flex flex-col gap-4">
-                <h3 className="h3-bold text-dark-600">Image</h3>
-                {/* This is what gets displayed after a successful Image upload */}
-                {publicId ? (
-                  <>
-                    <button
-                      type="button"
-                      className="button bg-red-500 text-white"
-                      disabled={submittingDelete}
-                      onClick={() => deleteImageHandler()}
-                    >
-                      Clear Image
-                    </button>
-                    <div className="cursor-pointer overflow-hidden rounded-[10px]">
-                      <CldImage
-                        width={getImageSize2(image, "width")}
-                        height={getImageSize2(image, "height")}
-                        src={publicId}
-                        alt="userImage"
-                        sizes={"(max-width: 900px) 100vw, 100vw"}
-                        placeholder={dataUrl as PlaceholderValue}
-                        className="media-uploader_cldImage"
-                      />
-                    </div>
-                  </>
-                ) : (
-                  // If no publicId is detected then that means no Image has been registered so give them the option to upload something
-                  <div className="media-uploader_cta" onClick={() => open()}>
-                    <div className="media-uploader_cta_image">
-                      <Image
-                        src="/assets/icons/add.svg"
-                        alt="Add Image"
-                        width={24}
-                        height={24}
-                      />
-                    </div>
-                    <p className="p-14-medium">Upload Image</p>
-                  </div>
-                )}
-              </div>
+          <PostField
+            control={form.control}
+            name="publicId"
+            render={({ field }) => (
+              <ImageUpload
+                onValueChange={field.onChange}
+                setImage={setImage}
+                publicId={field.value}
+                image={image}
+                handleImageDelete={handleImageDelete}
+              />
             )}
-          </CldUploadWidget>
-
+          ></PostField>
           <Button
             type="submit"
             className="submit-button capitalize"

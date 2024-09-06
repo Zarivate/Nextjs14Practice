@@ -38,6 +38,7 @@ export const formSchema = z.object({
   color: z.string().optional(),
   prompt: z.string().optional(),
   publicId: z.string(),
+  postText: z.string(),
 });
 
 const TransformationForm = ({

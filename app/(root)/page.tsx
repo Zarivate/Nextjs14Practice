@@ -10,7 +10,7 @@ const Home = () => {
     <>
       <section className="home">
         <h1 className="home-heading">
-          Welcome to Void Board. A Basic full stack demonstration app.
+          Welcome to Void Board, a basic full stack app.
         </h1>
         <ul className="flex-center w-full gap-20">
           {navLinks.slice(1, 5).map((link) => (

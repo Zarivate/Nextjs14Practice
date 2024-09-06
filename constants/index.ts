@@ -215,6 +215,8 @@ export const defaultValues = {
 
 export const defaultValues2 = {
   postText: "",
+  timeChoice: "",
+  publicId: "",
 };
 
 export const creditFee = -1;

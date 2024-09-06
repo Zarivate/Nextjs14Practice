@@ -1,7 +1,7 @@
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { Post } from "@/lib/database/models/posts.model";
 import { getAuth } from "@clerk/nextjs/server";
-import { getUserById } from "@/lib/actions/user.actions";
+import { getUserById, updateCredits } from "@/lib/actions/user.actions";
 
 export async function POST(req: any) {
   // Grab the clerk userId using the built in auth method

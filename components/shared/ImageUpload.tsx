@@ -1,17 +1,18 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import { dataUrl, getImageSize } from "@/lib/utils";
+import { dataUrl, getImageSize2 } from "@/lib/utils";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
+import { deleteImage } from "@/lib/actions/image.actions";
 
 type ImageUploaderProps = {
   onValueChange: (value: string) => void;
   setImage: React.Dispatch<any>;
-  publicId: string;
   image: any;
-  type: string;
+  publicId: string;
+  handleImageDelete: () => void;
 };
 
 const ImageUpload = ({
@@ -19,9 +20,10 @@ const ImageUpload = ({
   setImage,
   image,
   publicId,
-  type,
+  handleImageDelete,
 }: ImageUploaderProps) => {
   const { toast } = useToast();
+  const [submittingDelete, setSubmittingDelete] = useState(false);
 
   const onUploadSuccess = (result: any) => {
     console.log(result);
@@ -35,14 +37,6 @@ const ImageUpload = ({
     }));
 
     onValueChange(result?.info?.public_id);
-
-    console.log("Image data above, if any");
-    toast({
-      title: "Post successfully made!",
-      description: "Hopefully someone responds soon",
-      duration: 5000,
-      className: "success-toast",
-    });
   };
 
   const onUploadError = () => {
@@ -52,6 +46,29 @@ const ImageUpload = ({
       duration: 5000,
       className: "error-toast",
     });
+  };
+
+  const deleteImageHandler = async () => {
+    setSubmittingDelete(true);
+
+    try {
+      const deleteResponse = await deleteImage(publicId);
+
+      if (deleteResponse.result === "ok") {
+        handleImageDelete();
+        setImage((prevState: any) => ({
+          ...prevState,
+          publicId: null,
+          width: null,
+          height: null,
+          secureUrl: null,
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmittingDelete(false);
+    }
   };
 
   return (
@@ -66,14 +83,21 @@ const ImageUpload = ({
     >
       {({ open }) => (
         <div className="flex flex-col gap-4">
-          <h3 className="h3-bold text-dark-600">Original</h3>
           {/* This is what gets displayed after a successful Image upload */}
           {publicId ? (
             <>
+              <button
+                type="button"
+                className="button bg-red-500 text-white"
+                disabled={submittingDelete}
+                onClick={() => deleteImageHandler()}
+              >
+                Clear Image
+              </button>
               <div className="cursor-pointer overflow-hidden rounded-[10px]">
                 <CldImage
-                  width={getImageSize(type, image, "width")}
-                  height={getImageSize(type, image, "height")}
+                  width={getImageSize2(image, "width")}
+                  height={getImageSize2(image, "height")}
                   src={publicId}
                   alt="userImage"
                   sizes={"(max-width: 767px) 100vw, 50vw"}
