@@ -15,7 +15,7 @@ const MobileNav = () => {
     <header className="header">
       <Link href="/" className="flex items-center gap-2 md:py-2">
         <Image
-          src="/assets/images/logo-text.svg"
+          src="/assets/images/VoidBoard-logo.svg"
           alt="logo"
           width={180}
           height={28}
@@ -26,7 +26,6 @@ const MobileNav = () => {
       <nav className="flex gap-2">
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
-          {/* Chatcn Sheet component */}
           <Sheet>
             <SheetTrigger>
               <Image
@@ -50,7 +49,7 @@ const MobileNav = () => {
                         key={link.route}
                         className={`${
                           isActive && "gradient-text"
-                        } p-18 flex whitespace-nowrap text-dark-700`}
+                        } p-18 flex whitespace-nowrap text-dark-600`}
                       >
                         <Link href={link.route} className="sidebar-link">
                           <Image

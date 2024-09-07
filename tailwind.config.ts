@@ -31,10 +31,12 @@ module.exports = {
           600: "#4318FF",
         },
         dark: {
+          300: "#fff",
           400: "#7986AC",
           500: "#606C80",
           600: "#2B3674",
           700: "#384262",
+          800: "#000000",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
@@ -70,7 +72,8 @@ module.exports = {
       },
       backgroundImage: {
         "purple-gradient": "url('/assets/images/gradient-bg.svg')",
-        banner: "url('/assets/images/banner-bg.png')",
+        "vb-gradient": "url('/assets/images/gradient-bg2.svg')",
+        banner: "url('/assets/images/banner-bg2.png')",
       },
       borderRadius: {
         lg: "var(--radius)",

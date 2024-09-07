@@ -28,10 +28,10 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
         <Link href="/" className="sidebar-logo">
           {/* TODO: Change this logo for one more fitting of VoidBoard */}
           <Image
-            src="/assets/images/logo-text.svg"
+            src="/assets/images/VoidBoard-logo.svg"
             alt="logo"
-            width={180}
-            height={28}
+            width={350}
+            height={45}
             className="px-2"
           />
         </Link>
@@ -57,8 +57,8 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
                       key={link.route}
                       className={`sidebar-nav_element group ${
                         isActive
-                          ? "bg-purple-gradient text-white"
-                          : "text-gray-700"
+                          ? "bg-gradient-to-r from-slate-900 to-slate-700 text-white"
+                          : "text-gray-500"
                       }`}
                     >
                       <Link href={link.route} className="sidebar-link">

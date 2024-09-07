@@ -22,7 +22,17 @@ const Credits = async () => {
         title="Buy Credits"
         subtitle="Choose a credit package that suits your needs!"
       />
-
+      <h1 className="font-extrabold mt-2 text-center">
+        Note: Please do not use your actual credit card information. You will be
+        charged.
+        <div className="mt-2">
+          <h1>Instead, use the test card numbers 4242 4242 4242 4242.</h1>
+          <h1>
+            Any date for the expiration, any numbers for the security code and
+            any email.
+          </h1>
+        </div>
+      </h1>
       <section>
         <ul className="credits-list">
           {plans.map((plan) => (

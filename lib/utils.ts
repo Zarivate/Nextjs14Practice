@@ -120,13 +120,7 @@ export const getImageSize2 = (
   dimension: "width" | "height"
 ): number => {
   var ratio = Math.min(1000 / image.width, 1000 / image.height);
-  // console.log(image);
-  // console.log("Image data above");
-  // console.log(image.height);
-  // console.log(image.width);
-  // console.log("Image height and width above");
-  // console.log(ratio);
-  // console.log("Ratio above");
+
   if (dimension == "height") {
     return ratio * image.height;
   }
