@@ -54,7 +54,12 @@ const SinglePost2 = ({
 
   return (
     <>
-      <div className="p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+      <div
+        // Adjust the size of the box depending on how much text is granted, not by whether someone clicks on it
+        className={`p-5 bg-white border-2 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-white-700 ${
+          imageClick ? "h-96" : ""
+        }`}
+      >
         {imageUrl ? (
           <div
             className={
@@ -128,7 +133,7 @@ const SinglePost2 = ({
           {editMode ? (
             <>
               <textarea
-                className="mb-3 font-normal text-gray-700 dark:text-gray-400 mt-5 w-full overflow-y"
+                className="mb-3 font-normal text-gray-700 bg-white mt-5 w-full overflow-y"
                 value={newPostText}
                 onChange={(e: any) => onInputChangeHandler(e.target.value)}
               />

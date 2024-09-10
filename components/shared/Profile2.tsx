@@ -108,7 +108,7 @@ const Profile2 = ({
   return (
     <>
       <div className="bg-white-200">
-        <h2 className="h1-semibold text-center text-black">
+        <h2 className="h1-semibold text-center text-white">
           Welcome to your Profile page
         </h2>
         <section className="profile">
@@ -128,11 +128,11 @@ const Profile2 = ({
             </div>
           </div>
         </section>
-        <p className="text-center text-lg text-black h-11 mt-4 ">
+        <p className="text-center text-lg text-white h-11 mt-4 ">
           Here is where you can change more specific aspects of what you allow
           other users to see.
         </p>
-        <p className="text-lg mt-5 text-center mb-3">
+        <p className="text-lg text-white mt-2 text-center mb-3">
           By default all your posts are only visible to you but you can let
           others see them by changing the setting below.
         </p>
@@ -161,38 +161,49 @@ const Profile2 = ({
           </Button>
         </form>
         <div className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
-          {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
-          {testPosts.map(
-            ({
-              userId,
-              email,
-              username,
-              postText,
-              expireAt,
-              allowHome,
-              _id,
-              createdAt,
-              updatedAt,
-              imageUrl,
-              privacySet,
-            }) => (
-              <SinglePost2
-                userId={userId}
-                email={email}
-                username={username}
-                postText={postText}
-                expireAt={expireAt}
-                allowHome={allowHome}
-                key={_id}
-                _id={_id}
-                imageUrl={imageUrl}
-                privacySet={privacySet}
-                createdAt={createdAt}
-                updatedAt={updatedAt}
-                handleDeleteFeed={handleDelete}
-                updatePromptFeed={updatePromptFeed}
-              />
-            )
+          <h2 className="text-center text-white text-lg mt-5">Your posts</h2>
+          {testPosts.length ? (
+            <>
+              {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
+              {testPosts.map(
+                ({
+                  userId,
+                  email,
+                  username,
+                  postText,
+                  expireAt,
+                  allowHome,
+                  _id,
+                  createdAt,
+                  updatedAt,
+                  imageUrl,
+                  privacySet,
+                }) => (
+                  <SinglePost2
+                    userId={userId}
+                    email={email}
+                    username={username}
+                    postText={postText}
+                    expireAt={expireAt}
+                    allowHome={allowHome}
+                    key={_id}
+                    _id={_id}
+                    imageUrl={imageUrl}
+                    privacySet={privacySet}
+                    createdAt={createdAt}
+                    updatedAt={updatedAt}
+                    handleDeleteFeed={handleDelete}
+                    updatePromptFeed={updatePromptFeed}
+                  />
+                )
+              )}
+            </>
+          ) : (
+            <>
+              <h2 className="text-center">
+                There doesn't seem to be any posts... why not make one?
+              </h2>
+            </>
           )}
         </div>
 

@@ -11,6 +11,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import {
   Select,
@@ -45,7 +46,12 @@ type UserProps = {
 };
 
 const formSchema = z.object({
-  postText: z.string().min(1),
+  postText: z
+    .string()
+    .min(2, {
+      message: "Post must be at least 1 character long and no more than 700",
+    })
+    .max(700),
   timeChoice: z.string().optional(),
   publicId: z.string().optional(),
 });
@@ -177,11 +183,12 @@ const MakePost = ({
                     className="input-field "
                   />
                 </FormControl>
-                <FormDescription>
+                <FormDescription className="text-white">
                   This post gets sent to your profile by default but you can
                   also send it to the main home page by clicking the checkbox
                   below.
                 </FormDescription>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -195,7 +202,7 @@ const MakePost = ({
               >
                 Allow post to appear on homepage.
               </label>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 If unchecked only you can see your post on your profile.
               </p>
             </div>
