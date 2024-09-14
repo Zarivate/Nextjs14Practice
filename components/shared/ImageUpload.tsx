@@ -115,7 +115,6 @@ const ImageUpload = ({
                   alt="Add Image"
                   width={24}
                   height={24}
-                  className=""
                 />
               </div>
               <p className="p-14-medium text-white">Upload Image</p>

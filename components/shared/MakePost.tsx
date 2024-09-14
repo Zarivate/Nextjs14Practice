@@ -48,10 +48,12 @@ type UserProps = {
 const formSchema = z.object({
   postText: z
     .string()
-    .min(2, {
-      message: "Post must be at least 1 character long and no more than 700",
+    .min(1, {
+      message: "Post can't be empty",
     })
-    .max(700),
+    .max(500, {
+      message: "Post can't be more than 500 characters",
+    }),
   timeChoice: z.string().optional(),
   publicId: z.string().optional(),
 });
