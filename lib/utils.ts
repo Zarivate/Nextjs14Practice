@@ -4,7 +4,7 @@ import { type ClassValue, clsx } from "clsx";
 import qs from "qs";
 import { twMerge } from "tailwind-merge";
 
-import { aspectRatioOptions, postTimeLimits } from "@/constants";
+import { postTimeLimits } from "@/constants";
 import { FormUrlQueryParams, RemoveUrlQueryParams } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
@@ -94,26 +94,7 @@ export const debounce = (func: (...args: any[]) => void, delay: number) => {
   };
 };
 
-// GE IMAGE SIZE
-export type AspectRatioKey = keyof typeof aspectRatioOptions;
 export type TimeLimitKeys = keyof typeof postTimeLimits;
-export const getImageSize = (
-  type: string,
-  image: any,
-  dimension: "width" | "height"
-): number => {
-  {
-    console.log(image);
-    console.log("howdy");
-  }
-  if (type === "fill") {
-    return (
-      aspectRatioOptions[image.aspectRatio as AspectRatioKey]?.[dimension] ||
-      1000
-    );
-  }
-  return image?.[dimension] || 1000;
-};
 
 export const getImageSize2 = (
   image: any,

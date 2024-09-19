@@ -126,15 +126,6 @@ declare type SearchParamProps = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-declare type TransformationFormProps = {
-  action: "Add" | "Update";
-  userId: string;
-  type: TransformationTypeKey;
-  creditBalance: number;
-  data?: IImage | null;
-  config?: Transformations | null;
-};
-
 declare type ProfileProps = {
   clerkId: string;
   privacySet: boolean;
