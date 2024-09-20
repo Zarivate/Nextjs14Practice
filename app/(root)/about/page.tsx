@@ -1,5 +1,4 @@
 import Header from "@/components/shared/Header";
-import Image from "next/image";
 import React from "react";
 import { AboutPanelsText } from "@/constants";
 import AboutPanel from "@/components/shared/AboutPanel";
@@ -14,6 +13,7 @@ const AboutPage = () => {
       />
       {AboutPanelsText.map((aboutPanel) => (
         <AboutPanel
+          key={aboutPanel.title}
           title={aboutPanel.title}
           subtitle={aboutPanel.subtitle}
           bulletPoints={aboutPanel.bulletPoints}
