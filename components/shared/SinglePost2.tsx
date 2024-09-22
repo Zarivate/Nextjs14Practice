@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { TestPostInterface, UserPost } from "@/constants";
 import { useSession } from "@clerk/nextjs";
 import { debounce } from "@/lib/utils";
-
+import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { DotOptions } from "./DotOptions";
 
@@ -25,10 +25,13 @@ const SinglePost2 = ({
   const [newPostText, setNewPostText] = useState(postText);
   const [editMode, setEditMode] = useState(false);
   const [imageClick, setImageClick] = useState(false);
-  console.log(session);
-  console.log("Session above");
-  console.log(userId);
-  console.log("Post user id above");
+  const router = useRouter();
+  // console.log(session);
+  // console.log("Session above");
+  // console.log(userId);
+  // console.log("Post user id above");
+  console.log(_id);
+  console.log("Post id above");
 
   function handleEdit() {
     setEditMode(!editMode);
@@ -50,6 +53,15 @@ const SinglePost2 = ({
 
   const testClick = () => {
     setImageClick(!imageClick);
+  };
+
+  const handleProfileClick = () => {
+    // Check to see if the post's creator id matches with the current session user's profile id, if so
+    // that means the user clicked on their own profile and redirect them to their own profile page
+    if (userId === session?.user.id) return router.push("/profile");
+
+    // Else if that's not the case, then redirect to that specific user's profile page
+    router.push(`/profile/${username}`);
   };
 
   return (
@@ -81,15 +93,20 @@ const SinglePost2 = ({
           ""
         )}
         <div className="flex flex-col p-2">
-          {/* Check to see whether user Privacy On or if the user is the same as the post. */}
+          {/* Check to see whether user Privacy On */}
           {privacySet ? (
             <>
+              {/* If the Privacy is true, first check to see if it's the same user as the one who made the post */}
               {session?.user.id === userId ? (
                 <>
+                  {/* If so, display their username, email, and options to delete and or edit the post */}
                   <div className="flex flex-row justify-between">
-                    <h3 className="font-satoshi font-bold text-gray-900">
+                    <p
+                      className="font-satoshi font-bold text-gray-900"
+                      onClick={handleProfileClick}
+                    >
                       {username}
-                    </h3>
+                    </p>
 
                     <DotOptions
                       handleEdit={handleEdit}
@@ -105,26 +122,28 @@ const SinglePost2 = ({
               )}
             </>
           ) : (
+            // Else that means that Privacy is off, meaning the user allows other people to see their name and email
             <>
-              {session?.user.id === userId ? (
-                <>
-                  <div className="flex flex-row justify-between">
-                    <h3 className="font-satoshi font-bold text-gray-900">
-                      {username}
-                    </h3>
-
-                    <DotOptions
-                      handleEdit={handleEdit}
-                      sendPatch={sendPatch}
-                      handleDelete={() => handleDeleteFeed(_id)}
-                      editMode={editMode}
-                    />
-                  </div>
-                  <p className="font-inter text-sm text-gray-500">{email}</p>
-                </>
-              ) : (
-                <></>
-              )}
+              <div className="flex flex-row justify-between">
+                <p
+                  onClick={handleProfileClick}
+                  className="font-satoshi font-bold text-blue-400 cursor-pointer"
+                >
+                  {username}
+                </p>
+                {/* Even if Privacy is off, only the same user can edit their posts so check to make sure it's the same person before displaying the dotOptions component  */}
+                {session?.user.id === userId ? (
+                  <DotOptions
+                    handleEdit={handleEdit}
+                    sendPatch={sendPatch}
+                    handleDelete={() => handleDeleteFeed(_id)}
+                    editMode={editMode}
+                  />
+                ) : (
+                  <></>
+                )}
+              </div>
+              <p className="font-inter text-sm text-gray-500">{email}</p>
             </>
           )}
         </div>

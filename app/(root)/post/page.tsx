@@ -10,7 +10,7 @@ const Page = async () => {
 
   if (!userId) redirect("/sign-in");
 
-  const user = await getUserById(userId);
+  const user = await getUserById(userId, null);
 
   return (
     <>

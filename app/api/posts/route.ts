@@ -7,7 +7,7 @@ export async function POST(req: any) {
   // Grab the clerk userId using the built in auth method
   const { userId } = getAuth(req);
 
-  const userData = await getUserById(userId!);
+  const userData = await getUserById(userId!, null);
 
   const privacySet = userData.privacySet;
 

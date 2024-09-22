@@ -12,7 +12,7 @@ const Page = async () => {
   if (!userId) redirect("/sign-in");
 
   // Grab the corresponding mongoDB user id using the clerk Id
-  const user = await getUserById(userId);
+  const user = await getUserById(userId, null);
 
   // console.log(userId);
   // console.log("userId above");

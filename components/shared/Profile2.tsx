@@ -101,6 +101,7 @@ const Profile2 = ({
     toast({
       title: "Success!",
       description: "Settings have been changed",
+      className: "success-toast",
     });
     console.log("I'm going to make you proud everyone...");
   };
@@ -141,8 +142,8 @@ const Profile2 = ({
             <div className="space-y-0.5">
               <div className="mb-2 text-lg font-medium">Privacy</div>
               <div>
-                When on only you can see your profile and name and email above
-                your posts. When off all this will become visible to anyone.
+                When on only you can see your profile, name and email above your
+                posts. When off all this will become visible to anyone.
               </div>
             </div>
 
