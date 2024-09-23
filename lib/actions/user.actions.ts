@@ -24,15 +24,25 @@ export async function createUser(user: CreateUserParams) {
 }
 
 // READ
-export async function getUserById(userId: string, username: string | null) {
+export async function getUserById(
+  userId: string | null,
+  username: string | null
+) {
   try {
     await connectToDatabase();
 
-    const user = await User.findOne({ clerkId: userId });
+    // Check to see whether username isn't empty/null. If so means checking to see whether user allows their profile to be seen or not
+    if (username) {
+      const user = await User.findOne({ username: username });
 
-    if (!user) throw new Error("User not found");
+      return JSON.parse(JSON.stringify(user.privacySet));
+    } else {
+      const user = await User.findOne({ clerkId: userId });
 
-    return JSON.parse(JSON.stringify(user));
+      if (!user) throw new Error("User not found");
+
+      return JSON.parse(JSON.stringify(user));
+    }
   } catch (error) {
     handleError(error);
   }

@@ -27,6 +27,7 @@ const Profile2 = ({
   const [submitting, setSubmitting] = useState(false);
 
   const stringUsername = session?.user.username;
+
   // console.log(testPosts);
   // console.log("test posts above");
   // console.log(session);
