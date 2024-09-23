@@ -35,6 +35,8 @@ export async function getUserById(
     if (username) {
       const user = await User.findOne({ username: username });
 
+      if (!user) return "User doesn't exist";
+
       return JSON.parse(JSON.stringify(user.privacySet));
     } else {
       const user = await User.findOne({ clerkId: userId });
@@ -43,6 +45,20 @@ export async function getUserById(
 
       return JSON.parse(JSON.stringify(user));
     }
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+// READ
+export async function getUserConfirm(username: string) {
+  try {
+    await connectToDatabase();
+    const user = await User.findOne({ username: username });
+
+    if (!user) return false;
+
+    return true;
   } catch (error) {
     handleError(error);
   }
