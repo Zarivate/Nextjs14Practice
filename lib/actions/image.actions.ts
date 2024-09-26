@@ -10,6 +10,7 @@ export async function deleteImage(publicId: string) {
         publicId: publicId,
       }),
     });
+    ``;
 
     const deletedImageData = await res.json();
 

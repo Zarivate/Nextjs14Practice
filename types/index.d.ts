@@ -131,6 +131,7 @@ declare type ProfileProps = {
   privacySet: boolean;
   user: UpdateUserParams;
   accountCredits: Number;
+  username: string;
 };
 
 declare type TransformedImageProps = {

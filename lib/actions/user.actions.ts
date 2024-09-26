@@ -37,7 +37,7 @@ export async function getUserById(
 
       if (!user) return "User doesn't exist";
 
-      return JSON.parse(JSON.stringify(user.privacySet));
+      return JSON.parse(JSON.stringify(user));
     } else {
       const user = await User.findOne({ clerkId: userId });
 
