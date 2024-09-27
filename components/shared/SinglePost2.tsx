@@ -47,7 +47,7 @@ const SinglePost2 = ({
   };
 
   const sendPatch = () => {
-    updatePromptFeed(_id, newPostText);
+    updatePromptFeed!(_id, newPostText);
     setEditMode(!editMode);
   };
 
@@ -111,7 +111,7 @@ const SinglePost2 = ({
                     <DotOptions
                       handleEdit={handleEdit}
                       sendPatch={sendPatch}
-                      handleDelete={() => handleDeleteFeed(_id)}
+                      handleDelete={() => handleDeleteFeed!(_id)}
                       editMode={editMode}
                     />
                   </div>
@@ -136,7 +136,7 @@ const SinglePost2 = ({
                   <DotOptions
                     handleEdit={handleEdit}
                     sendPatch={sendPatch}
-                    handleDelete={() => handleDeleteFeed(_id)}
+                    handleDelete={() => handleDeleteFeed!(_id)}
                     editMode={editMode}
                   />
                 ) : (

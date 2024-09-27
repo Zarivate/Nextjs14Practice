@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
-import { useSession } from "@clerk/nextjs";
 import { UserPost } from "@/constants";
 import SinglePost2 from "@/components/shared/SinglePost2";
 import { Switch } from "@/components/ui/switch";
@@ -17,31 +16,28 @@ const Profile2 = ({
   privacySet,
   user,
   accountCredits,
+  username,
 }: ProfileProps) => {
   const [allowedProfile, setAllowedProfile] = useState(privacySet);
 
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
 
-  const { session } = useSession();
-
   const [submitting, setSubmitting] = useState(false);
-
-  const stringUsername = session?.user.username;
 
   // console.log(testPosts);
   // console.log("test posts above");
   // console.log(session);
 
   const grabPosts = async () => {
-    const data = await fetchPosts("user", stringUsername);
+    const data = await fetchPosts("user", username);
     setTestPosts(data);
   };
 
   useEffect(() => {
-    if (session?.user.username) {
+    if (username) {
       grabPosts();
     }
-  }, [session?.user.username]);
+  }, [username]);
 
   // Function to handle deleting posts, accepts the unique post id
   const handleDelete = async (_id: string) => {
@@ -62,6 +58,7 @@ const Profile2 = ({
         body: JSON.stringify({
           _id: _id,
           postText: newPostText,
+          type: "FEED",
         }),
       });
       grabPosts();
@@ -208,8 +205,6 @@ const Profile2 = ({
             </>
           )}
         </div>
-
-        {/* Add feature here where displays any products user may have in their cart/want to purchase */}
       </div>
     </>
   );

@@ -2,9 +2,19 @@
 import React from "react";
 import SinglePost2 from "@/components/shared/SinglePost2";
 import Image from "next/image";
+import { UserPost } from "@/constants";
 
-// Have a seperate landing page for a personal profile page and all the other user profiles
-const PublicTemplate = ({ username, data }: any) => {
+type PublicTemplateProps = {
+  username: string;
+  data: UserPost[];
+  accountCredits: Number;
+};
+
+const PublicTemplate = ({
+  username,
+  data,
+  accountCredits,
+}: PublicTemplateProps) => {
   return (
     <>
       <div className="bg-white-200">
@@ -31,7 +41,6 @@ const PublicTemplate = ({ username, data }: any) => {
           <h2 className="text-center text-white text-lg mt-5">Posts</h2>
           {data.length ? (
             <>
-              {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
               {data.map(
                 ({
                   userId,
@@ -59,6 +68,8 @@ const PublicTemplate = ({ username, data }: any) => {
                     privacySet={privacySet}
                     createdAt={createdAt}
                     updatedAt={updatedAt}
+                    handleDeleteFeed={null}
+                    updatePromptFeed={null}
                   />
                 )
               )}
@@ -66,13 +77,12 @@ const PublicTemplate = ({ username, data }: any) => {
           ) : (
             <>
               <h2 className="text-center">
-                There doesn't seem to be any posts... why not make one?
+                Seems they either haven't made any posts or have all expired by
+                now, oh well!
               </h2>
             </>
           )}
         </div>
-
-        {/* Add feature here where displays any products user may have in their cart/want to purchase */}
       </div>
     </>
   );

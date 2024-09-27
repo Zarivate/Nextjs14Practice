@@ -13,7 +13,13 @@ const Found = async ({ username }: any) => {
     return <PrivateProfile />;
   }
 
-  return <PublicTemplate username={username} data={data} />;
+  return (
+    <PublicTemplate
+      username={username}
+      data={data}
+      accountCredits={user.accountCredits}
+    />
+  );
 };
 
 export default Found;

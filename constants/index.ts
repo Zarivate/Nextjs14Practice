@@ -292,8 +292,8 @@ export interface TestPostInterface {
   updatedAt: Date;
   imageUrl: string;
   privacySet: Boolean;
-  handleDeleteFeed: (_id: string) => Promise<void>;
-  updatePromptFeed: (_id: string, postText: string) => Promise<void>;
+  handleDeleteFeed: null | ((_id: string) => Promise<void>);
+  updatePromptFeed: null | ((_id: string, postText: string) => Promise<void>);
 }
 
 // This is to handle the types for an unknown user's profile

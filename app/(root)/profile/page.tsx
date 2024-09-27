@@ -26,6 +26,7 @@ const Page = async () => {
         privacySet={user.privacySet}
         user={user}
         accountCredits={user.creditBalance}
+        username={user.username}
       />
     </>
   );
