@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 // This file holds a colletion of links to different parts of the site, to be adjusted later
 export const navLinks = [
   {
@@ -33,6 +31,37 @@ export const navLinks = [
     label: `"Buy" Credits`,
     route: "/credits",
     icon: "/assets/icons/bag.svg",
+  },
+];
+
+export const templatePosts = [
+  {
+    key: 1,
+    imageSampleUrl: "samples/landscapes/girl-urban-view",
+    postText: "This isn't an actual post, it's all just one big template.",
+  },
+  {
+    key: 2,
+    imageSampleUrl: "samples/people/kitchen-bar",
+    postText:
+      "All these images come from built in samples cloudinary gives you when you use their media library and upload services.",
+  },
+  {
+    key: 3,
+    imageSampleUrl: "samples/animals/cat",
+    postText:
+      "If you're looking at this then congrats, you got past the blur feature wrapping the container.",
+  },
+  {
+    key: 4,
+    imageSampleUrl: "samples/landscapes/beach-boat",
+    postText:
+      "Sorry if you were expecting more, didn't go too hard on this cause it's just a basic demo.",
+  },
+  {
+    key: 5,
+    imageSampleUrl: "samples/landscapes/nature-mountains",
+    postText: "Hope you're having an alright time so far though.",
   },
 ];
 

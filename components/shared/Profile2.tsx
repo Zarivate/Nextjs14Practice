@@ -106,105 +106,103 @@ const Profile2 = ({
 
   return (
     <>
-      <div className="bg-white-200">
-        <h2 className="h1-semibold text-center text-white">
-          Welcome to your Profile page
-        </h2>
-        <section className="profile">
-          <div className="profile-balance">
-            <p className="p-14-medium md:p-16-medium">CREDITS AVAILABLE</p>
-            <div className="mt-4 flex items-center gap-4">
-              <Image
-                src="/assets/icons/coins.svg"
-                alt="coins"
-                width={50}
-                height={50}
-                className="size-9 md:size-12"
-              />
-              <h2 className="h2-bold text-dark-600">
-                {accountCredits.toString()}
-              </h2>
-            </div>
-          </div>
-        </section>
-        <p className="text-center text-lg text-white h-11 mt-4 ">
-          Here is where you can change more specific aspects of what you allow
-          other users to see.
-        </p>
-        <p className="text-lg text-white mt-2 text-center mb-3">
-          By default all your posts are only visible to you but you can let
-          others see them by changing the setting below.
-        </p>
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
-          <div className="flex items-center justify-between rounded-lg border p-3 shadow-md">
-            <div className="space-y-0.5">
-              <div className="mb-2 text-lg font-medium">Privacy</div>
-              <div>
-                When on only you can see your profile, name and email above your
-                posts. When off all this will become visible to anyone.
-              </div>
-            </div>
-
-            <Switch
-              checked={allowedProfile}
-              onCheckedChange={handlePrivacyCheck}
-              aria-readonly
+      <h2 className="h1-semibold text-center text-white">
+        Welcome to your Profile page
+      </h2>
+      <section className="profile">
+        <div className="profile-balance">
+          <p className="balance-text">CREDITS AVAILABLE</p>
+          <div className="balance-box">
+            <Image
+              src="/assets/icons/coins.svg"
+              alt="coins"
+              width={50}
+              height={50}
+              className="size-9 md:size-12"
             />
+            <h2 className="h2-bold text-dark-600">
+              {accountCredits.toString()}
+            </h2>
           </div>
-          <Button
-            type="submit"
-            className="submit-button capitalize"
-            disabled={submitting}
-          >
-            Save Changes
-          </Button>
-        </form>
-        <div className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
-          <h2 className="text-center text-white text-lg mt-5">Your posts</h2>
-          {testPosts.length ? (
-            <>
-              {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
-              {testPosts.map(
-                ({
-                  userId,
-                  email,
-                  username,
-                  postText,
-                  expireAt,
-                  allowHome,
-                  _id,
-                  createdAt,
-                  updatedAt,
-                  imageUrl,
-                  privacySet,
-                }) => (
-                  <SinglePost2
-                    userId={userId}
-                    email={email}
-                    username={username}
-                    postText={postText}
-                    expireAt={expireAt}
-                    allowHome={allowHome}
-                    key={_id}
-                    _id={_id}
-                    imageUrl={imageUrl}
-                    privacySet={privacySet}
-                    createdAt={createdAt}
-                    updatedAt={updatedAt}
-                    handleDeleteFeed={handleDelete}
-                    updatePromptFeed={updatePromptFeed}
-                  />
-                )
-              )}
-            </>
-          ) : (
-            <>
-              <h2 className="text-center">
-                There doesn't seem to be any posts... why not make one?
-              </h2>
-            </>
-          )}
         </div>
+      </section>
+      <p className="text-center text-lg text-white h-11 mt-4 ">
+        Here is where you can change more specific aspects of what you allow
+        other users to see.
+      </p>
+      <p className="text-lg text-white mt-2 text-center mb-3">
+        By default all your posts are only visible to you but you can let others
+        see them by changing the setting below.
+      </p>
+      <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
+        <div className="flex items-center justify-between rounded-lg border p-3 shadow-md">
+          <div className="space-y-0.5">
+            <div className="mb-2 text-lg font-medium">Privacy</div>
+            <div>
+              When on only you can see your profile, name and email above your
+              posts. When off all this will become visible to anyone.
+            </div>
+          </div>
+
+          <Switch
+            checked={allowedProfile}
+            onCheckedChange={handlePrivacyCheck}
+            aria-readonly
+          />
+        </div>
+        <Button
+          type="submit"
+          className="submit-button capitalize"
+          disabled={submitting}
+        >
+          Save Changes
+        </Button>
+      </form>
+      <div className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
+        <h2 className="text-center text-white text-lg mt-5">Your posts</h2>
+        {testPosts.length ? (
+          <>
+            {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
+            {testPosts.map(
+              ({
+                userId,
+                email,
+                username,
+                postText,
+                expireAt,
+                allowHome,
+                _id,
+                createdAt,
+                updatedAt,
+                imageUrl,
+                privacySet,
+              }) => (
+                <SinglePost2
+                  userId={userId}
+                  email={email}
+                  username={username}
+                  postText={postText}
+                  expireAt={expireAt}
+                  allowHome={allowHome}
+                  key={_id}
+                  _id={_id}
+                  imageUrl={imageUrl}
+                  privacySet={privacySet}
+                  createdAt={createdAt}
+                  updatedAt={updatedAt}
+                  handleDeleteFeed={handleDelete}
+                  updatePromptFeed={updatePromptFeed}
+                />
+              )
+            )}
+          </>
+        ) : (
+          <>
+            <h2 className="text-center">
+              There doesn't seem to be any posts... why not make one?
+            </h2>
+          </>
+        )}
       </div>
     </>
   );

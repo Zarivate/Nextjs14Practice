@@ -242,19 +242,27 @@
 
   /* Profile Page */
   .profile {
-    @apply mt-5 flex flex-col gap-5 sm:flex-row md:mt-8 md:gap-10;
+    @apply mt-auto md:flex md:flex-row gap-5 md:mt-8 md:gap-10;
   }
 
   .profile-balance {
-    @apply w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8;
+    @apply w-2/5 rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8 mx-auto my-auto mt-2;
   }
 
-  .profile-image-manipulation {
-    @apply w-full rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8;
+  .balance-text {
+    @apply p-14-medium md:p-16-medium text-center;
   }
 
+  .balance-box {
+    @apply mt-4 flex gap-4 items-center justify-center;
+  }
+  /* Private Profile */
   .private-wrapper {
     @apply blur-lg;
+  }
+
+  .private-header {
+    @apply h1-semibold text-center text-white mt-2;
   }
 
   /* Transformation Details */

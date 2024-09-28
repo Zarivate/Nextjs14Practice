@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import FakeTemplate from "./FakeTemplate";
 import Header from "./shared/Header";

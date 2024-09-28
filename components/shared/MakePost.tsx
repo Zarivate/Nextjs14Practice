@@ -253,7 +253,7 @@ const MakePost = ({
           ></PostField>
           <Button
             type="submit"
-            className="submit-button capitalize"
+            className="submit-button capitalize text-green"
             disabled={submitting}
           >
             Post

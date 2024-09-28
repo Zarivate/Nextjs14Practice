@@ -10,15 +10,21 @@ const Found = async ({ username }: any) => {
   const data = await fetchPosts2("user", username);
 
   if (user.privacySet) {
-    return <PrivateProfile />;
+    return (
+      <div>
+        <PrivateProfile />
+      </div>
+    );
   }
 
   return (
-    <PublicTemplate
-      username={username}
-      data={data}
-      accountCredits={user.accountCredits}
-    />
+    <div>
+      <PublicTemplate
+        username={username}
+        data={data}
+        accountCredits={user.accountCredits}
+      />
+    </div>
   );
 };
 
