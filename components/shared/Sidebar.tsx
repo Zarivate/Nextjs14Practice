@@ -26,7 +26,6 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
         />
 
         <Link href="/" className="sidebar-logo">
-          {/* TODO: Change this logo for one more fitting of VoidBoard */}
           <Image
             src="/assets/images/VoidBoard-logo.svg"
             alt="logo"

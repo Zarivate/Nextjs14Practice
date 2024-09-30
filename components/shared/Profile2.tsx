@@ -9,6 +9,7 @@ import { toast } from "../ui/use-toast";
 import { updateUser } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import { ProfileProps } from "@/types";
+import Link from "next/link";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Profile2 = ({
@@ -23,10 +24,6 @@ const Profile2 = ({
   const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
 
   const [submitting, setSubmitting] = useState(false);
-
-  // console.log(testPosts);
-  // console.log("test posts above");
-  // console.log(session);
 
   const grabPosts = async () => {
     const data = await fetchPosts("user", username);
@@ -101,14 +98,11 @@ const Profile2 = ({
       description: "Settings have been changed",
       className: "success-toast",
     });
-    console.log("I'm going to make you proud everyone...");
   };
 
   return (
-    <>
-      <h2 className="h1-semibold text-center text-white">
-        Welcome to your Profile page
-      </h2>
+    <div className="100vh">
+      <h2 className="profile-header">Welcome to your Profile page</h2>
       <section className="profile">
         <div className="profile-balance">
           <p className="balance-text">CREDITS AVAILABLE</p>
@@ -126,40 +120,9 @@ const Profile2 = ({
           </div>
         </div>
       </section>
-      <p className="text-center text-lg text-white h-11 mt-4 ">
-        Here is where you can change more specific aspects of what you allow
-        other users to see.
-      </p>
-      <p className="text-lg text-white mt-2 text-center mb-3">
-        By default all your posts are only visible to you but you can let others
-        see them by changing the setting below.
-      </p>
-      <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
-        <div className="flex items-center justify-between rounded-lg border p-3 shadow-md">
-          <div className="space-y-0.5">
-            <div className="mb-2 text-lg font-medium">Privacy</div>
-            <div>
-              When on only you can see your profile, name and email above your
-              posts. When off all this will become visible to anyone.
-            </div>
-          </div>
 
-          <Switch
-            checked={allowedProfile}
-            onCheckedChange={handlePrivacyCheck}
-            aria-readonly
-          />
-        </div>
-        <Button
-          type="submit"
-          className="submit-button capitalize"
-          disabled={submitting}
-        >
-          Save Changes
-        </Button>
-      </form>
-      <div className="mt-5 grid grid-rows-1 md:grid md:grid-rows-1 md:max-w-full gap-4">
-        <h2 className="text-center text-white text-lg mt-5">Your posts</h2>
+      <div className="post-holder">
+        <h2 className="post-header">Your posts</h2>
         {testPosts.length ? (
           <>
             {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
@@ -199,12 +162,49 @@ const Profile2 = ({
         ) : (
           <>
             <h2 className="text-center">
-              There doesn't seem to be any posts... why not make one?
+              There doesn't seem to be any posts...{" "}
+              <Link
+                href="/post"
+                className="cursor-pointer text-white hover:underline"
+              >
+                why not make one?
+              </Link>
             </h2>
           </>
         )}
       </div>
-    </>
+      <p className="profile-p mt-4">
+        Here is where you can change what you allow other users to see.
+      </p>
+      <p className="profile-p mt-2">
+        By default all your posts and profile are only visible to you but you
+        can let others see them by changing the setting below.
+      </p>
+      <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 mt-3">
+        <div className="profile-form">
+          <div className="space-y-0.5">
+            <div className="mb-2 text-lg font-medium">Privacy</div>
+            <div>
+              When on only you can see your profile, name and email above your
+              posts. When off all this will become visible to anyone.
+            </div>
+          </div>
+
+          <Switch
+            checked={allowedProfile}
+            onCheckedChange={handlePrivacyCheck}
+            aria-readonly
+          />
+        </div>
+        <Button
+          type="submit"
+          className="submit-button capitalize"
+          disabled={submitting}
+        >
+          Save Changes
+        </Button>
+      </form>
+    </div>
   );
 };
 

@@ -182,10 +182,6 @@
     @apply rounded-[16px] border-2 border-purple-200/20 shadow-sm shadow-purple-200/15 text-dark-600 disabled:opacity-100 p-16-semibold h-[50px] md:h-[54px] focus-visible:ring-offset-0 px-4 py-3 focus-visible:ring-transparent !important;
   }
 
-  .search-field {
-    @apply border-0 bg-transparent text-dark-600 w-full placeholder:text-dark-400 h-[50px] p-16-medium focus-visible:ring-offset-0 p-3 focus-visible:ring-transparent !important;
-  }
-
   .submit-button {
     @apply bg-dark-900 bg-cover rounded-full py-4 px-6 p-16-semibold h-[50px] w-full md:h-[54px];
   }
@@ -246,7 +242,7 @@
   }
 
   .profile-balance {
-    @apply w-2/5 rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8 mx-auto my-auto mt-2;
+    @apply w-2/5 sm:w-1/3 rounded-[16px] border-2 border-purple-200/20 bg-white p-5 shadow-lg shadow-purple-200/10 md:px-6 md:py-8 mx-auto my-auto mt-2;
   }
 
   .balance-text {
@@ -254,45 +250,28 @@
   }
 
   .balance-box {
-    @apply mt-4 flex gap-4 items-center justify-center;
-  }
-  /* Private Profile */
-  .private-wrapper {
-    @apply blur-lg;
+    @apply mt-4 gap-4 flex-center;
   }
 
-  .private-header {
+  .post-header {
+    @apply text-center text-white text-lg mt-5;
+  }
+
+  .profile-header {
     @apply h1-semibold text-center text-white mt-2;
   }
 
-  /* Transformation Details */
-  .transformation-grid {
-    @apply grid h-fit min-h-[200px] grid-cols-1 gap-5 py-8 md:grid-cols-2;
+  .profile-p {
+    @apply text-center text-lg text-white;
   }
 
-  .transformation-original_image {
-    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
+  .profile-form {
+    @apply flex items-center justify-between rounded-lg border p-3 shadow-md;
   }
 
-  /* Collection Component */
-  .collection-heading {
-    @apply md:flex-between mb-6 flex flex-col gap-5 md:flex-row;
-  }
-
-  .collection-list {
-    @apply grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3;
-  }
-
-  .collection-empty {
-    @apply flex-center h-60 w-full rounded-[10px] border border-dark-400/10 bg-white/20;
-  }
-
-  .collection-btn {
-    @apply button w-32 bg-purple-gradient bg-cover text-white;
-  }
-
-  .collection-card {
-    @apply flex flex-1 cursor-pointer flex-col gap-5 rounded-[16px] border-2 border-purple-200/15 bg-white p-4 shadow-xl shadow-purple-200/10 transition-all hover:shadow-purple-200/20;
+  /* Private Profile */
+  .private-wrapper {
+    @apply blur-lg;
   }
 
   /* MediaUploader Component */
@@ -315,11 +294,6 @@
 
   .header-nav_elements {
     @apply mt-8 flex w-full flex-col items-start gap-5;
-  }
-
-  /* Search Component */
-  .search {
-    @apply flex w-full rounded-[16px] border-2 border-purple-200/20 bg-white px-4 shadow-sm shadow-purple-200/15 md:max-w-96;
   }
 
   /* Sidebar Component */
@@ -347,30 +321,9 @@
     @apply p-16-semibold flex size-full gap-4 p-4;
   }
 
-  /* TransformationForm Component */
-  .prompt-field {
-    @apply flex flex-col gap-5 lg:flex-row lg:gap-10;
-  }
-
+  /* Image Upload Component */
   .media-uploader-field {
     @apply grid h-fit min-h-[200px] grid-cols-1 gap-5 py-4 md:grid-cols-2;
-  }
-
-  /* TransformedImage Component */
-  .download-btn {
-    @apply p-14-medium mt-2 flex items-center gap-2 px-2;
-  }
-
-  .transformed-image {
-    @apply h-fit min-h-72 w-full rounded-[10px] border border-dashed bg-purple-100/20 object-cover p-2;
-  }
-
-  .transforming-loader {
-    @apply flex-center absolute left-[50%] top-[50%] size-full -translate-x-1/2 -translate-y-1/2 flex-col gap-2 rounded-[10px] border bg-dark-700/90;
-  }
-
-  .transformed-placeholder {
-    @apply flex-center p-14-medium h-full min-h-72 flex-col gap-5 rounded-[16px] border border-dashed bg-purple-100/20 shadow-inner;
   }
 }
 

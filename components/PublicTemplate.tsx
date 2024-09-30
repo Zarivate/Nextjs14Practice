@@ -17,9 +17,7 @@ const PublicTemplate = ({
 }: PublicTemplateProps) => {
   return (
     <>
-      <h2 className="h1-semibold text-center text-white">
-        Welcome to {username}'s profile
-      </h2>
+      <h2 className="profile-header">Welcome to {username}'s profile</h2>
       <section className="profile">
         <div className="profile-balance">
           <p className="balance-text">CREDITS</p>
@@ -31,13 +29,15 @@ const PublicTemplate = ({
               height={50}
               className="size-9 md:size-12"
             />
-            <h2 className="h2-bold text-dark-600">{1000}</h2>
+            <h2 className="h2-bold text-dark-600">
+              {accountCredits.toString()}
+            </h2>
           </div>
         </div>
       </section>
 
       <div className="post-holder">
-        <h2 className="text-center text-white text-lg mt-5">Posts</h2>
+        <h2 className="post-header">Posts</h2>
         {data.length ? (
           <>
             {data.map(
