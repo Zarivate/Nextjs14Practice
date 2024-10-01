@@ -26,12 +26,6 @@ const SinglePost2 = ({
   const [editMode, setEditMode] = useState(false);
   const [imageClick, setImageClick] = useState(false);
   const router = useRouter();
-  // console.log(session);
-  // console.log("Session above");
-  // console.log(userId);
-  // console.log("Post user id above");
-  console.log(_id);
-  console.log("Post id above");
 
   function handleEdit() {
     setEditMode(!editMode);

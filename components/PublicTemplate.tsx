@@ -30,7 +30,7 @@ const PublicTemplate = ({
               className="size-9 md:size-12"
             />
             <h2 className="h2-bold text-dark-600">
-              {accountCredits.toString()}
+              {accountCredits.toString()!}
             </h2>
           </div>
         </div>

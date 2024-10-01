@@ -101,7 +101,7 @@ const Profile2 = ({
   };
 
   return (
-    <div className="100vh">
+    <>
       <h2 className="profile-header">Welcome to your Profile page</h2>
       <section className="profile">
         <div className="profile-balance">
@@ -120,7 +120,35 @@ const Profile2 = ({
           </div>
         </div>
       </section>
+      <p className="profile-p mt-4">
+        Here is where you can change what you allow other users to see.
+      </p>
+      <p className="profile-p mt-2">
+        By default all your posts and profile are only visible to you but you
+        can let others see them by changing the setting below.
+      </p>
 
+      <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 mt-3">
+        <div className="profile-form">
+          <div className="space-y-0.5">
+            <div className="mb-2 text-lg font-medium">Privacy</div>
+            When on only you can see your profile, name and email above your
+            posts. When off all this will become visible to anyone.
+          </div>
+          <Switch
+            checked={allowedProfile}
+            onCheckedChange={handlePrivacyCheck}
+            aria-readonly
+          />
+        </div>
+        <Button
+          type="submit"
+          className="submit-button capitalize"
+          disabled={submitting}
+        >
+          Save Changes
+        </Button>
+      </form>
       <div className="post-holder">
         <h2 className="post-header">Your posts</h2>
         {testPosts.length ? (
@@ -172,39 +200,30 @@ const Profile2 = ({
             </h2>
           </>
         )}
-      </div>
-      <p className="profile-p mt-4">
-        Here is where you can change what you allow other users to see.
-      </p>
-      <p className="profile-p mt-2">
-        By default all your posts and profile are only visible to you but you
-        can let others see them by changing the setting below.
-      </p>
-      <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 mt-3">
-        <div className="profile-form">
-          <div className="space-y-0.5">
-            <div className="mb-2 text-lg font-medium">Privacy</div>
-            <div>
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 mt-3">
+          <div className="profile-form">
+            <div className="space-y-0.5">
+              <div className="mb-2 text-lg font-medium">Privacy</div>
               When on only you can see your profile, name and email above your
               posts. When off all this will become visible to anyone.
             </div>
+            <Switch
+              checked={allowedProfile}
+              onCheckedChange={handlePrivacyCheck}
+              aria-readonly
+              className=""
+            />
           </div>
-
-          <Switch
-            checked={allowedProfile}
-            onCheckedChange={handlePrivacyCheck}
-            aria-readonly
-          />
-        </div>
-        <Button
-          type="submit"
-          className="submit-button capitalize"
-          disabled={submitting}
-        >
-          Save Changes
-        </Button>
-      </form>
-    </div>
+          <Button
+            type="submit"
+            className="submit-button capitalize"
+            disabled={submitting}
+          >
+            Save Changes
+          </Button>
+        </form>
+      </div>
+    </>
   );
 };
 
