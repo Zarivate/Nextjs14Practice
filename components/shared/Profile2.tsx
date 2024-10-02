@@ -10,6 +10,17 @@ import { updateUser } from "@/lib/actions/user.actions";
 import Image from "next/image";
 import { ProfileProps } from "@/types";
 import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
 const Profile2 = ({
@@ -47,6 +58,27 @@ const Profile2 = ({
     setTestPosts(filteredData);
   };
 
+  const FormSchema = z.object({
+    marketing_emails: z.boolean().default(false).optional(),
+    security_emails: z.boolean(),
+  });
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      security_emails: true,
+    },
+  });
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    });
+  }
   // Function to handle updating the prompt
   const updatePromptFeed = async (_id: string, newPostText: string) => {
     try {
@@ -128,27 +160,6 @@ const Profile2 = ({
         can let others see them by changing the setting below.
       </p>
 
-      <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 mt-3">
-        <div className="profile-form">
-          <div className="space-y-0.5">
-            <div className="mb-2 text-lg font-medium">Privacy</div>
-            When on only you can see your profile, name and email above your
-            posts. When off all this will become visible to anyone.
-          </div>
-          <Switch
-            checked={allowedProfile}
-            onCheckedChange={handlePrivacyCheck}
-            aria-readonly
-          />
-        </div>
-        <Button
-          type="submit"
-          className="submit-button capitalize"
-          disabled={submitting}
-        >
-          Save Changes
-        </Button>
-      </form>
       <div className="post-holder">
         <h2 className="post-header">Your posts</h2>
         {testPosts.length ? (
@@ -200,28 +211,39 @@ const Profile2 = ({
             </h2>
           </>
         )}
-        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6 mt-3">
-          <div className="profile-form">
-            <div className="space-y-0.5">
-              <div className="mb-2 text-lg font-medium">Privacy</div>
-              When on only you can see your profile, name and email above your
-              posts. When off all this will become visible to anyone.
-            </div>
-            <Switch
-              checked={allowedProfile}
-              onCheckedChange={handlePrivacyCheck}
-              aria-readonly
-              className=""
-            />
-          </div>
-          <Button
-            type="submit"
-            className="submit-button capitalize"
-            disabled={submitting}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-6"
           >
-            Save Changes
-          </Button>
-        </form>
+            <div>
+              <h3 className="mb-4 text-lg font-medium">Email Notifications</h3>
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="marketing_emails"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                      <div className="space-y-0.5">
+                        <FormLabel>Marketing emails</FormLabel>
+                        <FormDescription>
+                          Receive emails about new products, features, and more.
+                        </FormDescription>
+                      </div>
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </div>
+            <Button type="submit">Submit</Button>
+          </form>
+        </Form>
       </div>
     </>
   );
