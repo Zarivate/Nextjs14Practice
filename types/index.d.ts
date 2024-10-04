@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { UserPost } from "@/constants";
+
 // ====== USER PARAMS
 declare type CreateUserParams = {
   clerkId: string;
@@ -63,22 +65,6 @@ declare type UpdateImageParams = {
   path: string;
 };
 
-declare type Transformations = {
-  restore?: boolean;
-  fillBackground?: boolean;
-  remove?: {
-    prompt: string;
-    removeShadow?: boolean;
-    multiple?: boolean;
-  };
-  recolor?: {
-    prompt?: string;
-    to: string;
-    multiple?: boolean;
-  };
-  removeBackground?: boolean;
-};
-
 // ====== TRANSACTION PARAMS
 declare type CheckoutTransactionParams = {
   plan: string;
@@ -95,13 +81,6 @@ declare type CreateTransactionParams = {
   buyerId: string;
   createdAt: Date;
 };
-
-declare type TransformationTypeKey =
-  | "restore"
-  | "fill"
-  | "remove"
-  | "recolor"
-  | "removeBackground";
 
 // ====== URL QUERY PARAMS
 declare type FormUrlQueryParams = {
@@ -121,27 +100,14 @@ declare type RemoveUrlQueryParams = {
   keysToRemove: string[];
 };
 
-declare type SearchParamProps = {
-  params: { id: string; type: TransformationTypeKey };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
-
 declare type ProfileProps = {
   clerkId: string;
   privacySet: boolean;
   user: UpdateUserParams;
   accountCredits: Number;
   username: string | null;
-};
-
-declare type TransformedImageProps = {
-  image: any;
-  type: string;
-  title: string;
-  transformationConfig: Transformations | null;
-  isTransforming: boolean;
-  hasDownload?: boolean;
-  setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
+  userPosts: UserPost[];
+  grabPosts: () => Promise<any>;
 };
 
 export type Product = {

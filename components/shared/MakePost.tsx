@@ -29,6 +29,7 @@ import { InsufficientCreditsModal } from "@/components/shared/InsufficientCredit
 import { updateCredits } from "@/lib/actions/user.actions";
 import { PostField } from "./PostField";
 import ImageUpload from "./ImageUpload";
+import { Label } from "../ui/label";
 
 type ImageProps = {
   prevState: any;
@@ -198,12 +199,7 @@ const MakePost = ({
           <div className="flex justify-start">
             <Checkbox id="terms1" onCheckedChange={choicBoxHandler} />
             <div className="grid gap-1.5 px-5">
-              <label
-                htmlFor="terms1"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Allow post to appear on homepage.
-              </label>
+              <Label htmlFor="terms1">Allow post to appear on homepage.</Label>
               <p className="text-sm text-white">
                 If unchecked only you can see your post on your profile.
               </p>

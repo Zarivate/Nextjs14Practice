@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
+import { handleDeleteGeneral } from "@/lib/actions/post.actions";
 import { UserPost } from "@/constants";
 import SinglePost2 from "@/components/shared/SinglePost2";
 import { Switch } from "@/components/ui/switch";
@@ -29,21 +29,18 @@ const Profile2 = ({
   user,
   accountCredits,
   username,
+  userPosts,
+  grabPosts,
 }: ProfileProps) => {
   const [allowedProfile, setAllowedProfile] = useState(privacySet);
 
-  const [testPosts, setTestPosts] = useState<Array<UserPost>>([]);
+  const [profilePosts, setProfilePosts] = useState<Array<UserPost>>([]);
 
   const [submitting, setSubmitting] = useState(false);
 
-  const grabPosts = async () => {
-    const data = await fetchPosts("user", username);
-    setTestPosts(data);
-  };
-
   useEffect(() => {
     if (username) {
-      grabPosts();
+      setProfilePosts(userPosts);
     }
   }, [username]);
 
@@ -52,33 +49,23 @@ const Profile2 = ({
     const returnId = await handleDeleteGeneral(_id);
 
     // Filter out the now deleted post from the rest of the posts
-    const filteredData = testPosts.filter((bleh) => bleh._id !== returnId);
+    const filteredData = profilePosts.filter((bleh) => bleh._id !== returnId);
 
     // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.
-    setTestPosts(filteredData);
+    setProfilePosts(filteredData);
   };
 
   const FormSchema = z.object({
-    marketing_emails: z.boolean().default(false).optional(),
-    security_emails: z.boolean(),
+    privacyState: z.boolean(),
   });
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      security_emails: true,
+      privacyState: allowedProfile,
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-  }
   // Function to handle updating the prompt
   const updatePromptFeed = async (_id: string, newPostText: string) => {
     try {
@@ -90,7 +77,8 @@ const Profile2 = ({
           type: "FEED",
         }),
       });
-      grabPosts();
+      const data = await grabPosts();
+      setProfilePosts(data);
     } catch (error) {
       console.log(error);
     }
@@ -103,14 +91,12 @@ const Profile2 = ({
   };
 
   // Function to handle user form submission
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const handlePrivacySubmit = async () => {
     setSubmitting(true);
 
     try {
       await updateUser(clerkId, user);
-      testPosts.map(async (post) => {
+      profilePosts.map(async (post) => {
         await fetch(`/api/posts`, {
           method: "PATCH",
           body: JSON.stringify({
@@ -132,6 +118,10 @@ const Profile2 = ({
     });
   };
 
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <>
       <h2 className="profile-header">Welcome to your Profile page</h2>
@@ -152,20 +142,59 @@ const Profile2 = ({
           </div>
         </div>
       </section>
-      <p className="profile-p mt-4">
-        Here is where you can change what you allow other users to see.
-      </p>
-      <p className="profile-p mt-2">
-        By default all your posts and profile are only visible to you but you
-        can let others see them by changing the setting below.
-      </p>
-
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handlePrivacySubmit)}
+          className="w-full space-y-6 mt-10"
+        >
+          <div>
+            <p className="profile-p">
+              Here is where you can change what you allow other users to see.
+            </p>
+            <p className="profile-p mb-4">
+              By default all your posts and profile are only visible to you but
+              you can let others see them by changing the setting below.
+            </p>
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="privacyState"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <div className="space-y-0.5">
+                      <FormLabel>Privacy</FormLabel>
+                      <FormDescription>
+                        When on only you can see your profile, name and email
+                        above your posts. When off all this will become visible
+                        to anyone.
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={allowedProfile}
+                        onCheckedChange={handlePrivacyCheck}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <Button
+            type="submit"
+            className="submit-button capitalize"
+            disabled={submitting}
+          >
+            Confirm Changes
+          </Button>
+        </form>
+      </Form>
       <div className="post-holder">
         <h2 className="post-header">Your posts</h2>
-        {testPosts.length ? (
+        {profilePosts.length ? (
           <>
             {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
-            {testPosts.map(
+            {profilePosts.map(
               ({
                 userId,
                 email,
@@ -211,40 +240,31 @@ const Profile2 = ({
             </h2>
           </>
         )}
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full space-y-6"
-          >
-            <div>
-              <h3 className="mb-4 text-lg font-medium">Email Notifications</h3>
-              <div className="space-y-4">
-                <FormField
-                  control={form.control}
-                  name="marketing_emails"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                      <div className="space-y-0.5">
-                        <FormLabel>Marketing emails</FormLabel>
-                        <FormDescription>
-                          Receive emails about new products, features, and more.
-                        </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
-            </div>
-            <Button type="submit">Submit</Button>
-          </form>
-        </Form>
       </div>
+      <form
+        onSubmit={(e) => handleSubmit(e)}
+        className="space-y-6 mt-3 relative"
+      >
+        <div className="profile-form">
+          <div className="space-y-0.5">
+            <div className="mb-2 text-lg font-medium">Privacy</div>
+            When on only you can see your profile, name and email above your
+            posts. When off all this will become visible to anyone.
+          </div>
+          <Switch
+            checked={allowedProfile}
+            onCheckedChange={handlePrivacyCheck}
+            aria-readonly
+          />
+        </div>
+        <Button
+          type="submit"
+          className="submit-button capitalize"
+          disabled={submitting}
+        >
+          Save Changes
+        </Button>
+      </form>
     </>
   );
 };
