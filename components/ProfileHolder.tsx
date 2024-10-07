@@ -13,7 +13,7 @@ declare type ProfileLoadParams = {
   userPosts: UserPost[];
 };
 
-async function ProfileLoader(userId: any) {
+async function ProfileLoader({ userId }: any) {
   const user = await getUserById(userId, null);
   const userPosts = await fetchPosts2("user", user.username);
 
