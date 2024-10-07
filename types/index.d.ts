@@ -110,6 +110,18 @@ declare type ProfileProps = {
   grabPosts: () => Promise<any>;
 };
 
+export type UserProps = {
+  clerkId: string;
+  email: string;
+  username: string;
+  photo: string;
+  firstName: string;
+  lastName: string;
+  planId: number;
+  creditBalance: number;
+  privacySet: boolean;
+};
+
 export type Product = {
   id: number;
   title: string;

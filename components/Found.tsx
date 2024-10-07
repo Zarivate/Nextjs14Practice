@@ -22,7 +22,7 @@ const Found = async ({ username }: any) => {
       <PublicTemplate
         username={username}
         data={data}
-        accountCredits={user.accountCredits}
+        accountCredits={user.creditBalance}
       />
     </div>
   );

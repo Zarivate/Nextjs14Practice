@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 
 // Have a seperate landing page for a personal profile page and all the other user profiles
-const Profile2 = ({
+const Profile = ({
   clerkId,
   privacySet,
   user,
@@ -118,10 +118,6 @@ const Profile2 = ({
     });
   };
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>): void {
-    throw new Error("Function not implemented.");
-  }
-
   return (
     <>
       <h2 className="profile-header">Welcome to your Profile page</h2>
@@ -142,58 +138,11 @@ const Profile2 = ({
           </div>
         </div>
       </section>
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handlePrivacySubmit)}
-          className="w-full space-y-6 mt-10"
-        >
-          <div>
-            <p className="profile-p">
-              Here is where you can change what you allow other users to see.
-            </p>
-            <p className="profile-p mb-4">
-              By default all your posts and profile are only visible to you but
-              you can let others see them by changing the setting below.
-            </p>
-            <div className="space-y-4">
-              <FormField
-                control={form.control}
-                name="privacyState"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel>Privacy</FormLabel>
-                      <FormDescription>
-                        When on only you can see your profile, name and email
-                        above your posts. When off all this will become visible
-                        to anyone.
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={allowedProfile}
-                        onCheckedChange={handlePrivacyCheck}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-          <Button
-            type="submit"
-            className="submit-button capitalize"
-            disabled={submitting}
-          >
-            Confirm Changes
-          </Button>
-        </form>
-      </Form>
+
       <div className="post-holder">
         <h2 className="post-header">Your posts</h2>
         {profilePosts.length ? (
           <>
-            {/* Possibly add "show more" feature where can see rest of posts/posts get cutoff at somepoint */}
             {profilePosts.map(
               ({
                 userId,
@@ -241,32 +190,55 @@ const Profile2 = ({
           </>
         )}
       </div>
-      <form
-        onSubmit={(e) => handleSubmit(e)}
-        className="space-y-6 mt-3 relative"
-      >
-        <div className="profile-form">
-          <div className="space-y-0.5">
-            <div className="mb-2 text-lg font-medium">Privacy</div>
-            When on only you can see your profile, name and email above your
-            posts. When off all this will become visible to anyone.
-          </div>
-          <Switch
-            checked={allowedProfile}
-            onCheckedChange={handlePrivacyCheck}
-            aria-readonly
-          />
-        </div>
-        <Button
-          type="submit"
-          className="submit-button capitalize"
-          disabled={submitting}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handlePrivacySubmit)}
+          className="w-full space-y-6 mt-10 relative"
         >
-          Save Changes
-        </Button>
-      </form>
+          <div>
+            <p className="profile-p">
+              Here is where you can change what you allow other users to see.
+            </p>
+            <p className="profile-p mb-4">
+              By default all your posts and profile are only visible to you but
+              you can let others see them by changing the setting below.
+            </p>
+            <div className="space-y-4">
+              <FormField
+                control={form.control}
+                name="privacyState"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
+                    <div className="space-y-0.5">
+                      <FormLabel>Privacy</FormLabel>
+                      <FormDescription>
+                        When on only you can see your profile, name and email
+                        above your posts. When off all this will become visible
+                        to anyone.
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        checked={allowedProfile}
+                        onCheckedChange={handlePrivacyCheck}
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <Button
+            type="submit"
+            className="submit-button capitalize"
+            disabled={submitting}
+          >
+            Confirm Changes
+          </Button>
+        </form>
+      </Form>
     </>
   );
 };
 
-export default Profile2;
+export default Profile;

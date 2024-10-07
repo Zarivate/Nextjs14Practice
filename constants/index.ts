@@ -309,6 +309,21 @@ export interface BasicPost {
   handleDelete: (_id: string) => Promise<void>;
   updatePrompt: (_id: string, postText: string) => Promise<void>;
 }
+
+export interface PostTemplate {
+  _id: string;
+  userId: string;
+  email: string;
+  username: string;
+  postText: string;
+  expireAt: Date;
+  allowHome: boolean;
+  imageUrl: string;
+  privacySet: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export interface TestPostInterface {
   userId: string;
   email: string;

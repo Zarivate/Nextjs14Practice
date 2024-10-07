@@ -1,41 +1,34 @@
 import React from "react";
 import { auth } from "@clerk/nextjs/server";
 import { getUserById } from "@/lib/actions/user.actions";
-import Profile2 from "@/components/shared/Profile2";
 import { redirect } from "next/navigation";
 import { fetchPosts2 } from "@/lib/actions/post.actions";
+import { headers } from "next/headers";
+import { UserProps } from "@/types";
+import { UserPost } from "@/constants";
+import ProfileHolder from "@/components/ProfileHolder";
 
-const Page = async () => {
+const ProfilePage = async () => {
   // Grab the clerk userId using the built in auth method
   const { userId } = auth();
 
   // Because the correspodning user can be null, case is handled
   if (!userId) redirect("/sign-in");
 
-  // Grab the corresponding mongoDB user id using the clerk Id
-  const user = await getUserById(userId, null);
+  let user: UserProps;
+  let userPosts: UserPost[];
 
-  const userPosts = await fetchPosts2("user", user.username);
-
-  const grabPosts = async () => {
-    "use server";
-    const data = await fetchPosts2("user", user.username);
-    return data;
-  };
+  // if browser is requesting html it means it's the first page load
+  if (headers().get("accept")?.includes("text/html")) {
+    user = await getUserById(userId, null);
+    userPosts = await fetchPosts2("user", user.username);
+  }
 
   return (
     <>
-      <Profile2
-        clerkId={userId}
-        privacySet={user.privacySet}
-        user={user}
-        accountCredits={user.creditBalance}
-        username={user.username}
-        userPosts={userPosts}
-        grabPosts={grabPosts}
-      />
+      <ProfileHolder userId={userId} user={user!} userPosts={userPosts!} />
     </>
   );
 };
 
-export default Page;
+export default ProfilePage;

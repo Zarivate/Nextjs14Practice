@@ -3,7 +3,7 @@ import { getUserConfirm } from "@/lib/actions/user.actions";
 import NotFound from "@/components/NotFound";
 import Found from "@/components/Found";
 
-const ProfilePage = async ({ params }: any) => {
+const OtherProfilePage = async ({ params }: any) => {
   const username = params.id;
   const confirm = await getUserConfirm(username);
 
@@ -12,4 +12,4 @@ const ProfilePage = async ({ params }: any) => {
   return <NotFound />;
 };
 
-export default ProfilePage;
+export default OtherProfilePage;
