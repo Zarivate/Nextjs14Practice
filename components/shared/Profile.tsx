@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { handleDeleteGeneral } from "@/lib/actions/post.actions";
-import { UserPost } from "@/constants";
+import { FullPostInterface } from "@/constants";
 import SinglePost2 from "@/components/shared/SinglePost2";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
@@ -34,7 +34,9 @@ const Profile = ({
 }: ProfileProps) => {
   const [allowedProfile, setAllowedProfile] = useState(privacySet);
 
-  const [profilePosts, setProfilePosts] = useState<Array<UserPost>>([]);
+  const [profilePosts, setProfilePosts] = useState<Array<FullPostInterface>>(
+    []
+  );
 
   const [submitting, setSubmitting] = useState(false);
 

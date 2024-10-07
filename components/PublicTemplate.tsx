@@ -2,11 +2,11 @@
 import React from "react";
 import SinglePost2 from "@/components/shared/SinglePost2";
 import Image from "next/image";
-import { UserPost } from "@/constants";
+import { FullPostInterface } from "@/constants";
 
 type PublicTemplateProps = {
   username: string;
-  data: UserPost[];
+  data: FullPostInterface[];
   accountCredits: Number;
 };
 

@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { TestPostInterface, UserPost } from "@/constants";
+import React, { useState } from "react";
+import { FullPostInterface } from "@/constants";
 import { useSession } from "@clerk/nextjs";
 import { debounce } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ const SinglePost2 = ({
   privacySet,
   handleDeleteFeed,
   updatePromptFeed,
-}: TestPostInterface) => {
+}: FullPostInterface) => {
   // Grab the user session state to check whether the same user is looking at their post on the home screen
   const { session } = useSession();
   const [newPostText, setNewPostText] = useState(postText);

@@ -1,12 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { TestPostInterface2 } from "@/constants";
+import { PostTemplate } from "@/constants";
 import SinglePost2 from "./SinglePost2";
 import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
 
-export default function Feed({ products }: { products: TestPostInterface2[] }) {
-  const [userPosts, setUserPosts] = useState<Array<TestPostInterface2>>([]);
-  const [userPosts2, setUserPosts2] = useState<Array<TestPostInterface2>>([]);
+export default function Feed({ products }: { products: PostTemplate[] }) {
+  const [userPosts, setUserPosts] = useState<Array<PostTemplate>>([]);
+  const [userPosts2, setUserPosts2] = useState<Array<PostTemplate>>([]);
 
   console.log(userPosts);
   console.log("Client side retrieved posts above");

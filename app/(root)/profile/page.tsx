@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { fetchPosts2 } from "@/lib/actions/post.actions";
 import { headers } from "next/headers";
 import { UserProps } from "@/types";
-import { UserPost } from "@/constants";
+import { FullPostInterface } from "@/constants";
 import ProfileHolder from "@/components/ProfileHolder";
 
 const ProfilePage = async () => {
@@ -15,10 +15,12 @@ const ProfilePage = async () => {
   // Because the correspodning user can be null, case is handled
   if (!userId) redirect("/sign-in");
 
+  // Declare variables to be
   let user: UserProps;
-  let userPosts: UserPost[];
+  let userPosts: FullPostInterface[];
 
-  // if browser is requesting html it means it's the first page load
+  // If browser is requesting html it means it's the first page load and thus the data isn't cached already
+  // so make calls to retrieve it
   if (headers().get("accept")?.includes("text/html")) {
     user = await getUserById(userId, null);
     userPosts = await fetchPosts2("user", user.username);
@@ -26,6 +28,7 @@ const ProfilePage = async () => {
 
   return (
     <>
+      {/* Retrieved data could be null on first call, so use the non-null assertion operator to get around it */}
       <ProfileHolder userId={userId} user={user!} userPosts={userPosts!} />
     </>
   );

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import { UserPost } from "@/constants";
+import { FullPostInterface } from "@/constants";
 
 // ====== USER PARAMS
 declare type CreateUserParams = {
@@ -106,11 +106,11 @@ declare type ProfileProps = {
   user: UpdateUserParams;
   accountCredits: Number;
   username: string | null;
-  userPosts: UserPost[];
+  userPosts: FullPostInterface[];
   grabPosts: () => Promise<any>;
 };
 
-export type UserProps = {
+declare type UserProps = {
   clerkId: string;
   email: string;
   username: string;
@@ -122,7 +122,7 @@ export type UserProps = {
   privacySet: boolean;
 };
 
-export type Product = {
+declare type Product = {
   id: number;
   title: string;
   price: int;

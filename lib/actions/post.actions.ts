@@ -1,4 +1,4 @@
-import { UserPost } from "@/constants";
+import { FullPostInterface } from "@/constants";
 
 export async function fetchPosts(
   type: string | null | undefined,
@@ -11,13 +11,13 @@ export async function fetchPosts(
 
   if (type == "home") {
     const homePosts = data.filter(
-      (datasnip: UserPost) => datasnip.allowHome == true
+      (datasnip: FullPostInterface) => datasnip.allowHome == true
     );
 
     return homePosts;
   } else if (type == "user") {
     const profilePosts = data.filter(
-      (datasnip: UserPost) => datasnip.username == value
+      (datasnip: FullPostInterface) => datasnip.username == value
     );
     return profilePosts;
   } else return data;
@@ -34,13 +34,13 @@ export async function fetchPosts2(
 
   if (type == "home") {
     const homePosts = data.filter(
-      (datasnip: UserPost) => datasnip.allowHome == true
+      (datasnip: FullPostInterface) => datasnip.allowHome == true
     );
 
     return homePosts;
   } else if (type == "user") {
     const profilePosts = data.filter(
-      (datasnip: UserPost) => datasnip.username == value
+      (datasnip: FullPostInterface) => datasnip.username == value
     );
     return profilePosts;
   } else return data;

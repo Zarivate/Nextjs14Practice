@@ -270,46 +270,6 @@ export const AboutPanelsText = [
 
 export const creditFee = -1;
 
-export interface UserPost {
-  userId: string;
-  email: string;
-  username: string;
-  postText: string;
-  expireAt: Date;
-  allowHome: Boolean;
-  _id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  imageUrl: string;
-  privacySet: Boolean;
-  handleDelete: (_id: string) => Promise<void>;
-  updatePrompt: (_id: string, postText: string) => Promise<void>;
-}
-export interface TestPostInterface2 {
-  userId: string;
-  email: string;
-  username: string;
-  postText: string;
-  expireAt: Date;
-  createdAt: Date;
-  updatedAt: Date;
-  allowHome: Boolean;
-  _id: string;
-  imageUrl: string;
-  privacySet: Boolean;
-}
-export interface BasicPost {
-  userId: "test";
-  email: "test@mail.com";
-  username: "zari";
-  postText: "Bleh";
-  expireAt: "Today";
-  allowHome: true;
-  _id: "1234";
-  handleDelete: (_id: string) => Promise<void>;
-  updatePrompt: (_id: string, postText: string) => Promise<void>;
-}
-
 export interface PostTemplate {
   _id: string;
   userId: string;
@@ -317,50 +277,16 @@ export interface PostTemplate {
   username: string;
   postText: string;
   expireAt: Date;
-  allowHome: boolean;
-  imageUrl: string;
-  privacySet: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface TestPostInterface {
-  userId: string;
-  email: string;
-  username: string;
-  postText: string;
-  expireAt: Date;
   allowHome: Boolean;
-  _id: string;
   createdAt: Date;
   updatedAt: Date;
   imageUrl: string;
   privacySet: Boolean;
+}
+
+export interface FullPostInterface extends PostTemplate {
   handleDeleteFeed: null | ((_id: string) => Promise<void>);
   updatePromptFeed: null | ((_id: string, postText: string) => Promise<void>);
-}
-
-// This is to handle the types for an unknown user's profile
-export interface TestPostInterface3 {
-  profilePosts: TestPostInterface2[];
-  handleDelete: (_id: string) => Promise<void>;
-}
-
-export interface TestPostInterface4 {
-  userId: string;
-  email: string;
-  username: string;
-  postText: string;
-  _id: string;
-  handleDelete: (_id: string) => Promise<void>;
-}
-
-export interface UserPostsArray {
-  posts: UserPost[];
-}
-
-export interface UserPostsArray2 {
-  posts: TestPostInterface2[];
 }
 
 export interface SideBarPass {
