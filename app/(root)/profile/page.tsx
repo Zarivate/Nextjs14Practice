@@ -2,7 +2,7 @@ import React from "react";
 import { auth } from "@clerk/nextjs/server";
 import { getUserById } from "@/lib/actions/user.actions";
 import { redirect } from "next/navigation";
-import { fetchPosts2 } from "@/lib/actions/post.actions";
+import { fetchPosts } from "@/lib/actions/post.actions";
 import { headers } from "next/headers";
 import { UserProps } from "@/types";
 import { FullPostInterface } from "@/constants";
@@ -23,7 +23,7 @@ const ProfilePage = async () => {
   // so make calls to retrieve it
   if (headers().get("accept")?.includes("text/html")) {
     user = await getUserById(userId, null);
-    userPosts = await fetchPosts2("user", user.username);
+    userPosts = await fetchPosts("user", user.username);
   }
 
   return (

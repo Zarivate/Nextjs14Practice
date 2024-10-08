@@ -1,21 +1,17 @@
 import React from "react";
+import { fetchPosts } from "@/lib/actions/post.actions";
 import Feed from "./Feed";
-import { fetchPosts2 } from "@/lib/actions/post.actions";
 
 async function FeedHold() {
-  const products = await fetchPosts2("home", null);
+  const posts = await fetchPosts("home", null);
 
-  // Artifical delay to showcase the loading skeleton
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+  const grabServerPosts = async () => {
+    "use server";
+    const data = await fetchPosts("home", null);
+    return data;
+  };
 
-  await delay(2000);
-
-  return (
-    <div>
-      <Feed products={products} />
-    </div>
-  );
+  return <Feed posts={posts} grabServerPosts={grabServerPosts} />;
 }
 
 export default FeedHold;

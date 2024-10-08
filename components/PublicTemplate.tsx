@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import SinglePost2 from "@/components/shared/SinglePost2";
+import SinglePost from "@/components/shared/SinglePost";
 import Image from "next/image";
 import { FullPostInterface } from "@/constants";
 
@@ -54,7 +54,7 @@ const PublicTemplate = ({
                 imageUrl,
                 privacySet,
               }) => (
-                <SinglePost2
+                <SinglePost
                   userId={userId}
                   email={email}
                   username={username}

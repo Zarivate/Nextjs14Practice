@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { handleDeleteGeneral } from "@/lib/actions/post.actions";
 import { FullPostInterface } from "@/constants";
-import SinglePost2 from "@/components/shared/SinglePost2";
+import SinglePost from "@/components/shared/SinglePost";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "../ui/button";
 import { toast } from "../ui/use-toast";
@@ -159,7 +159,7 @@ const Profile = ({
                 imageUrl,
                 privacySet,
               }) => (
-                <SinglePost2
+                <SinglePost
                   userId={userId}
                   email={email}
                   username={username}

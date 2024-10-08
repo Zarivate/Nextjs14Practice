@@ -5,7 +5,7 @@ import { navLinks } from "@/constants";
 import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
 import FeedHold from "@/components/shared/FeedHold";
 
-const Home = () => {
+const Home = async () => {
   return (
     <>
       <section className="home">

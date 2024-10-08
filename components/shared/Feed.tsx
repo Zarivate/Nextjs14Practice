@@ -1,27 +1,27 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { PostTemplate } from "@/constants";
-import SinglePost2 from "./SinglePost2";
-import { fetchPosts, handleDeleteGeneral } from "@/lib/actions/post.actions";
+import SinglePost from "./SinglePost";
+import { handleDeleteGeneral } from "@/lib/actions/post.actions";
 
-export default function Feed({ products }: { products: PostTemplate[] }) {
+type FeedTemplate = {
+  posts: PostTemplate[];
+  grabServerPosts: () => Promise<any>;
+};
+
+export default function Feed({ posts, grabServerPosts }: FeedTemplate) {
   const [userPosts, setUserPosts] = useState<Array<PostTemplate>>([]);
-  const [userPosts2, setUserPosts2] = useState<Array<PostTemplate>>([]);
-
-  console.log(userPosts);
-  console.log("Client side retrieved posts above");
-  console.log(userPosts2);
-  console.log("Server side retrieved posts above");
 
   const fetchPostsFeed = async () => {
-    const posts = await fetchPosts("home", null);
+    const ServerSidePosts = await grabServerPosts();
 
-    setUserPosts(posts);
-    setUserPosts2(products);
+    setUserPosts(ServerSidePosts);
   };
 
   useEffect(() => {
-    fetchPostsFeed();
+    if (!posts) {
+      fetchPostsFeed();
+    } else setUserPosts(posts);
   }, []);
 
   // Function to handle deleting posts, accepts the unique post id
@@ -29,12 +29,10 @@ export default function Feed({ products }: { products: PostTemplate[] }) {
     const returnId = await handleDeleteGeneral(_id);
 
     // Filter out the now deleted post from the rest of the posts
-    const filteredData = userPosts.filter((bleh) => bleh._id !== returnId);
-    const filteredData2 = userPosts2.filter((bleh) => bleh._id !== returnId);
+    const filteredData2 = userPosts.filter((bleh) => bleh._id !== returnId);
 
     // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.
-    setUserPosts(filteredData);
-    setUserPosts2(filteredData2);
+    setUserPosts(filteredData2);
   };
 
   // Function to handle updating the prompt
@@ -71,7 +69,7 @@ export default function Feed({ products }: { products: PostTemplate[] }) {
             imageUrl,
             privacySet,
           }) => (
-            <SinglePost2
+            <SinglePost
               userId={userId}
               email={email}
               username={username}

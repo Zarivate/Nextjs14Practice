@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { DotOptions } from "./DotOptions";
 
-const SinglePost2 = ({
+const SinglePost = ({
   userId,
   email,
   username,
@@ -167,4 +167,4 @@ const SinglePost2 = ({
   );
 };
 
-export default SinglePost2;
+export default SinglePost;
