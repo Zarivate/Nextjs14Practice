@@ -232,7 +232,7 @@ const Profile = ({
           </div>
           <Button
             type="submit"
-            className="submit-button capitalize"
+            className="submit-button capitalize text-white"
             disabled={submitting}
           >
             Confirm Changes

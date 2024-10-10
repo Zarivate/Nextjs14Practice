@@ -24,7 +24,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { TimeLimitKeys, debounce } from "@/lib/utils";
-import { defaultValues2, postTimeLimits } from "@/constants";
+import { defaultValues, postTimeLimits } from "@/constants";
 import { InsufficientCreditsModal } from "@/components/shared/InsufficientCredits";
 import { updateCredits } from "@/lib/actions/user.actions";
 import { PostField } from "./PostField";
@@ -89,12 +89,6 @@ const MakePost = ({
   // Function to handle making a post to the database
   const createPost = async () => {
     setSubmitting(true);
-    // console.log(session);
-    // console.log(session?.user.username);
-    // console.log(session?.user.primaryEmailAddress?.emailAddress);
-    // console.log(timeToExpire);
-    // console.log(allowHome);
-    // console.log(image?.publicId);
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -122,7 +116,7 @@ const MakePost = ({
     }
 
     // Reset the fields
-    form.reset(defaultValues2);
+    form.reset(defaultValues);
 
     toast({
       title: "Post made!",

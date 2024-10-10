@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 type AboutPanelProps = {
-  key: string;
+  id: number;
   title: string;
   subtitle: string;
   bulletPoints: string[];
@@ -11,7 +11,7 @@ type AboutPanelProps = {
 };
 
 const AboutPanel = ({
-  key,
+  id,
   title,
   subtitle,
   bulletPoints,
@@ -25,7 +25,7 @@ const AboutPanel = ({
         <p className="mb-6">{subtitle}</p>
         <div className="mb-4 space-y-4">
           {bulletPoints.map((bulletPoint) => (
-            <div key={key} className="flex space-x-2">
+            <div key={id} className="flex space-x-2">
               <span className="text-blue-400">•</span>
               <span className="font-medium">{bulletPoint}</span>
             </div>

@@ -5,6 +5,7 @@ import { navLinks } from "@/constants";
 import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
 import FeedHold from "@/components/shared/FeedHold";
 
+// Home page, has a feed component that fetches data from the database so it become async
 const Home = async () => {
   return (
     <>
@@ -27,6 +28,7 @@ const Home = async () => {
           ))}
         </ul>
       </section>
+      {/* Showcase a loading skeleton while the data is fetched and built */}
       <Suspense fallback={<LoadingPostsSkeleton />}>
         <FeedHold />
       </Suspense>

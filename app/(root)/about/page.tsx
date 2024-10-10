@@ -13,7 +13,8 @@ const AboutPage = () => {
       />
       {AboutPanelsText.map((aboutPanel) => (
         <AboutPanel
-          key={aboutPanel.title}
+          key={aboutPanel.id}
+          id={aboutPanel.id}
           title={aboutPanel.title}
           subtitle={aboutPanel.subtitle}
           bulletPoints={aboutPanel.bulletPoints}

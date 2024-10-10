@@ -1,11 +1,13 @@
-// This file holds a colletion of links to different parts of the site, to be adjusted later
+// This file contains a default set of values to be fetched and applied to various fields throuhout
+// the project for easier maintenance and any future altering that may be needed
+
+// Collection of links used to populate the sidebar
 export const navLinks = [
   {
     label: "Home",
     route: "/",
     icon: "/assets/icons/home.svg",
   },
-
   {
     label: "Make A Post",
     route: "/post",
@@ -15,12 +17,6 @@ export const navLinks = [
     label: "Profile",
     route: "/profile",
     icon: "/assets/icons/profile.svg",
-  },
-
-  {
-    label: "Shop",
-    route: "/shop",
-    icon: "/assets/icons/stars.svg",
   },
   {
     label: "About",
@@ -34,6 +30,8 @@ export const navLinks = [
   },
 ];
 
+// In the event a user encounters a private profile and gets around the blur technique, a basic
+// profile is what they'll see made with these basic posts serving as a template
 export const templatePosts = [
   {
     key: 1,
@@ -65,6 +63,7 @@ export const templatePosts = [
   },
 ];
 
+// The various plans a user can sign up and pay for
 export const plans = [
   {
     _id: 1,
@@ -143,6 +142,7 @@ export const plans = [
   },
 ];
 
+// The options a user has for how long they want their post to exist for
 export const postTimeLimits = {
   "Don't Save": {
     label: "Don't Save",
@@ -170,22 +170,18 @@ export const postTimeLimits = {
   },
 };
 
+// Default values of a post, used to reset the fields once a user finishes making a post
 export const defaultValues = {
-  title: "",
-  aspectRatio: "",
-  color: "",
-  prompt: "",
-  publicId: "",
-};
-
-export const defaultValues2 = {
   postText: "",
   timeChoice: "",
   publicId: "",
 };
 
+// Collection of text regarding the integration and reasoning for why the various softwares
+// were chosen to handle their respective aspect of the project
 export const AboutPanelsText = [
   {
+    id: 1,
     title: "Database",
     subtitle: `MongoDB was chosen for a variety of reason, besides just being fairly comfortable with it due to past projects
       it also perfectly fit the needs of the site.`,
@@ -201,6 +197,7 @@ export const AboutPanelsText = [
     imageAlt: "MongoDBLogo",
   },
   {
+    id: 2,
     title: "FrontEnd + Backend",
     subtitle: `The framework I decided to go with was the React based NextJS, mainly due to it's ability to combine
     frontend and backend aspects together.`,
@@ -217,6 +214,7 @@ export const AboutPanelsText = [
     imageAlt: "NextJSLogo",
   },
   {
+    id: 3,
     title: "Deployment",
     subtitle: `Having used NextJS as the framework, Vercel was the obvious choice for handling deployment.`,
     bulletPoints: [
@@ -228,6 +226,7 @@ export const AboutPanelsText = [
     imageAlt: "VercelLogo",
   },
   {
+    id: 4,
     title: "Payment",
     subtitle: `It's popularity and relative ease in setting up are the main reasons Stripe was chosen`,
     bulletPoints: [
@@ -240,6 +239,7 @@ export const AboutPanelsText = [
     imageAlt: "StripeLogo",
   },
   {
+    id: 5,
     title: "Image Upload",
     subtitle: `While a simple S3 bucket might've been preferable, Cloudinary was instead chosen.`,
     bulletPoints: [
@@ -253,6 +253,7 @@ export const AboutPanelsText = [
     imageAlt: "CloudinaryLogoLogo",
   },
   {
+    id: 6,
     title: "Authentication and User Management",
     subtitle: `Clerk's ease and flexibility in customizing the user 
     authentication process were the main reason it was chosen`,
@@ -268,8 +269,10 @@ export const AboutPanelsText = [
   },
 ];
 
+// Amount to be deducted from a user's account for each post
 export const creditFee = -1;
 
+// Interface that comprises the basic template for when a user makes a post
 export interface PostTemplate {
   _id: string;
   userId: string;
@@ -284,11 +287,14 @@ export interface PostTemplate {
   privacySet: Boolean;
 }
 
+// A post may also have a delete and update feature, but only if the user is the owner of the post.
+// Thus a separate interface is made through extending the previous interface.
 export interface FullPostInterface extends PostTemplate {
   handleDeleteFeed: null | ((_id: string) => Promise<void>);
   updatePromptFeed: null | ((_id: string, postText: string) => Promise<void>);
 }
 
+// Values to handle whether the sidebar menu is open or not
 export interface SideBarPass {
   isOpen: boolean;
   toggle: () => void;
