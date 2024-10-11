@@ -6,7 +6,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "../ui/button";
-import { ModeToggle } from "./Theme";
 
 // The component that handles the sidebar and all it's navigations
 const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
@@ -34,7 +33,6 @@ const Sidebar = ({ isOpen, toggle }: SideBarPass) => {
             className="px-2"
           />
         </Link>
-        <ModeToggle />
       </nav>
       <aside
         className={`mt-25px hidden h-screen w-72 p-5 shadow-md shadow-purple-200/50 lg:flex pl-2 ${
