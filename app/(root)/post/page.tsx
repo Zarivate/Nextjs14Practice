@@ -1,5 +1,5 @@
 import Header from "@/components/shared/Header";
-import MakePost from "@/components/shared/MakePost";
+import MakePost from "@/components/MakePost";
 import React from "react";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";

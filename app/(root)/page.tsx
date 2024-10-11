@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { navLinks } from "@/constants";
 import LoadingPostsSkeleton from "@/components/shared/LoadingPostsSkeleton";
-import FeedHold from "@/components/shared/FeedHold";
+import FeedHold from "@/components/FeedHold";
 
 // Home page, has a feed component that fetches data from the database so it become async
 const Home = async () => {

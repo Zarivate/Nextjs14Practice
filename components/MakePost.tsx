@@ -27,9 +27,9 @@ import { TimeLimitKeys, debounce } from "@/lib/utils";
 import { defaultValues, postTimeLimits } from "@/constants";
 import { InsufficientCreditsModal } from "@/components/shared/InsufficientCredits";
 import { updateCredits } from "@/lib/actions/user.actions";
-import { PostField } from "./PostField";
-import ImageUpload from "./ImageUpload";
-import { Label } from "../ui/label";
+import { PostField } from "./shared/PostField";
+import ImageUpload from "./shared/ImageUpload";
+import { Label } from "./ui/label";
 
 // Declared types for both the images and user fields
 type ImageProps = {

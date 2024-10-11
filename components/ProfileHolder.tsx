@@ -1,7 +1,7 @@
 import { fetchPosts } from "@/lib/actions/post.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 import { SuspenseCheck } from "./shared/SuspenseCheck";
-import Profile from "./shared/Profile";
+import Profile from "./Profile";
 import React from "react";
 import { UserProps } from "@/types";
 import { FullPostInterface } from "@/constants";

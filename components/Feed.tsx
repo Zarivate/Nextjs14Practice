@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { PostTemplate } from "@/constants";
-import SinglePost from "./SinglePost";
+import SinglePost from "./shared/SinglePost";
 import { handleDeleteGeneral } from "@/lib/actions/post.actions";
 
 // Special type declared for function

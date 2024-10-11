@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 
+// Component that handles the functionality of the 3 dots that appear in the corner of a post
 export function DotOptions({
   handleEdit,
   sendPatch,

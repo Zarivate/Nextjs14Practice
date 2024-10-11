@@ -2,12 +2,11 @@
 
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect } from "react";
-
 import { useToast } from "@/components/ui/use-toast";
 import { checkoutCredits } from "@/lib/actions/transaction.actions";
+import { Button } from "./ui/button";
 
-import { Button } from "../ui/button";
-
+// Component to handle any user credit transactions
 const Checkout = ({
   plan,
   amount,
@@ -65,7 +64,7 @@ const Checkout = ({
         <Button
           type="submit"
           role="link"
-          className="w-full rounded-full bg-purple-gradient bg-cover"
+          className="w-full rounded-full bg-black bg-cover"
         >
           Buy Credit
         </Button>

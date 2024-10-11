@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
+// Component for the modal that appears when a user runs out of credits and tries to make a post
 export const InsufficientCreditsModal = () => {
   const router = useRouter();
 

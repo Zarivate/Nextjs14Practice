@@ -6,8 +6,9 @@ import Header from "@/components/shared/Header";
 import { Button } from "@/components/ui/button";
 import { plans } from "@/constants";
 import { getUserById } from "@/lib/actions/user.actions";
-import Checkout from "@/components/shared/Checkout";
+import Checkout from "@/components/Checkout";
 
+// Page for buying credits
 const Credits = async () => {
   const { userId } = auth();
 
@@ -21,7 +22,7 @@ const Credits = async () => {
         title="Buy Credits"
         subtitle="Choose a credit package that suits your needs!"
       />
-      <h1 className="font-extrabold mt-2 text-center">
+      <h1 className="font-extrabold mt-2 text-center text-white">
         Note: Please do not use your actual credit card information. You will be
         charged.
         <div className="mt-2">
@@ -38,10 +39,8 @@ const Credits = async () => {
             <li key={plan.name} className="credits-item">
               <div className="flex-center flex-col gap-3">
                 <Image src={plan.icon} alt="check" width={50} height={50} />
-                <p className="p-20-semibold mt-2 text-purple-500">
-                  {plan.name}
-                </p>
-                <p className="h1-semibold text-dark-600">${plan.price}</p>
+                <p className="p-20-semibold mt-2 text-black">{plan.name}</p>
+                <p className="h1-semibold text-dark-700">${plan.price}</p>
                 <p className="p-16-regular">{plan.credits} Credits</p>
               </div>
 
