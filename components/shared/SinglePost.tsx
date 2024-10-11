@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { CldImage } from "next-cloudinary";
 import { DotOptions } from "./DotOptions";
 
+// This function handles the actual manipulation of the posts themselves
 const SinglePost = ({
   userId,
   email,
@@ -22,33 +23,43 @@ const SinglePost = ({
 }: FullPostInterface) => {
   // Grab the user session state to check whether the same user is looking at their post on the home screen
   const { session } = useSession();
+
+  // May need to reroute a user to another page so declare router
+  const router = useRouter();
+
+  // Various state fields to handle manipulating the post fields, such as the text box and image size
   const [newPostText, setNewPostText] = useState(postText);
   const [editMode, setEditMode] = useState(false);
   const [imageClick, setImageClick] = useState(false);
-  const router = useRouter();
 
+  // Function to handle whether a user is currently editing their post or not
   function handleEdit() {
     setEditMode(!editMode);
   }
 
+  // Function to handle managing any text changes a user makes to their posts
   const onInputChangeHandler = (value: string) => {
+    // Set a very short debounce time so each keystroke isn't automatically registered
+    // and set to be the new field state
     debounce(() => {
       setNewPostText(value);
-      console.log(newPostText);
     }, 10)();
-
-    setNewPostText(value);
   };
 
+  // Function for when a user submits their updated prompt
   const sendPatch = () => {
+    // Make a call to update the prompt with the post id and new text
     updatePromptFeed!(_id, newPostText);
+    // Revert edit mode
     setEditMode(!editMode);
   };
 
-  const testClick = () => {
+  // Function for when a user clicks an image, decides whether to expand it or not
+  const handleImageClick = () => {
     setImageClick(!imageClick);
   };
 
+  // Function for if a user clicks on a username above a post
   const handleProfileClick = () => {
     // Check to see if the post's creator id matches with the current session user's profile id, if so
     // that means the user clicked on their own profile and redirect them to their own profile page
@@ -68,11 +79,7 @@ const SinglePost = ({
       >
         {imageUrl ? (
           <div
-            className={
-              imageClick
-                ? "float-left cursor-pointer md:h-full md:w-72"
-                : "float-left cursor-pointer md:h-full md:w-48"
-            }
+            className={imageClick ? "flex-image md:w-72" : "flex-image md:w-48"}
           >
             <CldImage
               crop="fit"
@@ -80,7 +87,7 @@ const SinglePost = ({
               width={imageClick ? 1000 : 175}
               src={imageUrl}
               alt="testImg"
-              onClick={testClick}
+              onClick={handleImageClick}
             />
           </div>
         ) : (
@@ -94,7 +101,7 @@ const SinglePost = ({
               {session?.user.id === userId ? (
                 <>
                   {/* If so, display their username, email, and options to delete and or edit the post */}
-                  <div className="flex flex-row justify-between">
+                  <div className="flex-userbox">
                     <p
                       className="font-satoshi font-bold text-gray-900"
                       onClick={handleProfileClick}
@@ -109,7 +116,7 @@ const SinglePost = ({
                       editMode={editMode}
                     />
                   </div>
-                  <p className="font-inter text-sm text-gray-500">{email}</p>
+                  <p className="font-inter feed-email">{email}</p>
                 </>
               ) : (
                 <></>
@@ -118,7 +125,7 @@ const SinglePost = ({
           ) : (
             // Else that means that Privacy is off, meaning the user allows other people to see their name and email
             <>
-              <div className="flex flex-row justify-between">
+              <div className="flex-userbox">
                 <p
                   onClick={handleProfileClick}
                   className="font-satoshi font-bold text-blue-400 cursor-pointer"
@@ -137,7 +144,7 @@ const SinglePost = ({
                   <></>
                 )}
               </div>
-              <p className="font-inter text-sm text-gray-500">{email}</p>
+              <p className="font-inter feed-email">{email}</p>
             </>
           )}
         </div>

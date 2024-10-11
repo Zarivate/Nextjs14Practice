@@ -107,6 +107,14 @@
     @apply flex justify-between items-center;
   }
 
+  .flex-image {
+    @apply float-left cursor-pointer md:h-full;
+  }
+
+  .flex-userbox {
+    @apply flex flex-row justify-between;
+  }
+
   /* ===== TYPOGRAPHY */
   /* 44 */
   .h1-semibold {
@@ -272,6 +280,11 @@
   /* Private Profile */
   .private-wrapper {
     @apply blur-lg;
+  }
+
+  /* Feed Component  */
+  .feed-email {
+    @apply text-sm text-gray-500;
   }
 
   /* MediaUploader Component */
