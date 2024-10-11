@@ -22,7 +22,7 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 
-// Have a seperate landing page for a personal profile page and all the other user profiles
+// Profile component for the user's own profile
 const Profile = ({
   clerkId,
   privacySet,
@@ -32,12 +32,15 @@ const Profile = ({
   userPosts,
   grabPosts,
 }: ProfileProps) => {
+  // State field for holding whether a user wants to update their privacy or not
   const [allowedProfile, setAllowedProfile] = useState(privacySet);
 
+  // State to hold all the user posts
   const [profilePosts, setProfilePosts] = useState<Array<FullPostInterface>>(
     []
   );
 
+  // State for toggling the submit state
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -53,14 +56,16 @@ const Profile = ({
     // Filter out the now deleted post from the rest of the posts
     const filteredData = profilePosts.filter((bleh) => bleh._id !== returnId);
 
-    // Update the state containing all the posts, which should trigger a call to the useEffect that will rerender the page and remove the deleted post.
+    // Update the state containing all the posts
     setProfilePosts(filteredData);
   };
 
+  // FormSchema that's only used for the privacy state
   const FormSchema = z.object({
     privacyState: z.boolean(),
   });
 
+  // Form to be used
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -96,8 +101,13 @@ const Profile = ({
   const handlePrivacySubmit = async () => {
     setSubmitting(true);
 
+    // Because the user's privacy status was updated, all their corresponding
+    // posts also need to be updated.
     try {
+      // To begin update the user's data first
       await updateUser(clerkId, user);
+
+      // Then map through every post and update their privacy state
       profilePosts.map(async (post) => {
         await fetch(`/api/posts`, {
           method: "PATCH",
@@ -195,6 +205,8 @@ const Profile = ({
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handlePrivacySubmit)}
+          // As an annoying side note, the "relative" classname here is what stopped it from causing a
+          // second y-axis scrollbar to appear. Took too long to figure that out.
           className="w-full space-y-6 mt-10 relative"
         >
           <div>

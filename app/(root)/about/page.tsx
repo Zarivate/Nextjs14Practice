@@ -3,6 +3,8 @@ import React from "react";
 import { AboutPanelsText } from "@/constants";
 import AboutPanel from "@/components/shared/AboutPanel";
 
+// Page that handles displaying information about the application. Nothing too complicated,
+// just maps out and displays hard coded information with a separate component.
 const AboutPage = () => {
   return (
     <div>

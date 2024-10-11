@@ -15,7 +15,7 @@ const ProfilePage = async () => {
   // Because the correspodning user can be null, case is handled
   if (!userId) redirect("/sign-in");
 
-  // Declare variables to be
+  // Declare variables and their types
   let user: UserProps;
   let userPosts: FullPostInterface[];
 

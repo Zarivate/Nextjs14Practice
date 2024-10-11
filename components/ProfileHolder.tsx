@@ -1,7 +1,6 @@
 import { fetchPosts } from "@/lib/actions/post.actions";
 import { getUserById } from "@/lib/actions/user.actions";
 import { SuspenseCheck } from "./shared/SuspenseCheck";
-import LoadingPostsSkeleton from "./shared/LoadingPostsSkeleton";
 import Profile from "./shared/Profile";
 import React from "react";
 import { UserProps } from "@/types";

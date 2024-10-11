@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CldImage } from "next-cloudinary";
 import { templatePosts } from "@/constants";
 
+// A basic hardcoded fake profile page that gets hidden behind a blur and displayed if the user has their privacy on
 const FakeTemplate = () => {
   const username = "SorryNoUser";
   const email = "ThisIsn'tARealEmail@mail.com";

@@ -10,6 +10,8 @@ type PublicTemplateProps = {
   accountCredits: Number;
 };
 
+// Component that handles displaying a user's profile when their privacy is off. Essentially just a skimmed
+// down version of a regular profile page without any ability to alter/interact with the posts.
 const PublicTemplate = ({
   username,
   data,

@@ -31,6 +31,7 @@ import { PostField } from "./PostField";
 import ImageUpload from "./ImageUpload";
 import { Label } from "../ui/label";
 
+// Declared types for both the images and user fields
 type ImageProps = {
   prevState: any;
   publicId: string;
@@ -46,7 +47,10 @@ type UserProps = {
   username: string;
 };
 
+// Chadcn uses a special format for their forms that involve this schema with any and
+// all fields the form may have.
 const formSchema = z.object({
+  // The post a user can make has to be within the range of 1-500 characters. Else an error message is displayed.
   postText: z
     .string()
     .min(1, {
@@ -55,10 +59,12 @@ const formSchema = z.object({
     .max(500, {
       message: "Post can't be more than 500 characters",
     }),
+  // Since a post doesn't need a time limit or image, their fields are left optional
   timeChoice: z.string().optional(),
   publicId: z.string().optional(),
 });
 
+// Component for handling any posts a user might want to make
 const MakePost = ({
   userId,
   creditBalance,
@@ -88,7 +94,11 @@ const MakePost = ({
 
   // Function to handle making a post to the database
   const createPost = async () => {
+    // During the duration of the request, the submitting state is set to true so the form can't be submitted
+    // multiple times
     setSubmitting(true);
+
+    // Make an API call to the post route
     try {
       const response = await fetch("/api/posts", {
         method: "POST",
@@ -103,27 +113,34 @@ const MakePost = ({
       });
 
       if (response.ok) {
-        console.log("Success!");
         // Each post costs 1 credit, so subtract it from their current credits.
         startTransition(async () => {
           await updateCredits(userId, -1);
         });
+
+        // Display a success toast
+        toast({
+          title: "Post made!",
+          description: "Your post has succesfully been created.",
+          duration: 3000,
+          className: "success-toast",
+        });
       }
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Something went wrong",
+        description: "Please try again in a short while",
+        duration: 3000,
+        className: "error-toast",
+      });
     } finally {
+      // Revert the submitting field for the next post a user might want to make
       setSubmitting(false);
     }
 
     // Reset the fields
     form.reset(defaultValues);
-
-    toast({
-      title: "Post made!",
-      description: "Your post has succesfully been created.",
-      duration: 3000,
-      className: "success-toast",
-    });
   };
 
   // Handler to update user input
@@ -144,8 +161,10 @@ const MakePost = ({
     value: string,
     onChangeField: (value: string) => void
   ) => {
+    // Find the amount of time the user chose for their post to be active and set it as the appropriate field
     const timeChoice = postTimeLimits[value as TimeLimitKeys];
     setTimeToExpire(timeChoice.timeTL);
+
     // This is just so the change is actually reflected in the ui
     return onChangeField(value);
   };
@@ -155,6 +174,7 @@ const MakePost = ({
     setAllowHome(!allowHome);
   };
 
+  // Handler for deleting an already uploaded image, simply resets the appropriate field
   const handleImageDelete = () => {
     form.resetField("publicId");
   };
@@ -163,6 +183,7 @@ const MakePost = ({
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(createPost)} className="space-y-8">
+          {/* If the user has no more credits left, then display a modal for them to buy more credits */}
           {creditBalance < 0 && <InsufficientCreditsModal />}
           <FormField
             control={form.control}
@@ -173,7 +194,6 @@ const MakePost = ({
                 <FormControl>
                   <Input
                     {...field}
-                    // This prevents any typing from hapening for some reason
                     onChange={(e) =>
                       onInputChangeHandler(e.target.value, field.onChange)
                     }

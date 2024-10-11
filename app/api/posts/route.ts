@@ -1,21 +1,28 @@
+// Route file that handles all the possible methods a post can use
 import { connectToDatabase } from "@/lib/database/mongoose";
 import { Post } from "@/lib/database/models/posts.model";
 import { getAuth } from "@clerk/nextjs/server";
-import { getUserById, updateCredits } from "@/lib/actions/user.actions";
+import { getUserById } from "@/lib/actions/user.actions";
 
+// Function to handle making POSTS to the database
 export async function POST(req: any) {
   // Grab the clerk userId using the built in auth method
   const { userId } = getAuth(req);
 
+  // Grab the userdata using the clerk ID
   const userData = await getUserById(userId!, null);
 
+  // Get the privacy state value of the user
   const privacySet = userData.privacySet;
 
-  // Grab the user details
+  // Grab the other user details from the passed in request
   const { email, username, postText, liveTime, allowHome, imageUrl } =
     await req.json();
+
   // Create the deletion date by adding the passed in "liveTime" in milliseconds to the current date
   const expireAt = new Date(new Date().getTime() + liveTime * 1000);
+
+  // Attempt to connect to the database and make a POST document with the aquired data
   try {
     await connectToDatabase();
 
@@ -33,8 +40,10 @@ export async function POST(req: any) {
     // Make it so the documents in the database are expired right at the moment they reach their expireAt Date, due to the mongodb deletion reaper running
     // every 60 seconds however, documents may persist for up to a minute past their actual deletion date.
     Post.schema.index({ expireAt: 1 }, { expireAfterSeconds: 0 });
-
     await newPost.save();
+
+    // Return a success status and stringified version of the newly made post, else if it failed return
+    // an error status
     return new Response(JSON.stringify(newPost), {
       status: 201,
     });
@@ -44,6 +53,7 @@ export async function POST(req: any) {
   }
 }
 
+// Function to handle the GET method, any calls for post retrival are handled here
 export const GET = async () => {
   try {
     // Connect to the database
@@ -63,10 +73,13 @@ export const GET = async () => {
   }
 };
 
+// Method to handle deleting a post
 export async function DELETE(req: any) {
+  // Grab the post id from the passed in request
   const { _id } = await req.json();
-  console.log(_id);
 
+  // Attempt to connect to the database and delete the document using Mongoose's built in method for
+  // deleting a single document.
   try {
     await connectToDatabase();
 
@@ -82,6 +95,7 @@ export async function DELETE(req: any) {
 
 // PATCH request for editing the prompt
 export async function PATCH(req: any) {
+  // Grab the passed in data from the request field, should be the new textbody of the post
   const data = await req.json();
 
   try {
@@ -106,7 +120,7 @@ export async function PATCH(req: any) {
     // Once updated, just await for it to save in the DB
     await existingPost.save();
 
-    // Return a successful response
+    // Return an appropriate response
     return new Response(JSON.stringify(existingPost), { status: 200 });
   } catch (error) {
     return new Response("Failed to update prompt", { status: 500 });

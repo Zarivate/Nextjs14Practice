@@ -10,6 +10,7 @@ type AboutPanelProps = {
   imageAlt: string;
 };
 
+// Component that actually manipulates the about page details and displays them
 const AboutPanel = ({
   id,
   title,

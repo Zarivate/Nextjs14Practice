@@ -5,11 +5,15 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getUserById } from "@/lib/actions/user.actions";
 
+// Page for when a user wants to make a post
 const Page = async () => {
+  // Grab the user id, if there is one
   const { userId } = auth();
 
+  // In the case the user got to the page without logging in, redirect them to the sign in page
   if (!userId) redirect("/sign-in");
 
+  // Grab the user data using the clerkId
   const user = await getUserById(userId, null);
 
   return (

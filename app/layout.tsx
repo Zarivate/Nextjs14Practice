@@ -2,13 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 
 const IBMPlex = IBM_Plex_Sans({
@@ -19,7 +13,7 @@ const IBMPlex = IBM_Plex_Sans({
 
 export const metadata: Metadata = {
   title: "FullStackDemo",
-  description: "Fullstack AI Saas Demo",
+  description: "A basic fullstack web app with all the bells and whistles",
 };
 
 export default function RootLayout({
