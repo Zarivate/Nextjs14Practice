@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 
 type AboutPanelProps = {
-  id: number;
   title: string;
   subtitle: string;
   bulletPoints: string[];
@@ -12,7 +11,6 @@ type AboutPanelProps = {
 
 // Component that actually manipulates the about page details and displays them
 const AboutPanel = ({
-  id,
   title,
   subtitle,
   bulletPoints,
@@ -25,8 +23,8 @@ const AboutPanel = ({
         <h2 className="mb-4 text-4xl font-medium text-black">{title}</h2>
         <p className="mb-6">{subtitle}</p>
         <div className="mb-4 space-y-4">
-          {bulletPoints.map((bulletPoint) => (
-            <div key={id} className="flex space-x-2">
+          {bulletPoints.map((bulletPoint, index) => (
+            <div key={index} className="flex space-x-2">
               <span className="text-blue-400">•</span>
               <span className="font-medium">{bulletPoint}</span>
             </div>

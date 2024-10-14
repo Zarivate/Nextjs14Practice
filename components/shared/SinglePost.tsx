@@ -82,12 +82,12 @@ const SinglePost = ({
             className={imageClick ? "flex-image md:w-72" : "flex-image md:w-48"}
           >
             <CldImage
-              crop="fit"
               height={imageClick ? 1300 : 200}
               width={imageClick ? 1000 : 175}
               src={imageUrl}
               alt="testImg"
               onClick={handleImageClick}
+              className="h-auto w-auto"
             />
           </div>
         ) : (

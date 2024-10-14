@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import { dataUrl, getImageSize2 } from "@/lib/utils";
+import { dataUrl, getImageSize } from "@/lib/utils";
 import { PlaceholderValue } from "next/dist/shared/lib/get-img-props";
 import { deleteImage } from "@/lib/actions/image.actions";
 
@@ -96,8 +96,8 @@ const ImageUpload = ({
               </button>
               <div className="cursor-pointer overflow-hidden rounded-[10px]">
                 <CldImage
-                  width={getImageSize2(image, "width")}
-                  height={getImageSize2(image, "height")}
+                  width={getImageSize(image, "width")}
+                  height={getImageSize(image, "height")}
                   src={publicId}
                   alt="userImage"
                   sizes={"(max-width: 767px) 100vw, 50vw"}
